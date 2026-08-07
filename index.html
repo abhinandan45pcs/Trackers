@@ -37,8 +37,8 @@
   #app-header .right{display:flex;align-items:center;gap:12px}
   #sync-status{font-size:11px;color:var(--muted)}
   #user-email{font-size:12px;color:var(--muted)}
-  #logout-btn{font-size:12px;padding:6px 12px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer}
-  #logout-btn:hover{background:var(--surface2);color:var(--text)}
+  #logout-btn,#print-btn{font-size:12px;padding:6px 12px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer}
+  #logout-btn:hover,#print-btn:hover{background:var(--surface2);color:var(--text)}
   #main-tabs{display:flex;gap:6px;padding:10px 20px;background:var(--surface);border-bottom:1px solid var(--border);flex-wrap:wrap;position:sticky;top:49px;z-index:19}
   .main-tab{font-size:13px;padding:8px 16px;border-radius:20px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);cursor:pointer;font-weight:500}
   .main-tab:hover{background:var(--accent-bg);color:var(--accent-text)}
@@ -156,6 +156,25 @@
   .legacy .empty{text-align:center;padding:3rem;color:#888;font-size:13px;background:#fff;border:1px solid #ddd;border-radius:8px}
 
   @media(max-width:540px){#tool-revision .stats{grid-template-columns:repeat(2,1fr)}#tool-revision header{padding:12px 14px}#tool-revision main{padding:14px 10px}}
+
+  /* ===== PRINT ===== */
+  @media print {
+    #login-screen{display:none !important}
+    #app-header,#main-tabs,#tool-revision header,#tool-revision .header-btns,
+    #tool-revision .toolbar,#tool-revision .add-subject-btn,#tool-revision .icon-btn,
+    #tool-revision .tab-del,#tool-revision .ch-actions .icon-btn,
+    .legacy .btns,.legacy .add-subject-btn,.legacy .tab-del,.legacy .delbtn,
+    #rev-import-input,input[type=file]{display:none !important}
+    body{background:#fff}
+    .tool-panel{display:none !important}
+    .tool-panel.active{display:block !important}
+    #tool-revision main{max-width:100%;padding:0}
+    #tool-revision .ch-body{display:flex !important}
+    .legacy{background:#fff;padding:0}
+    .legacy .wrap{overflow:visible}
+    .legacy table{min-width:0 !important;width:100%}
+    .legacy th,.legacy td{font-size:10px;padding:3px}
+  }
 </style>
 </head>
 <body>
@@ -183,6 +202,7 @@
     <div class="right">
       <span id="sync-status"></span>
       <span id="user-email"></span>
+      <button id="print-btn">🖨 Print</button>
       <button id="logout-btn">Log out</button>
     </div>
   </div>
@@ -407,6 +427,7 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
 });
 
 document.getElementById('logout-btn').addEventListener('click', () => auth.signOut());
+document.getElementById('print-btn').addEventListener('click', () => window.print());
 
 // ---- Auth state ----
 auth.onAuthStateChanged(async (user) => {
