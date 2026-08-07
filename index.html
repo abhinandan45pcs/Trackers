@@ -160,6 +160,10 @@
   .legacy input.testinput2{border:none;background:transparent;font-size:13px}
   .legacy input.numinput{width:55px}
   .legacy input.dateinput{width:128px}
+  .legacy select.relaxsel{width:100%;min-width:70px;box-sizing:border-box;border:1px solid #ccc;border-radius:4px;padding:3px;text-align:center;text-align-last:center;font-size:12px;background:#fff}
+  .legacy select.relaxsel:focus{outline:2px solid #5CE1E6}
+  #day-pdf{background:#0a6e56;color:#fff;border-color:#0a6e56}
+  #day-pdf:hover{background:#085945}
   .legacy .btns{margin-top:14px}
   .legacy button{padding:8px 14px;margin-right:8px;border:1px solid #999;border-radius:6px;background:#fff;cursor:pointer;font-size:13px}
   .legacy button:hover{background:#eee}
@@ -172,6 +176,7 @@
 
   /* ===== PRINT ===== */
   @media print {
+    @page { size: landscape; margin: 8mm; }
     #login-screen{display:none !important}
     #app-header,#main-tabs,#tool-revision header,#tool-revision .header-btns,
     #tool-revision .toolbar,#tool-revision .add-subject-btn,#tool-revision .icon-btn,
@@ -185,8 +190,11 @@
     #tool-revision .ch-body{display:flex !important}
     .legacy{background:#fff;padding:0}
     .legacy .wrap{overflow:visible}
-    .legacy table{min-width:0 !important;width:100%}
-    .legacy th,.legacy td{font-size:10px;padding:3px}
+    .legacy table{min-width:0 !important;width:100%;table-layout:fixed}
+    .legacy th,.legacy td{font-size:8px;padding:2px}
+    .legacy input[type="text"],.legacy input[type="time"],.legacy input[type="date"],
+    .legacy select.relaxsel,.legacy .edittext{border:none;padding:1px;font-size:8px;background:transparent}
+    #tool-daily td:last-child,#tool-daily th:last-child{display:none}
   }
 </style>
 </head>
@@ -352,6 +360,7 @@
       <button id="day-export">⬇ Export Backup</button>
       <button id="day-import-btn">⬆ Import Backup</button>
       <input type="file" id="day-import" accept=".json" style="display:none;"/>
+      <button id="day-pdf">⬇ Download PDF</button>
     </div>
   </div>
 
@@ -1210,12 +1219,31 @@ const PrelimsTool = (function () {
 const DailyTool = (function () {
   const sessions = [1,2,3,4,5,6];
 
+  function todayStr() {
+    const d = new Date();
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    return `${d.getFullYear()}-${mm}-${dd}`;
+  }
+
   function blankRow() {
-    const r = { date: '', wake: '' };
+    const r = { date: todayStr(), wake: '' };
     sessions.forEach(s => { r[`s${s}_from`]=''; r[`s${s}_to`]=''; r[`s${s}_subject`]=''; r[`s${s}_relaxing`]=''; });
     return r;
   }
-  function defaultRows() { return [blankRow(), blankRow(), blankRow(), blankRow(), blankRow(), blankRow(), blankRow()]; }
+  function defaultRows() {
+    const out = [];
+    for (let i = 0; i < 7; i++) {
+      const d = new Date();
+      d.setDate(d.getDate() + i);
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const dd = String(d.getDate()).padStart(2, '0');
+      const row = blankRow();
+      row.date = `${d.getFullYear()}-${mm}-${dd}`;
+      out.push(row);
+    }
+    return out;
+  }
 
   let rows = [];
 
@@ -1234,13 +1262,33 @@ const DailyTool = (function () {
     if (m === 0) return `${h}h`;
     return `${h}h ${m}m`;
   }
+  function parseRelaxingMinutes(val) {
+    if (!val) return 0;
+    const match = String(val).match(/\d+(\.\d+)?/);
+    if (!match) return 0;
+    return parseFloat(match[0]) || 0;
+  }
   function computeTotalMinutes(row) {
     let total = 0;
     sessions.forEach(s => {
       const from = timeToMinutes(row[`s${s}_from`]), to = timeToMinutes(row[`s${s}_to`]);
-      if (from !== null && to !== null && to > from) total += (to - from);
+      if (from !== null && to !== null && to > from) {
+        const studyMinutes = to - from;
+        const relaxingMinutes = parseRelaxingMinutes(row[`s${s}_relaxing`]);
+        total += Math.max(studyMinutes - relaxingMinutes, 0);
+      }
     });
     return total;
+  }
+  function relaxOptions(selected) {
+    const values = [0,5,10,15,20,25,30,40,45,50,60,75,90,105,120];
+    const cur = parseInt(selected, 10) || 0;
+    if (!values.includes(cur)) values.push(cur);
+    values.sort((a,b) => a - b);
+    return values.map(v => {
+      const label = v === 0 ? '—' : (v % 60 === 0 ? `${v/60}h` : `${v}m`);
+      return `<option value="${v}"${v === cur ? ' selected' : ''}>${label}</option>`;
+    }).join('');
   }
 
   function init(saved) {
@@ -1254,13 +1302,13 @@ const DailyTool = (function () {
     body.innerHTML = '';
     rows.forEach((row, i) => {
       const tr = document.createElement('tr');
-      let html = `<td class="datecell"><div class="edittext" contenteditable="true" data-i="${i}" data-f="date" data-placeholder="DD/MM">${row.date || ''}</div></td>`;
+      let html = `<td class="datecell"><input type="date" data-i="${i}" data-f="date" value="${row.date || ''}" style="min-width:130px;font-weight:bold;"/></td>`;
       html += `<td><input type="time" data-i="${i}" data-f="wake" value="${row.wake || ''}"/></td>`;
       sessions.forEach(s => {
         html += `<td><input type="time" data-i="${i}" data-f="s${s}_from" value="${row['s'+s+'_from'] || ''}"/></td>`;
         html += `<td><input type="time" data-i="${i}" data-f="s${s}_to" value="${row['s'+s+'_to'] || ''}"/></td>`;
         html += `<td><div class="edittext" contenteditable="true" data-i="${i}" data-f="s${s}_subject" data-placeholder="Subject">${row['s'+s+'_subject'] || ''}</div></td>`;
-        html += `<td><div class="edittext" contenteditable="true" data-i="${i}" data-f="s${s}_relaxing" data-placeholder="Relaxing">${row['s'+s+'_relaxing'] || ''}</div></td>`;
+        html += `<td><select class="relaxsel" data-i="${i}" data-f="s${s}_relaxing">${relaxOptions(row['s'+s+'_relaxing'])}</select></td>`;
       });
       html += `<td class="hourscell" id="day-hours-${i}">${formatHours(computeTotalMinutes(row))}</td>`;
       html += `<td><button class="delbtn" data-del="${i}" title="Delete row">✕</button></td>`;
@@ -1268,7 +1316,7 @@ const DailyTool = (function () {
       body.appendChild(tr);
     });
 
-    body.querySelectorAll('input[type="time"]').forEach(inp => {
+    body.querySelectorAll('input[type="time"], input[type="date"]').forEach(inp => {
       inp.addEventListener('input', e => {
         const i = parseInt(e.target.dataset.i), f = e.target.dataset.f;
         rows[i][f] = e.target.value;
@@ -1280,6 +1328,14 @@ const DailyTool = (function () {
       div.addEventListener('input', e => {
         const i = parseInt(e.target.dataset.i), f = e.target.dataset.f;
         rows[i][f] = e.target.textContent;
+        save();
+      });
+    });
+    body.querySelectorAll('select.relaxsel').forEach(sel => {
+      sel.addEventListener('change', e => {
+        const i = parseInt(e.target.dataset.i), f = e.target.dataset.f;
+        rows[i][f] = e.target.value;
+        document.getElementById('day-hours-' + i).textContent = formatHours(computeTotalMinutes(rows[i]));
         save();
       });
     });
@@ -1317,6 +1373,7 @@ const DailyTool = (function () {
     };
     reader.readAsText(file);
   });
+  document.getElementById('day-pdf').addEventListener('click', () => window.print());
 
   return { init };
 })();
