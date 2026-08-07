@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UPSC Prep Hub</title>
+<style>
+  :root {
+    --bg:#F7F6F3;--surface:#FFFFFF;--surface2:#F2F1ED;--border:#E2E0D8;
+    --text:#1A1A18;--muted:#6B6A65;--accent:#4A43A8;--accent-bg:#EEEDFE;--accent-text:#3C3489;
+    --red:#A32D2D;--red-bg:#FCEBEB;--amber:#854F0B;--amber-bg:#FAEEDA;--green:#3B6D11;--green-bg:#EAF3DE;
+    --radius:8px;--shadow:0 1px 3px rgba(0,0,0,0.07);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;min-height:100vh}
+
+  /* ===== LOGIN SCREEN ===== */
+  #login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px}
+  .login-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.1);padding:32px;width:340px}
+  .login-box h1{font-size:18px;font-weight:600;margin:0 0 4px;display:flex;align-items:center;gap:8px}
+  .login-box .logo-dot{width:9px;height:9px;border-radius:50%;background:var(--accent);display:inline-block}
+  .login-box p{font-size:12px;color:var(--muted);margin:0 0 20px}
+  .login-box label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px;margin-top:12px}
+  .login-box input{width:100%;font-size:14px;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius);outline:none;color:var(--text)}
+  .login-box input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-bg)}
+  .login-box button{width:100%;margin-top:18px;font-size:14px;padding:10px;border-radius:var(--radius);border:none;background:var(--accent);color:#fff;cursor:pointer;font-weight:500}
+  .login-box button:hover{background:var(--accent-text)}
+  .login-box button:disabled{opacity:.6;cursor:default}
+  #login-error{color:var(--red);font-size:12px;margin-top:10px;min-height:14px}
+
+  /* ===== APP SHELL ===== */
+  #app-shell{display:none;min-height:100vh}
+  #app-header{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20}
+  #app-header .brand{font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px}
+  #app-header .brand .logo-dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+  #app-header .right{display:flex;align-items:center;gap:12px}
+  #sync-status{font-size:11px;color:var(--muted)}
+  #user-email{font-size:12px;color:var(--muted)}
+  #logout-btn{font-size:12px;padding:6px 12px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer}
+  #logout-btn:hover{background:var(--surface2);color:var(--text)}
+  #main-tabs{display:flex;gap:6px;padding:10px 20px;background:var(--surface);border-bottom:1px solid var(--border);flex-wrap:wrap;position:sticky;top:49px;z-index:19}
+  .main-tab{font-size:13px;padding:8px 16px;border-radius:20px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);cursor:pointer;font-weight:500}
+  .main-tab:hover{background:var(--accent-bg);color:var(--accent-text)}
+  .main-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .tool-panel{display:none}
+  .tool-panel.active{display:block}
+
+  /* ===== REVISION TRACKER (scoped) ===== */
+  #tool-revision header{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+  #tool-revision .logo{font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px}
+  #tool-revision .header-btns{display:flex;gap:8px}
+  #tool-revision .hbtn{font-size:12px;padding:6px 12px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:5px}
+  #tool-revision .hbtn:hover{background:var(--surface2);color:var(--text);border-color:#C8C6BC}
+  #tool-revision .hbtn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  #tool-revision .hbtn.primary:hover{background:var(--accent-text)}
+  #tool-revision main{max-width:860px;margin:0 auto;padding:24px 16px}
+  #tool-revision .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+  #tool-revision .stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;box-shadow:var(--shadow)}
+  #tool-revision .stat-val{font-size:22px;font-weight:600}
+  #tool-revision .stat-lbl{font-size:11px;color:var(--muted);margin-top:2px}
+  #tool-revision .stat.overdue .stat-val{color:var(--red)}
+  #tool-revision .stat.soon .stat-val{color:var(--amber)}
+  #tool-revision .stat.fresh .stat-val{color:var(--green)}
+  #tool-revision .tabs-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+  #tool-revision .tabs{display:flex;gap:6px;flex-wrap:wrap;flex:1}
+  #tool-revision .tab{font-size:13px;padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;font-weight:500;display:flex;align-items:center;gap:5px}
+  #tool-revision .tab:hover:not(.active){background:var(--surface2);color:var(--text)}
+  #tool-revision .tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+  #tool-revision .tab-del{font-size:11px;opacity:0.55;cursor:pointer;margin-left:2px;line-height:1}
+  #tool-revision .tab-del:hover{opacity:1}
+  #tool-revision .tab.active .tab-del{color:#fff}
+  #tool-revision .add-subject-btn{font-size:12px;padding:6px 12px;border-radius:20px;border:1px dashed var(--border);background:transparent;color:var(--muted);cursor:pointer;white-space:nowrap}
+  #tool-revision .add-subject-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+  #tool-revision .toolbar{display:flex;gap:8px;margin-bottom:14px}
+  #tool-revision .toolbar input{flex:1;font-size:13px;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);outline:none}
+  #tool-revision .toolbar input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-bg)}
+  #tool-revision .toolbar select{font-size:12px;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--muted);cursor:pointer;outline:none}
+  #tool-revision .add-btn{font-size:13px;padding:8px 16px;border-radius:var(--radius);border:none;background:var(--accent);color:#fff;cursor:pointer;font-weight:500;white-space:nowrap}
+  #tool-revision .add-btn:hover{background:var(--accent-text)}
+  #tool-revision .chapter-list{display:flex;flex-direction:column;gap:6px}
+  #tool-revision .ch-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+  #tool-revision .ch-card.overdue{border-left:3px solid var(--red)}
+  #tool-revision .ch-card.soon{border-left:3px solid #BA7517}
+  #tool-revision .ch-card.fresh{border-left:3px solid #639922}
+  #tool-revision .ch-card.never{border-left:3px solid var(--border)}
+  #tool-revision .ch-head{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;user-select:none}
+  #tool-revision .ch-head:hover{background:var(--surface2)}
+  #tool-revision .ch-name{font-size:13px;font-weight:500;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #tool-revision .badge{font-size:11px;font-weight:500;padding:3px 9px;border-radius:20px;white-space:nowrap;flex-shrink:0}
+  #tool-revision .badge.overdue{background:var(--red-bg);color:var(--red)}
+  #tool-revision .badge.soon{background:var(--amber-bg);color:var(--amber)}
+  #tool-revision .badge.fresh{background:var(--green-bg);color:var(--green)}
+  #tool-revision .badge.never{background:var(--surface2);color:var(--muted)}
+  #tool-revision .ch-actions{display:flex;gap:4px;flex-shrink:0;align-items:center}
+  #tool-revision .icon-btn{background:none;border:none;cursor:pointer;padding:4px 6px;color:var(--muted);font-size:14px;border-radius:4px}
+  #tool-revision .icon-btn:hover{color:var(--red);background:var(--red-bg)}
+  #tool-revision .chevron{font-size:11px;color:var(--muted);transition:transform .2s;display:inline-block;padding:4px 6px}
+  #tool-revision .chevron.open{transform:rotate(180deg)}
+  #tool-revision .rev-count{font-size:11px;color:var(--muted);background:var(--surface2);border-radius:20px;padding:2px 7px;flex-shrink:0}
+  #tool-revision .ch-body{border-top:1px solid var(--border);padding:12px 14px;display:flex;flex-direction:column;gap:10px;background:#FAFAF8}
+  #tool-revision .field-row{display:flex;align-items:center;gap:10px}
+  #tool-revision .field-row label{font-size:12px;color:var(--muted);width:96px;flex-shrink:0}
+  #tool-revision .field-row input[type=date],#tool-revision .field-row select{font-size:12px;padding:5px 8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);outline:none}
+  #tool-revision .field-row.note-row{align-items:flex-start}
+  #tool-revision .field-row.note-row label{padding-top:6px}
+  #tool-revision textarea{width:100%;font-size:12px;padding:7px 9px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);resize:vertical;min-height:64px;font-family:inherit;outline:none;line-height:1.6}
+  #tool-revision .empty{text-align:center;padding:3rem;color:var(--muted);font-size:13px}
+  #tool-revision .empty-icon{font-size:32px;margin-bottom:10px}
+  #tool-revision .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center;z-index:100}
+  #tool-revision .modal{background:var(--surface);border-radius:12px;padding:24px;width:320px;border:1px solid var(--border);box-shadow:0 8px 32px rgba(0,0,0,0.15)}
+  #tool-revision .modal h3{font-size:15px;font-weight:600;margin-bottom:14px}
+  #tool-revision .modal input{width:100%;font-size:13px;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);outline:none;color:var(--text)}
+  #tool-revision .modal-btns{display:flex;gap:8px;margin-top:14px;justify-content:flex-end}
+  #rev-import-input{display:none}
+
+  /* ===== SHARED "LEGACY" TABLE-STYLE TOOLS (Prelims + Daily) ===== */
+  .legacy{background:#f4f4f2;padding:24px;font-family:'Segoe UI',Arial,sans-serif;color:#222;min-height:calc(100vh - 100px)}
+  .legacy h1{background:#FFF200;display:inline-block;padding:4px 12px;font-size:20px;margin-bottom:16px}
+  .legacy .tabs-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+  .legacy .tabs{display:flex;gap:6px;flex-wrap:wrap;flex:1}
+  .legacy .tab{font-size:13px;padding:6px 14px;border-radius:20px;border:1px solid #ccc;background:#fff;color:#555;cursor:pointer;font-weight:500;display:flex;align-items:center;gap:6px}
+  .legacy .tab:hover:not(.active){background:#eee;color:#222}
+  .legacy .tab.active{background:#5CE1E6;border-color:#3bbfc4;color:#003b3d;font-weight:700}
+  .legacy .tab-count{font-size:11px;opacity:.65}
+  .legacy .tab-del{font-size:11px;opacity:.55;cursor:pointer;margin-left:2px;line-height:1}
+  .legacy .tab-del:hover{opacity:1;color:#a32d2d}
+  .legacy .add-subject-btn{font-size:12px;padding:6px 12px;border-radius:20px;border:1px dashed #999;background:transparent;color:#555;cursor:pointer;white-space:nowrap}
+  .legacy .add-subject-btn:hover{border-color:#5CE1E6;background:#eafefe;color:#003b3d}
+  .legacy .wrap{overflow-x:auto}
+  .legacy table{border-collapse:collapse;width:100%;background:#fff}
+  .legacy th,.legacy td{border:1px solid #000;padding:5px;text-align:center;font-size:12px}
+  .legacy thead th.yellow{background:#FFF200}
+  .legacy thead th.pink{background:#FFC0DA}
+  .legacy thead th.cyan{background:#5CE1E6}
+  .legacy thead th.green{background:#B7F0B1}
+  .legacy td.datecell{background:#FFF9B0;font-weight:bold}
+  .legacy input[type="text"],.legacy input[type="time"],.legacy input[type="date"]{width:100%;box-sizing:border-box;border:1px solid #ccc;border-radius:4px;padding:3px;text-align:center;font-size:12px}
+  .legacy .edittext,.legacy .notestext{min-width:70px;max-width:220px;border:1px solid #ccc;border-radius:4px;padding:4px;text-align:left;font-size:12px;background:#fff;white-space:pre-wrap;word-break:break-word;overflow-wrap:break-word}
+  .legacy .edittext:empty::before,.legacy .notestext:empty::before{content:attr(data-placeholder);color:#aaa}
+  .legacy .edittext:focus,.legacy .notestext:focus{outline:2px solid #5CE1E6;max-width:none}
+  .legacy td.hourscell,.legacy td.computed{font-weight:bold;color:#0a6e56;background:#F0FFF4;white-space:nowrap}
+  .legacy td.unattended{color:#555;background:#F5F5F3}
+  .legacy td.testname{text-align:left;font-weight:bold;background:#FFF9B0}
+  .legacy td.testcol{text-align:left;background:#FCFCE3}
+  .legacy input.testinput{border:none;background:transparent;font-weight:bold;font-size:13px}
+  .legacy input.testinput2{border:none;background:transparent;font-size:13px}
+  .legacy input.numinput{width:55px}
+  .legacy input.dateinput{width:128px}
+  .legacy .btns{margin-top:14px}
+  .legacy button{padding:8px 14px;margin-right:8px;border:1px solid #999;border-radius:6px;background:#fff;cursor:pointer;font-size:13px}
+  .legacy button:hover{background:#eee}
+  .legacy .delbtn{border:none;background:transparent;color:#a32d2d;cursor:pointer;font-size:15px}
+  .legacy .legend{margin-top:20px;font-size:13px;line-height:1.6}
+  .legacy .legend b{color:#0a6e56}
+  .legacy .empty{text-align:center;padding:3rem;color:#888;font-size:13px;background:#fff;border:1px solid #ddd;border-radius:8px}
+
+  @media(max-width:540px){#tool-revision .stats{grid-template-columns:repeat(2,1fr)}#tool-revision header{padding:12px 14px}#tool-revision main{padding:14px 10px}}
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN SCREEN ============ -->
+<div id="login-screen">
+  <div class="login-box">
+    <h1><span class="logo-dot"></span>UPSC Prep Hub</h1>
+    <p>Log in with the account made for you. No signup — accounts are created by the admin.</p>
+    <form id="login-form">
+      <label>Email</label>
+      <input type="email" id="login-email" required autocomplete="username">
+      <label>Password</label>
+      <input type="password" id="login-password" required autocomplete="current-password">
+      <button type="submit" id="login-btn">Log in</button>
+      <div id="login-error"></div>
+    </form>
+  </div>
+</div>
+
+<!-- ============ APP SHELL ============ -->
+<div id="app-shell">
+  <div id="app-header">
+    <div class="brand"><span class="logo-dot"></span>UPSC Prep Hub</div>
+    <div class="right">
+      <span id="sync-status"></span>
+      <span id="user-email"></span>
+      <button id="logout-btn">Log out</button>
+    </div>
+  </div>
+  <div id="main-tabs">
+    <button class="main-tab active" data-tool="revision">Revision Tracker</button>
+    <button class="main-tab" data-tool="prelims">Prelims Report Card</button>
+    <button class="main-tab" data-tool="daily">Daily Study Log</button>
+  </div>
+
+  <!-- ===== TOOL 1: REVISION TRACKER ===== -->
+  <div id="tool-revision" class="tool-panel active">
+    <header>
+      <div class="logo"><div class="logo-dot"></div>Revision Tracker</div>
+      <div class="header-btns">
+        <button class="hbtn" onclick="revImportData()">&#8593; Import</button>
+        <button class="hbtn" onclick="revExportData()">&#8595; Export</button>
+      </div>
+    </header>
+    <input type="file" id="rev-import-input" accept=".json" onchange="revHandleImport(event)">
+    <main>
+      <div class="stats">
+        <div class="stat overdue"><div class="stat-val" id="rev-s-overdue">0</div><div class="stat-lbl">Overdue (7d+)</div></div>
+        <div class="stat soon"><div class="stat-val" id="rev-s-soon">0</div><div class="stat-lbl">Due soon (4–7d)</div></div>
+        <div class="stat fresh"><div class="stat-val" id="rev-s-fresh">0</div><div class="stat-lbl">Fresh (0–3d)</div></div>
+        <div class="stat"><div class="stat-val" id="rev-s-never">0</div><div class="stat-lbl">Never revised</div></div>
+      </div>
+      <div class="tabs-row">
+        <div class="tabs" id="rev-tabs"></div>
+        <button class="add-subject-btn" onclick="revOpenAddSubject()">+ Subject</button>
+      </div>
+      <div class="toolbar">
+        <input id="rev-ch-input" placeholder="Add chapter name and press Enter…" onkeydown="if(event.key==='Enter')revAddChapter()">
+        <button class="add-btn" onclick="revAddChapter()">+ Add</button>
+        <select id="rev-sort-sel" onchange="revRender()">
+          <option value="priority">Priority</option>
+          <option value="name">Name</option>
+          <option value="default">Default order</option>
+        </select>
+      </div>
+      <div class="chapter-list" id="rev-chapter-list"></div>
+    </main>
+    <div id="rev-modal-layer"></div>
+  </div>
+
+  <!-- ===== TOOL 2: PRELIMS REPORT CARD ===== -->
+  <div id="tool-prelims" class="tool-panel legacy">
+    <h1>Prelims Report Card</h1>
+    <div class="tabs-row">
+      <div class="tabs" id="pr-tabs"></div>
+      <button class="add-subject-btn" id="pr-add-subject">+ Subject</button>
+    </div>
+    <div class="wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="yellow" rowspan="2">Subject</th>
+          <th class="yellow" rowspan="2">Test</th>
+          <th class="yellow" rowspan="2">Date</th>
+          <th class="yellow" rowspan="2">Total<br>Questions</th>
+          <th class="yellow" rowspan="2">Correct</th>
+          <th class="yellow" rowspan="2">Wrong</th>
+          <th class="yellow" rowspan="2">Unattempted</th>
+          <th class="green" rowspan="2">Marks<br>Obtained</th>
+          <th class="green" rowspan="2">Out of</th>
+          <th class="yellow" rowspan="2">Silly<br>Mistake</th>
+          <th class="cyan" colspan="4">Incorrect</th>
+          <th class="yellow" rowspan="2">Guesswork</th>
+          <th class="yellow" rowspan="2">Notes</th>
+          <th rowspan="2"></th>
+        </tr>
+        <tr>
+          <th class="cyan">Awareness Gap</th>
+          <th class="cyan">Conceptual Gap</th>
+          <th class="cyan">Revision Gap</th>
+          <th class="cyan">Factual Gap</th>
+        </tr>
+      </thead>
+      <tbody id="pr-body"></tbody>
+    </table>
+    </div>
+    <div id="pr-empty" style="display:none;" class="empty"></div>
+    <div class="btns">
+      <button id="pr-add">+ Add Test</button>
+      <button id="pr-reset">Reset This Subject</button>
+      <button id="pr-export">⬇ Export Backup (All Subjects)</button>
+      <button id="pr-import-btn">⬆ Import Backup</button>
+      <input type="file" id="pr-import" accept=".json" style="display:none;"/>
+    </div>
+    <div class="legend">
+      <b>Marking scheme:</b> +2 for each correct answer, −2/3 for each incorrect answer, 0 for unattempted. <b>Marks Obtained</b> and <b>Out of</b> are calculated automatically from Total/Correct/Wrong — you don't need to enter them.<br>
+      <b>Awareness Gap</b> – didn't know the topic existed &nbsp;|&nbsp;
+      <b>Conceptual Gap</b> – misunderstood the concept &nbsp;|&nbsp;
+      <b>Revision Gap</b> – knew it, forgot due to no revision &nbsp;|&nbsp;
+      <b>Factual Gap</b> – got a specific fact wrong<br>
+      <b>Interpretation/Silly Mistake Gap</b> – misread the question &nbsp;|&nbsp;
+      <b>Guesswork/Intuition Gap</b> – answered by guessing
+    </div>
+  </div>
+
+  <!-- ===== TOOL 3: DAILY STUDY LOG ===== -->
+  <div id="tool-daily" class="tool-panel legacy">
+    <h1>Daily Accountability & Productivity Sheet</h1>
+    <div class="wrap">
+    <table style="min-width:1300px">
+      <thead>
+        <tr>
+          <th class="yellow" rowspan="2">Date</th>
+          <th class="yellow" rowspan="2">Wake Up<br>Time</th>
+          <th class="pink" colspan="4">Study Session 1</th>
+          <th class="cyan" colspan="4">Study Session 2</th>
+          <th class="pink" colspan="4">Study Session 3</th>
+          <th class="cyan" colspan="4">Study Session 4</th>
+          <th class="pink" colspan="4">Study Session 5</th>
+          <th class="cyan" colspan="4">Study Session 6</th>
+          <th class="yellow" rowspan="2">Total Study<br>Hours</th>
+          <th rowspan="2"></th>
+        </tr>
+        <tr>
+          <th class="pink">From</th><th class="pink">To</th><th class="pink">Subject</th><th class="pink">Relaxing</th>
+          <th class="cyan">From</th><th class="cyan">To</th><th class="cyan">Subject</th><th class="cyan">Relaxing</th>
+          <th class="pink">From</th><th class="pink">To</th><th class="pink">Subject</th><th class="pink">Relaxing</th>
+          <th class="cyan">From</th><th class="cyan">To</th><th class="cyan">Subject</th><th class="cyan">Relaxing</th>
+          <th class="pink">From</th><th class="pink">To</th><th class="pink">Subject</th><th class="pink">Relaxing</th>
+          <th class="cyan">From</th><th class="cyan">To</th><th class="cyan">Subject</th><th class="cyan">Relaxing</th>
+        </tr>
+      </thead>
+      <tbody id="day-body"></tbody>
+    </table>
+    </div>
+    <div class="btns">
+      <button id="day-add">+ Add Day</button>
+      <button id="day-reset">Reset All</button>
+      <button id="day-export">⬇ Export Backup</button>
+      <button id="day-import-btn">⬆ Import Backup</button>
+      <input type="file" id="day-import" accept=".json" style="display:none;"/>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ FIREBASE SDK ============ -->
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
+
+<script>
+// ======================================================
+// PASTE YOUR FIREBASE CONFIG OBJECT BELOW (from Project settings > Your apps)
+// ======================================================
+{% comment %} const firebaseConfig = {
+  apiKey: "PASTE_API_KEY_HERE",
+  authDomain: "PASTE_AUTH_DOMAIN_HERE",
+  projectId: "PASTE_PROJECT_ID_HERE",
+  storageBucket: "PASTE_STORAGE_BUCKET_HERE",
+  messagingSenderId: "PASTE_SENDER_ID_HERE",
+  appId: "PASTE_APP_ID_HERE"
+}; {% endcomment %}
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBXJ-4DYBM23HAAd4Sw5lO4jTeF6GJOYaU",
+  authDomain: "trackers45.firebaseapp.com",
+  databaseURL: "https://trackers45-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "trackers45",
+  storageBucket: "trackers45.firebasestorage.app",
+  messagingSenderId: "144294285789",
+  appId: "1:144294285789:web:62cb3da02d59a41bac6634",
+  measurementId: "G-KQRRF4JVS1"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+let currentUser = null;
+let appState = { revision: null, prelims: null, daily: null };
+let saveTimer = null;
+
+function setSyncStatus(text) {
+  const el = document.getElementById('sync-status');
+  if (el) el.textContent = text;
+}
+
+function scheduleSave() {
+  setSyncStatus('Saving…');
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveNow, 1000);
+}
+
+async function saveNow() {
+  if (!currentUser) return;
+  try {
+    await db.collection('users').doc(currentUser.uid).set(appState, { merge: true });
+    setSyncStatus('Saved ✓');
+  } catch (e) {
+    console.error('Save failed', e);
+    setSyncStatus('Save failed — check connection');
+  }
+}
+
+async function loadState() {
+  const ref = db.collection('users').doc(currentUser.uid);
+  const snap = await ref.get();
+  if (snap.exists) {
+    const d = snap.data() || {};
+    appState.revision = d.revision || null;
+    appState.prelims = d.prelims || null;
+    appState.daily = d.daily || null;
+  } else {
+    appState = { revision: null, prelims: null, daily: null };
+  }
+}
+
+// ---- Login form ----
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  const btn = document.getElementById('login-btn');
+  const errEl = document.getElementById('login-error');
+  errEl.textContent = '';
+  btn.disabled = true;
+  btn.textContent = 'Logging in…';
+  try {
+    await auth.signInWithEmailAndPassword(email, password);
+  } catch (err) {
+    errEl.textContent = 'Login failed — check your email and password.';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Log in';
+  }
+});
+
+document.getElementById('logout-btn').addEventListener('click', () => auth.signOut());
+
+// ---- Auth state ----
+auth.onAuthStateChanged(async (user) => {
+  if (user) {
+    currentUser = user;
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app-shell').style.display = 'block';
+    document.getElementById('user-email').textContent = user.email || '';
+    setSyncStatus('Loading…');
+    await loadState();
+    RevisionTool.init(appState.revision);
+    PrelimsTool.init(appState.prelims);
+    DailyTool.init(appState.daily);
+    setSyncStatus('Saved ✓');
+  } else {
+    currentUser = null;
+    document.getElementById('app-shell').style.display = 'none';
+    document.getElementById('login-screen').style.display = 'flex';
+  }
+});
+
+// ---- Main tab switching ----
+document.querySelectorAll('.main-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.main-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tool-' + btn.dataset.tool).classList.add('active');
+  });
+});
+</script>
+
+<script>
+// ======================================================
+// TOOL 1: REVISION TRACKER
+// ======================================================
+const RevisionTool = (function () {
+  const HISTORY_CHAPTERS = [
+    "CH1 - Mughal Background","CH2 - 1707 Decline of Mughals","CH3 - Successor States",
+    "CH4 - Rise of Marathas & Maratha Administration","CH5 - Jats and Afghans","CH6 - Sikh State",
+    "CH7 - Rajputs, Mysore & Travancore","CH8 - Advent of Europeans","CH9 - Carnatic Wars (1746–63)",
+    "CH10 - Battle of Plassey (1757) & Battle of Buxar (1764)","CH11 - Subsidiary Alliance of Wellesley (1798–1805)",
+    "CH12 - Anglo-Mysore Wars (1766–99), Travancore & Carnatic","CH13 - Anglo-Maratha Wars (1775–1819) till 1848",
+    "CH14 - Dalhousie Annexations & Policies (1848–56)","CH15 - British Imperial Ideology",
+    "CH16 - Land Revenue Systems","CH17 - Regulating Act (1773) to GOI Act (1858)","CH18 - EIC Administration",
+    "CH19 - Social Reforms, Education Reforms & Print Culture","CH20 - Pre-1857 Peasant Revolts & Tribal Uprisings",
+    "CH21 - Revolt of 1857","CH22 - Post-1857 Peasant Revolts","CH23 - Pre-1885 Indian National Movement (INM)",
+    "CH24 - INC (1885) & English Political Reformers","CH25 - Indian Councils Act (ICA) 1861",
+    "CH26 - Moderates in INC – Ideology, Demands & Negatives","CH27 - Moderates: Positives & Drain Theory",
+    "CH28 - Indian Councils Act (ICA) 1892","CH29 - Extremists & Swadeshi Movement (1905–08)",
+    "CH30 - Revolutionaries of the Swadeshi Movement","CH31 - Muslim League (1906) & ICA 1909",
+    "CH32 - Ghadar Movement (1913–15)","CH33 - Home Rule League & Lucknow Pact (1916)",
+    "CH34 - Government of India Act (1919)","CH35 - Gandhiji in South Africa","CH36 - Mahatma Gandhi – Ideology",
+    "CH37 - Gandhian Era till 1927","CH38 - Peasant Movements of the 1920s & 1930s",
+    "CH39 - Revolutionaries of the 1920s–30s","CH40 - Simon Commission (1927) to Delhi Manifesto (Nov 1929)",
+    "CH41 - Lahore Session (1929) to Civil Disobedience Movement (1930–34)",
+    "CH42 - GOI Act 1935 & Congress Ministries (1937–39)","CH43 - World War II (1939) to Cripps Mission (1942)",
+    "CH44 - Quit India Movement (1942–45)","CH45 - Bengal Famine, INA Agitations, INA & Naval Mutiny",
+    "CH46 - Rajaji Formula (1944) to Partition","CH47 - Many Voices of the Nation – Workers, Capitalists, Dalits & Women"
+  ];
+  const POLITY_CHAPTERS = [
+    "CH1 - Preamble","CH2 - Salient Features of the Constitution","CH3 - Amendment of the Indian Constitution",
+    "CH4 - Sources of the Indian Constitution","CH5 - Schedules of the Constitution","CH6 - Fundamental Rights",
+    "CH7 - Directive Principles of State Policy (DPSP)","CH8 - Fundamental Duties","CH9 - Union Executive",
+    "CH10 - State Executive","CH11 - Local Self Government","CH12 - State Legislature","CH13 - Judiciary",
+    "CH14 - Parliament","CH15 - Elections & Associated Topics","CH16 - System of Government",
+    "CH17 - Union Territories, Scheduled and Tribal Areas","CH18 - Union and its Territory","CH19 - Citizenship",
+    "CH20 - Constitutional Bodies","CH21 - Non-Constitutional Bodies","CH22 - Special Provisions for Some States",
+    "CH23 - Official Languages","CH24 - Cooperative Sector in India","CH25 - Making of the Constitution",
+    "CH26 - Governance","CH27 - NHRC (National Human Rights Commission)","CH28 - NCM (National Commission for Minorities)",
+    "CH29 - NCPCR (National Commission for Protection of Child Rights)","CH30 - NCW (National Commission for Women)",
+    "CH31 - Key Judgements","CH32 - Basic Structure of the Constitution","CH33 - Corruption and RTI"
+  ];
+  const DEFAULT_SUBJECTS = ['Modern Indian History','Geography','Polity','Economics','Environment','Sci & Tech','Ethics'];
+
+  function makeChapters(names) {
+    return names.map((name, i) => ({
+      id: 'preset-' + i + '-' + name.slice(0,8).replace(/\s/g,''),
+      name, lastRevised:'', status:'Not Started', note:'', revisionCount:0
+    }));
+  }
+
+  let subjects = [...DEFAULT_SUBJECTS];
+  let data = {};
+  let current = subjects[0];
+  let expanded = {};
+
+  function initData() { subjects.forEach(s => { if (!data[s]) data[s] = []; }); }
+
+  function init(saved) {
+    if (saved && saved.subjects) {
+      subjects = saved.subjects;
+      data = saved.data || {};
+    } else {
+      subjects = [...DEFAULT_SUBJECTS];
+      data = {};
+      data['Modern Indian History'] = makeChapters(HISTORY_CHAPTERS);
+      data['Polity'] = makeChapters(POLITY_CHAPTERS);
+    }
+    initData();
+    if (!subjects.includes(current)) current = subjects[0];
+    render();
+  }
+
+  function save() { appState.revision = { subjects, data }; scheduleSave(); }
+
+  function exportData() {
+    const blob = new Blob([JSON.stringify({ subjects, data }, null, 2)], { type:'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'upsc-revision-backup-' + new Date().toISOString().slice(0,10) + '.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function importData() { document.getElementById('rev-import-input').click(); }
+
+  function handleImport(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function (ev) {
+      try {
+        const imported = JSON.parse(ev.target.result);
+        if (confirm('Replace current data with this backup?')) {
+          subjects = imported.subjects || [...DEFAULT_SUBJECTS];
+          data = imported.data || {};
+          initData();
+          current = subjects[0];
+          save(); render();
+          alert('Import successful!');
+        }
+      } catch (err) { alert('Invalid backup file.'); }
+      e.target.value = '';
+    };
+    reader.readAsText(file);
+  }
+
+  function openAddSubject() {
+    document.getElementById('rev-modal-layer').innerHTML = `
+      <div class="modal-bg" onclick="revCloseModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+          <h3>Add subject</h3>
+          <input id="rev-m-subj" placeholder="e.g. Science & Technology" onkeydown="if(event.key==='Enter')revConfirmAddSubject()">
+          <div class="modal-btns">
+            <button class="hbtn" onclick="revCloseModal()">Cancel</button>
+            <button class="hbtn primary" onclick="revConfirmAddSubject()">Add</button>
+          </div>
+        </div>
+      </div>`;
+    setTimeout(() => document.getElementById('rev-m-subj')?.focus(), 50);
+  }
+
+  function closeModal(e) {
+    if (e && e.target !== e.currentTarget) return;
+    document.getElementById('rev-modal-layer').innerHTML = '';
+  }
+
+  function confirmAddSubject() {
+    const name = document.getElementById('rev-m-subj')?.value.trim();
+    if (!name) return;
+    if (subjects.includes(name)) { alert('Subject already exists.'); return; }
+    subjects.push(name);
+    data[name] = [];
+    current = name;
+    save(); closeModal(); render();
+  }
+
+  function deleteSubject(s) {
+    const count = (data[s]||[]).length;
+    const msg = count > 0 ? `"${s}" has ${count} chapter(s). Delete subject and all chapters?` : `Delete subject "${s}"?`;
+    if (!confirm(msg)) return;
+    subjects = subjects.filter(x => x !== s);
+    delete data[s];
+    if (current === s) current = subjects[0] || '';
+    save(); render();
+  }
+
+  function daysSince(d) {
+    if (!d) return null;
+    const diff = new Date().setHours(0,0,0,0) - new Date(d).setHours(0,0,0,0);
+    return Math.floor(diff / 86400000);
+  }
+
+  function badgeInfo(ch) {
+    const d = daysSince(ch.lastRevised);
+    if (d === null) return { cls:'never', text:'Never revised' };
+    if (d >= 7) return { cls:'overdue', text: d + 'd ago — revise now' };
+    if (d >= 4) return { cls:'soon', text: d + 'd ago — due soon' };
+    if (d === 0) return { cls:'fresh', text:'Revised today' };
+    return { cls:'fresh', text: d + 'd ago' };
+  }
+
+  function priorityOf(ch) {
+    const d = daysSince(ch.lastRevised);
+    if (d === null) return 0;
+    if (d >= 7) return 1;
+    if (d >= 4) return 2;
+    return 3;
+  }
+
+  function sortedChapters() {
+    const sort = document.getElementById('rev-sort-sel').value;
+    const chs = (data[current]||[]).map((ch,i) => ({...ch, _i:i}));
+    if (sort === 'priority') return chs.sort((a,b) => priorityOf(a) - priorityOf(b));
+    if (sort === 'name') return chs.sort((a,b) => a.name.localeCompare(b.name));
+    return chs;
+  }
+
+  function esc(s){ return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') }
+
+  function render() {
+    document.getElementById('rev-tabs').innerHTML = subjects.map(s => {
+      const count = (data[s]||[]).length;
+      return `<button class="tab${s===current?' active':''}" onclick="revSwitchTab('${esc(s)}')">
+        ${esc(s)} <span style="opacity:.6;font-size:11px">${count}</span>
+        <span class="tab-del" onclick="event.stopPropagation();revDeleteSubject('${esc(s)}')" title="Remove subject">✕</span>
+      </button>`;
+    }).join('');
+
+    let ov=0,so=0,fr=0,nv=0;
+    subjects.forEach(s => (data[s]||[]).forEach(ch => {
+      const d = daysSince(ch.lastRevised);
+      if (d===null) nv++; else if (d>=7) ov++; else if (d>=4) so++; else fr++;
+    }));
+    document.getElementById('rev-s-overdue').textContent = ov;
+    document.getElementById('rev-s-soon').textContent = so;
+    document.getElementById('rev-s-fresh').textContent = fr;
+    document.getElementById('rev-s-never').textContent = nv;
+
+    const list = document.getElementById('rev-chapter-list');
+    if (!current) { list.innerHTML = '<div class="empty">No subjects yet.</div>'; return; }
+
+    const chs = sortedChapters();
+    if (!chs.length) {
+      list.innerHTML = `<div class="empty"><div class="empty-icon">📖</div>No chapters in ${esc(current)} yet.<br>Type a chapter name above and press Enter.</div>`;
+      return;
+    }
+
+    list.innerHTML = chs.map(ch => {
+      const b = badgeInfo(ch);
+      const isOpen = expanded[ch.id];
+      const revLabel = ch.revisionCount > 0 ? `${ch.revisionCount}× revised` : '';
+      return `<div class="ch-card ${b.cls}">
+        <div class="ch-head" onclick="revToggleExpand('${ch.id}')">
+          <span class="ch-name">${esc(ch.name)}</span>
+          ${revLabel ? `<span class="rev-count">${revLabel}</span>` : ''}
+          <span class="badge ${b.cls}">${b.text}</span>
+          <div class="ch-actions" onclick="event.stopPropagation()">
+            <button class="icon-btn" onclick="revDeleteChapter('${ch.id}')" title="Delete chapter">✕</button>
+            <span class="chevron ${isOpen?'open':''}">▼</span>
+          </div>
+        </div>
+        ${isOpen ? `<div class="ch-body">
+          <div class="field-row">
+            <label>Last revised</label>
+            <input type="date" value="${ch.lastRevised||''}" onchange="revSetField('${ch.id}','lastRevised',this.value)">
+            <button class="hbtn primary" style="font-size:11px;padding:4px 10px" onclick="revMarkToday('${ch.id}')">Mark today</button>
+          </div>
+          <div class="field-row">
+            <label>Status</label>
+            <select onchange="revSetField('${ch.id}','status',this.value)">
+    <option value="Not Started"${ch.status==='Not Started'?' selected':''}>Not Started</option>
+    <option value="In Progress"${ch.status==='In Progress'?' selected':''}>In Progress</option>
+    <option value="Lectures Done"${ch.status==='Lectures Done'?' selected':''}>Lectures Done</option>
+    <option value="Revised"${ch.status==='Revised'?' selected':''}>Revised</option>
+    <option value="Mastered"${ch.status==='Mastered'?' selected':''}>Mastered</option>
+  </select>
+          </div>
+          <div class="field-row note-row">
+            <label>Notes</label>
+            <textarea placeholder="Key concepts, exam tips, important dates…" onchange="revSetField('${ch.id}','note',this.value)">${esc(ch.note||'')}</textarea>
+          </div>
+        </div>` : ''}
+      </div>`;
+    }).join('');
+  }
+
+  function switchTab(s){ current=s; render() }
+  function toggleExpand(id){ expanded[id]=!expanded[id]; render() }
+
+  function addChapter() {
+    const inp = document.getElementById('rev-ch-input');
+    const name = inp.value.trim();
+    if (!name || !current) return;
+    if (!data[current]) data[current]=[];
+    data[current].push({ id: Date.now().toString(), name, lastRevised:'', status:'Not Started', note:'', revisionCount:0 });
+    inp.value='';
+    save(); render();
+    inp.focus();
+  }
+
+  function setField(id, field, val) {
+    for (const s of subjects) {
+      const ch = (data[s]||[]).find(c => c.id===id);
+      if (ch) {
+        if (field==='lastRevised' && val && val!==ch.lastRevised) ch.revisionCount=(ch.revisionCount||0)+1;
+        ch[field]=val;
+        save(); render(); return;
+      }
+    }
+  }
+
+  function markToday(id){ setField(id,'lastRevised',new Date().toISOString().slice(0,10)) }
+
+  function deleteChapter(id) {
+    for (const s of subjects) {
+      const idx=(data[s]||[]).findIndex(c=>c.id===id);
+      if (idx!==-1) {
+        if (!confirm(`Delete "${data[s][idx].name}"?`)) return;
+        data[s].splice(idx,1);
+        delete expanded[id];
+        save(); render(); return;
+      }
+    }
+  }
+
+  return { init, render, switchTab, toggleExpand, addChapter, setField, markToday, deleteChapter,
+           openAddSubject, closeModal, confirmAddSubject, deleteSubject, importData, exportData, handleImport };
+})();
+
+window.revRender = RevisionTool.render;
+window.revSwitchTab = RevisionTool.switchTab;
+window.revToggleExpand = RevisionTool.toggleExpand;
+window.revAddChapter = RevisionTool.addChapter;
+window.revSetField = RevisionTool.setField;
+window.revMarkToday = RevisionTool.markToday;
+window.revDeleteChapter = RevisionTool.deleteChapter;
+window.revOpenAddSubject = RevisionTool.openAddSubject;
+window.revCloseModal = RevisionTool.closeModal;
+window.revConfirmAddSubject = RevisionTool.confirmAddSubject;
+window.revDeleteSubject = RevisionTool.deleteSubject;
+window.revImportData = RevisionTool.importData;
+window.revExportData = RevisionTool.exportData;
+window.revHandleImport = RevisionTool.handleImport;
+</script>
+
+<script>
+// ======================================================
+// TOOL 2: PRELIMS REPORT CARD
+// ======================================================
+const PrelimsTool = (function () {
+  const fields = ['test','testname','date','total','correct','wrong','silly','awareness','conceptual','revision','factual','guesswork','notes'];
+  const MARKS_CORRECT = 2;
+  const MARKS_WRONG = -2/3;
+  const DEFAULT_SUBJECTS = ['Polity','Modern Indian History','Geography','Economy','Environment','Science & Tech','CSAT','Current Affairs'];
+  const defaultPolityNames = ['Polity I Prelims Test','Polity II Prelims Test','Polity III Prelims Test','Polity IV Prelims Test','Polity V Prelims Test'];
+
+  function numOr0(v) { const n = parseFloat(v); return isNaN(n) ? 0 : n; }
+  function computeUnattempted(row) {
+    const u = numOr0(row.total) - numOr0(row.correct) - numOr0(row.wrong);
+    return u > 0 ? u : 0;
+  }
+  function computeMarksObtained(row) {
+    const marks = (numOr0(row.correct) * MARKS_CORRECT) + (numOr0(row.wrong) * MARKS_WRONG);
+    return Math.round(marks * 100) / 100;
+  }
+  function computeOutOf(row) { return Math.round(numOr0(row.total) * MARKS_CORRECT * 100) / 100; }
+
+  function blankRow(name) {
+    const r = {};
+    fields.forEach(f => r[f] = f === 'test' ? (name || '') : '');
+    return r;
+  }
+
+  let subjects = [...DEFAULT_SUBJECTS];
+  let data = {};
+  let current = subjects[0];
+
+  function initData() { subjects.forEach(s => { if (!data[s]) data[s] = []; }); }
+  function esc(s) { return (s || '').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  function init(saved) {
+    if (saved && saved.subjects) {
+      subjects = saved.subjects;
+      data = saved.data || {};
+      current = saved.current && subjects.includes(saved.current) ? saved.current : subjects[0];
+    } else {
+      subjects = [...DEFAULT_SUBJECTS];
+      data = {};
+      data['Polity'] = defaultPolityNames.map(n => blankRow(n));
+      current = 'Polity';
+    }
+    initData();
+    if (!subjects.includes(current)) current = subjects[0] || '';
+    render();
+  }
+
+  function save() { appState.prelims = { subjects, data, current }; scheduleSave(); }
+
+  function renderTabs() {
+    document.getElementById('pr-tabs').innerHTML = subjects.map(s => {
+      const count = (data[s] || []).length;
+      return `<button class="tab${s === current ? ' active' : ''}" data-tab="${esc(s)}">
+        ${esc(s)} <span class="tab-count">${count}</span>
+        <span class="tab-del" data-del-subject="${esc(s)}" title="Remove subject">✕</span>
+      </button>`;
+    }).join('');
+
+    document.querySelectorAll('#pr-tabs .tab').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        if (e.target.closest('[data-del-subject]')) return;
+        current = btn.dataset.tab;
+        render();
+      });
+    });
+    document.querySelectorAll('#pr-tabs [data-del-subject]').forEach(el => {
+      el.addEventListener('click', (e) => { e.stopPropagation(); deleteSubject(el.dataset.delSubject); });
+    });
+  }
+
+  function render() {
+    renderTabs();
+    const body = document.getElementById('pr-body');
+    const emptyDiv = document.getElementById('pr-empty');
+    const rows = data[current] || [];
+
+    if (!current) { body.innerHTML = ''; emptyDiv.style.display = 'block'; emptyDiv.textContent = 'No subjects yet. Click "+ Subject" to add one.'; return; }
+    if (!rows.length) { body.innerHTML = ''; emptyDiv.style.display = 'block'; emptyDiv.textContent = `No tests logged under "${current}" yet. Click "+ Add Test" to start.`; return; }
+    emptyDiv.style.display = 'none';
+
+    body.innerHTML = '';
+    rows.forEach((row, i) => {
+      const tr = document.createElement('tr');
+      let html = `<td class="testname"><input type="text" class="testinput" data-i="${i}" data-f="test" value="${esc(row.test)}"/></td>`;
+      html += `<td class="testcol"><input type="text" class="testinput2" data-i="${i}" data-f="testname" value="${esc(row.testname)}"/></td>`;
+      html += `<td><input type="date" class="dateinput" data-i="${i}" data-f="date" value="${esc(row.date)}"/></td>`;
+      ['total','correct','wrong'].forEach(f => { html += `<td><input type="text" class="numinput" data-i="${i}" data-f="${f}" value="${esc(row[f])}"/></td>`; });
+      html += `<td class="unattended" id="pr-unatt-${i}">${computeUnattempted(row)}</td>`;
+      html += `<td class="computed" id="pr-marks-${i}">${computeMarksObtained(row)}</td>`;
+      html += `<td class="computed" id="pr-outof-${i}">${computeOutOf(row)}</td>`;
+      ['silly','awareness','conceptual','revision','factual','guesswork'].forEach(f => { html += `<td><input type="text" class="numinput" data-i="${i}" data-f="${f}" value="${esc(row[f])}"/></td>`; });
+      html += `<td><div class="notestext" contenteditable="true" data-i="${i}" data-f="notes" data-placeholder="Add notes...">${esc(row.notes)}</div></td>`;
+      html += `<td><button class="delbtn" data-del="${i}" title="Delete row">✕</button></td>`;
+      tr.innerHTML = html;
+      body.appendChild(tr);
+    });
+
+    body.querySelectorAll('input').forEach(inp => {
+      inp.addEventListener('input', e => {
+        const i = parseInt(e.target.dataset.i);
+        const f = e.target.dataset.f;
+        data[current][i][f] = e.target.value;
+        if (f === 'total' || f === 'correct' || f === 'wrong') {
+          const row = data[current][i];
+          document.getElementById('pr-unatt-' + i).textContent = computeUnattempted(row);
+          document.getElementById('pr-marks-' + i).textContent = computeMarksObtained(row);
+          document.getElementById('pr-outof-' + i).textContent = computeOutOf(row);
+        }
+        save();
+      });
+    });
+    body.querySelectorAll('.notestext').forEach(div => {
+      div.addEventListener('input', e => {
+        const i = parseInt(e.target.dataset.i);
+        data[current][i]['notes'] = e.target.textContent;
+        save();
+      });
+    });
+    body.querySelectorAll('button[data-del]').forEach(btn => {
+      btn.addEventListener('click', e => {
+        const i = parseInt(e.currentTarget.dataset.del);
+        data[current].splice(i, 1);
+        render(); save();
+      });
+    });
+  }
+
+  function deleteSubject(s) {
+    const count = (data[s] || []).length;
+    const msg = count > 0 ? `"${s}" has ${count} logged test(s). Delete this subject and all its data?` : `Delete subject "${s}"?`;
+    if (!confirm(msg)) return;
+    subjects = subjects.filter(x => x !== s);
+    delete data[s];
+    if (current === s) current = subjects[0] || '';
+    save(); render();
+  }
+
+  document.getElementById('pr-add').addEventListener('click', () => {
+    if (!current) { alert('Add a subject first.'); return; }
+    data[current].push(blankRow('New test'));
+    render(); save();
+  });
+
+  document.getElementById('pr-reset').addEventListener('click', () => {
+    if (!current) return;
+    if (confirm(`Reset all tests under "${current}"? This cannot be undone.`)) { data[current] = []; render(); save(); }
+  });
+
+  document.getElementById('pr-add-subject').addEventListener('click', () => {
+    const name = prompt('New subject name (e.g. Environment, CSAT, Current Affairs):');
+    if (!name) return;
+    const trimmed = name.trim();
+    if (!trimmed) return;
+    if (subjects.includes(trimmed)) { alert('That subject already exists.'); current = trimmed; render(); return; }
+    subjects.push(trimmed);
+    data[trimmed] = [];
+    current = trimmed;
+    save(); render();
+  });
+
+  document.getElementById('pr-export').addEventListener('click', () => {
+    const blob = new Blob([JSON.stringify({ subjects, data }, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `prelims_report_card_backup_${new Date().toISOString().slice(0,10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  document.getElementById('pr-import-btn').addEventListener('click', () => document.getElementById('pr-import').click());
+  document.getElementById('pr-import').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      try {
+        const parsed = JSON.parse(evt.target.result);
+        if (!parsed || !parsed.data || !Array.isArray(parsed.subjects)) throw new Error('Invalid file format');
+        if (!confirm('Replace current data with this backup? This cannot be undone.')) { e.target.value = ''; return; }
+        subjects = parsed.subjects;
+        data = {};
+        Object.keys(parsed.data).forEach(s => { data[s] = (parsed.data[s] || []).map(r => ({ ...blankRow(''), ...r, total: r.total || '' })); });
+        initData();
+        current = subjects[0] || '';
+        save(); render();
+        alert('Backup restored successfully.');
+      } catch (err) { alert('Could not read this file. Make sure it is a valid backup exported from this tool.'); }
+      e.target.value = '';
+    };
+    reader.readAsText(file);
+  });
+
+  return { init };
+})();
+</script>
+
+<script>
+// ======================================================
+// TOOL 3: DAILY STUDY LOG
+// ======================================================
+const DailyTool = (function () {
+  const sessions = [1,2,3,4,5,6];
+
+  function blankRow() {
+    const r = { date: '', wake: '' };
+    sessions.forEach(s => { r[`s${s}_from`]=''; r[`s${s}_to`]=''; r[`s${s}_subject`]=''; r[`s${s}_relaxing`]=''; });
+    return r;
+  }
+  function defaultRows() { return [blankRow(), blankRow(), blankRow(), blankRow(), blankRow(), blankRow(), blankRow()]; }
+
+  let rows = [];
+
+  function timeToMinutes(t) {
+    if (!t) return null;
+    const parts = t.split(':');
+    if (parts.length !== 2) return null;
+    const h = parseInt(parts[0], 10), m = parseInt(parts[1], 10);
+    if (isNaN(h) || isNaN(m)) return null;
+    return h * 60 + m;
+  }
+  function formatHours(totalMinutes) {
+    if (totalMinutes <= 0) return '—';
+    const h = Math.floor(totalMinutes / 60), m = totalMinutes % 60;
+    if (h === 0) return `${m}m`;
+    if (m === 0) return `${h}h`;
+    return `${h}h ${m}m`;
+  }
+  function computeTotalMinutes(row) {
+    let total = 0;
+    sessions.forEach(s => {
+      const from = timeToMinutes(row[`s${s}_from`]), to = timeToMinutes(row[`s${s}_to`]);
+      if (from !== null && to !== null && to > from) total += (to - from);
+    });
+    return total;
+  }
+
+  function init(saved) {
+    rows = (saved && Array.isArray(saved.rows)) ? saved.rows : defaultRows();
+    render();
+  }
+  function save() { appState.daily = { rows }; scheduleSave(); }
+
+  function render() {
+    const body = document.getElementById('day-body');
+    body.innerHTML = '';
+    rows.forEach((row, i) => {
+      const tr = document.createElement('tr');
+      let html = `<td class="datecell"><div class="edittext" contenteditable="true" data-i="${i}" data-f="date" data-placeholder="DD/MM">${row.date || ''}</div></td>`;
+      html += `<td><input type="time" data-i="${i}" data-f="wake" value="${row.wake || ''}"/></td>`;
+      sessions.forEach(s => {
+        html += `<td><input type="time" data-i="${i}" data-f="s${s}_from" value="${row['s'+s+'_from'] || ''}"/></td>`;
+        html += `<td><input type="time" data-i="${i}" data-f="s${s}_to" value="${row['s'+s+'_to'] || ''}"/></td>`;
+        html += `<td><div class="edittext" contenteditable="true" data-i="${i}" data-f="s${s}_subject" data-placeholder="Subject">${row['s'+s+'_subject'] || ''}</div></td>`;
+        html += `<td><div class="edittext" contenteditable="true" data-i="${i}" data-f="s${s}_relaxing" data-placeholder="Relaxing">${row['s'+s+'_relaxing'] || ''}</div></td>`;
+      });
+      html += `<td class="hourscell" id="day-hours-${i}">${formatHours(computeTotalMinutes(row))}</td>`;
+      html += `<td><button class="delbtn" data-del="${i}" title="Delete row">✕</button></td>`;
+      tr.innerHTML = html;
+      body.appendChild(tr);
+    });
+
+    body.querySelectorAll('input[type="time"]').forEach(inp => {
+      inp.addEventListener('input', e => {
+        const i = parseInt(e.target.dataset.i), f = e.target.dataset.f;
+        rows[i][f] = e.target.value;
+        document.getElementById('day-hours-' + i).textContent = formatHours(computeTotalMinutes(rows[i]));
+        save();
+      });
+    });
+    body.querySelectorAll('.edittext').forEach(div => {
+      div.addEventListener('input', e => {
+        const i = parseInt(e.target.dataset.i), f = e.target.dataset.f;
+        rows[i][f] = e.target.textContent;
+        save();
+      });
+    });
+    body.querySelectorAll('button[data-del]').forEach(btn => {
+      btn.addEventListener('click', e => { rows.splice(parseInt(e.currentTarget.dataset.del), 1); render(); save(); });
+    });
+  }
+
+  document.getElementById('day-add').addEventListener('click', () => { rows.push(blankRow()); render(); save(); });
+  document.getElementById('day-reset').addEventListener('click', () => {
+    if (confirm('Reset all data? This cannot be undone.')) { rows = defaultRows(); render(); save(); }
+  });
+  document.getElementById('day-export').addEventListener('click', () => {
+    const blob = new Blob([JSON.stringify(rows, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `daily_accountability_backup_${new Date().toISOString().slice(0,10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+  document.getElementById('day-import-btn').addEventListener('click', () => document.getElementById('day-import').click());
+  document.getElementById('day-import').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      try {
+        const parsed = JSON.parse(evt.target.result);
+        if (!Array.isArray(parsed)) throw new Error('Invalid file format');
+        rows = parsed; save(); render();
+        alert('Backup restored successfully.');
+      } catch (err) { alert('Could not read this file. Make sure it is a valid backup exported from this tool.'); }
+      e.target.value = '';
+    };
+    reader.readAsText(file);
+  });
+
+  return { init };
+})();
+</script>
+
+</body>
+</html>
