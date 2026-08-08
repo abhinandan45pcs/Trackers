@@ -210,8 +210,12 @@
       <input type="email" id="login-email" required autocomplete="username">
       <label>Password</label>
       <input type="password" id="login-password" required autocomplete="current-password">
+      <div style="text-align:right;margin-top:6px">
+        <a href="#" id="forgot-password-link" style="font-size:12px;color:var(--accent);text-decoration:none">Forgot password?</a>
+      </div>
       <button type="submit" id="login-btn">Log in</button>
       <div id="login-error"></div>
+      <div id="login-message" style="font-size:12px;margin-top:10px;min-height:14px"></div>
     </form>
   </div>
 </div>
@@ -226,6 +230,10 @@
       <button id="print-btn">🖨 Print</button>
       <button id="logout-btn">Log out</button>
     </div>
+  </div>
+  <div id="pw-reminder-banner" style="display:none;background:var(--accent-bg);border-bottom:1px solid #D4D0F5;color:var(--accent-text);font-size:12px;padding:9px 20px;align-items:center;justify-content:space-between;gap:10px">
+    <span>💡 Tip: You can change your password anytime from the login screen using "Forgot password?" — no need to ask anyone for it.</span>
+    <button id="pw-reminder-close" style="background:none;border:none;color:var(--accent-text);cursor:pointer;font-size:14px;flex-shrink:0">✕</button>
   </div>
   <div id="main-tabs">
     <button class="main-tab active" data-tool="revision">Revision Tracker</button>
@@ -451,6 +459,37 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
 
 document.getElementById('logout-btn').addEventListener('click', () => auth.signOut());
 document.getElementById('print-btn').addEventListener('click', () => window.print());
+document.getElementById('pw-reminder-close').addEventListener('click', () => {
+  document.getElementById('pw-reminder-banner').style.display = 'none';
+});
+
+document.getElementById('forgot-password-link').addEventListener('click', async (e) => {
+  e.preventDefault();
+  const msgEl = document.getElementById('login-message');
+  const email = document.getElementById('login-email').value.trim();
+  if (!email) {
+    msgEl.style.color = 'var(--red)';
+    msgEl.textContent = 'Type your email above first, then click "Forgot password?" again.';
+    document.getElementById('login-email').focus();
+    return;
+  }
+  msgEl.style.color = 'var(--muted)';
+  msgEl.textContent = 'Sending reset link…';
+  try {
+    await auth.sendPasswordResetEmail(email);
+    msgEl.style.color = 'var(--green)';
+    msgEl.textContent = 'Reset link sent! Check ' + email + ' (including spam) for instructions.';
+  } catch (err) {
+    msgEl.style.color = 'var(--red)';
+    if (err.code === 'auth/user-not-found') {
+      msgEl.textContent = 'No account found with that email.';
+    } else if (err.code === 'auth/invalid-email') {
+      msgEl.textContent = 'That email address looks invalid.';
+    } else {
+      msgEl.textContent = 'Could not send reset link. Please try again.';
+    }
+  }
+});
 
 // ---- Auth state ----
 auth.onAuthStateChanged(async (user) => {
@@ -465,9 +504,17 @@ auth.onAuthStateChanged(async (user) => {
     PrelimsTool.init(appState.prelims);
     DailyTool.init(appState.daily);
     setSyncStatus('Saved ✓');
+
+    const seenKey = 'pwReminderShown_' + user.uid;
+    if (!localStorage.getItem(seenKey)) {
+      const banner = document.getElementById('pw-reminder-banner');
+      banner.style.display = 'flex';
+      localStorage.setItem(seenKey, '1');
+    }
   } else {
     currentUser = null;
     document.getElementById('app-shell').style.display = 'none';
+    document.getElementById('pw-reminder-banner').style.display = 'none';
     document.getElementById('login-screen').style.display = 'flex';
   }
 });
