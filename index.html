@@ -149,6 +149,8 @@
   .legacy thead th.green{background:#B7F0B1}
   .legacy td.datecell{background:#FFF9B0;font-weight:bold}
   .legacy input[type="text"],.legacy input[type="time"],.legacy input[type="date"]{width:100%;box-sizing:border-box;border:1px solid #ccc;border-radius:4px;padding:3px;text-align:center;font-size:12px}
+  .legacy textarea.numinput{width:100%;box-sizing:border-box;border:1px solid #ccc;border-radius:4px;padding:3px;text-align:center;font-size:12px;font-family:inherit;resize:none;overflow:hidden;line-height:1.3;display:block;min-height:22px}
+  .legacy textarea.numinput:focus{outline:2px solid #5CE1E6}
   .legacy .edittext,.legacy .notestext{min-width:70px;max-width:220px;border:1px solid #ccc;border-radius:4px;padding:4px;text-align:left;font-size:12px;background:#fff;white-space:pre-wrap;word-break:break-word;overflow-wrap:break-word}
   .legacy .edittext:empty::before,.legacy .notestext:empty::before{content:attr(data-placeholder);color:#aaa}
   .legacy .edittext:focus,.legacy .notestext:focus{outline:2px solid #5CE1E6;max-width:none}
@@ -1148,22 +1150,27 @@ const PrelimsTool = (function () {
       let html = `<td class="testname"><input type="text" class="testinput" data-i="${i}" data-f="test" value="${esc(row.test)}"/></td>`;
       html += `<td class="testcol"><input type="text" class="testinput2" data-i="${i}" data-f="testname" value="${esc(row.testname)}"/></td>`;
       html += `<td><input type="date" class="dateinput" data-i="${i}" data-f="date" value="${esc(row.date)}"/></td>`;
-      ['total','correct','wrong'].forEach(f => { html += `<td><input type="text" class="numinput" data-i="${i}" data-f="${f}" value="${esc(row[f])}"/></td>`; });
+      ['total','correct','wrong'].forEach(f => { html += `<td><textarea class="numinput" data-i="${i}" data-f="${f}" rows="1">${esc(row[f])}</textarea></td>`; });
       html += `<td class="unattended" id="pr-unatt-${i}">${computeUnattempted(row)}</td>`;
       html += `<td class="computed" id="pr-marks-${i}">${computeMarksObtained(row)}</td>`;
       html += `<td class="computed" id="pr-outof-${i}">${computeOutOf(row)}</td>`;
-      ['silly','awareness','conceptual','revision','factual','guesswork'].forEach(f => { html += `<td><input type="text" class="numinput" data-i="${i}" data-f="${f}" value="${esc(row[f])}"/></td>`; });
+      ['silly','awareness','conceptual','revision','factual','guesswork'].forEach(f => { html += `<td><textarea class="numinput" data-i="${i}" data-f="${f}" rows="1">${esc(row[f])}</textarea></td>`; });
       html += `<td><div class="notestext" contenteditable="true" data-i="${i}" data-f="notes" data-placeholder="Add notes...">${esc(row.notes)}</div></td>`;
       html += `<td><button class="delbtn" data-del="${i}" title="Delete row">✕</button></td>`;
       tr.innerHTML = html;
       body.appendChild(tr);
     });
 
-    body.querySelectorAll('input').forEach(inp => {
+    function autoResize(el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }
+
+    body.querySelectorAll('textarea.numinput').forEach(autoResize);
+
+    body.querySelectorAll('input[data-f], textarea.numinput').forEach(inp => {
       inp.addEventListener('input', e => {
         const i = parseInt(e.target.dataset.i);
         const f = e.target.dataset.f;
         data[current][i][f] = e.target.value;
+        if (e.target.tagName === 'TEXTAREA') autoResize(e.target);
         if (f === 'total' || f === 'correct' || f === 'wrong') {
           const row = data[current][i];
           document.getElementById('pr-unatt-' + i).textContent = computeUnattempted(row);
