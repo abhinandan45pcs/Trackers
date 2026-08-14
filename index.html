@@ -111,6 +111,9 @@
   #tool-revision .chevron{font-size:11px;color:var(--muted);transition:transform .2s;display:inline-block;padding:4px 6px}
   #tool-revision .chevron.open{transform:rotate(180deg)}
   #tool-revision .rev-count{font-size:11px;color:var(--muted);background:var(--surface2);border-radius:20px;padding:2px 7px;flex-shrink:0}
+  #tool-revision .tab.all-tab{font-weight:700}
+  #tool-revision .tab.all-tab:not(.active){background:var(--accent-bg);color:var(--accent-text);border-color:#D4D0F5}
+  #tool-revision .subject-tag{font-size:10px;font-weight:600;color:var(--accent-text);background:var(--accent-bg);border-radius:20px;padding:2px 8px;flex-shrink:0}
   #tool-revision .ch-body{border-top:1px solid var(--border);padding:12px 14px;display:flex;flex-direction:column;gap:10px;background:#FAFAF8}
   #tool-revision .field-row{display:flex;align-items:center;gap:10px}
   #tool-revision .field-row label{font-size:12px;color:var(--muted);width:96px;flex-shrink:0}
@@ -255,9 +258,9 @@
     <input type="file" id="rev-import-input" accept=".json" onchange="revHandleImport(event)">
     <main>
       <div class="stats">
-        <div class="stat overdue" id="rev-stat-overdue" onclick="revSetFilter('overdue')"><div class="stat-val" id="rev-s-overdue">0</div><div class="stat-lbl">Overdue (7d+)</div></div>
-        <div class="stat soon" id="rev-stat-soon" onclick="revSetFilter('soon')"><div class="stat-val" id="rev-s-soon">0</div><div class="stat-lbl">Due soon (4–7d)</div></div>
-        <div class="stat fresh" id="rev-stat-fresh" onclick="revSetFilter('fresh')"><div class="stat-val" id="rev-s-fresh">0</div><div class="stat-lbl">Fresh (0–3d)</div></div>
+        <div class="stat overdue" id="rev-stat-overdue" onclick="revSetFilter('overdue')"><div class="stat-val" id="rev-s-overdue">0</div><div class="stat-lbl">Overdue (15d+)</div></div>
+        <div class="stat soon" id="rev-stat-soon" onclick="revSetFilter('soon')"><div class="stat-val" id="rev-s-soon">0</div><div class="stat-lbl">Due soon (5–14d)</div></div>
+        <div class="stat fresh" id="rev-stat-fresh" onclick="revSetFilter('fresh')"><div class="stat-val" id="rev-s-fresh">0</div><div class="stat-lbl">Fresh (0–4d)</div></div>
         <div class="stat never" id="rev-stat-never" onclick="revSetFilter('never')"><div class="stat-val" id="rev-s-never">0</div><div class="stat-lbl">Never revised</div></div>
       </div>
       <div id="rev-daily-thought" class="daily-thought"></div>
@@ -265,7 +268,7 @@
         <div class="tabs" id="rev-tabs"></div>
         <button class="add-subject-btn" onclick="revOpenAddSubject()">+ Subject</button>
       </div>
-      <div class="toolbar">
+      <div class="toolbar" id="rev-toolbar">
         <input id="rev-ch-input" placeholder="Add chapter name and press Enter…" onkeydown="if(event.key==='Enter')revAddChapter()">
         <button class="add-btn" onclick="revAddChapter()">+ Add</button>
         <select id="rev-sort-sel" onchange="revRender()">
@@ -777,7 +780,7 @@ const RevisionTool = (function () {
       data['Polity'] = makeChapters(POLITY_CHAPTERS);
     }
     initData();
-    if (!subjects.includes(current)) current = subjects[0];
+    if (current !== 'All' && !subjects.includes(current)) current = subjects[0];
     render();
   }
 
@@ -865,8 +868,8 @@ const RevisionTool = (function () {
   function badgeInfo(ch) {
     const d = daysSince(ch.lastRevised);
     if (d === null) return { cls:'never', text:'Never revised' };
-    if (d >= 7) return { cls:'overdue', text: d + 'd ago — revise now' };
-    if (d >= 4) return { cls:'soon', text: d + 'd ago — due soon' };
+    if (d >= 15) return { cls:'overdue', text: d + 'd ago — revise now' };
+    if (d >= 5) return { cls:'soon', text: d + 'd ago — due soon' };
     if (d === 0) return { cls:'fresh', text:'Revised today' };
     return { cls:'fresh', text: d + 'd ago' };
   }
@@ -874,14 +877,20 @@ const RevisionTool = (function () {
   function priorityOf(ch) {
     const d = daysSince(ch.lastRevised);
     if (d === null) return 0;
-    if (d >= 7) return 1;
-    if (d >= 4) return 2;
+    if (d >= 15) return 1;
+    if (d >= 5) return 2;
     return 3;
   }
 
   function sortedChapters() {
     const sort = document.getElementById('rev-sort-sel').value;
-    const chs = (data[current]||[]).map((ch,i) => ({...ch, _i:i}));
+    let chs;
+    if (current === 'All') {
+      chs = [];
+      subjects.forEach(s => (data[s]||[]).forEach((ch,i) => chs.push({...ch, _i:i, _subject:s})));
+    } else {
+      chs = (data[current]||[]).map((ch,i) => ({...ch, _i:i, _subject:current}));
+    }
     if (sort === 'priority') return chs.sort((a,b) => priorityOf(a) - priorityOf(b));
     if (sort === 'name') return chs.sort((a,b) => a.name.localeCompare(b.name));
     return chs;
@@ -891,7 +900,12 @@ const RevisionTool = (function () {
 
   function render() {
     renderDailyThought();
-    document.getElementById('rev-tabs').innerHTML = subjects.map(s => {
+    const allCount = subjects.reduce((sum,s) => sum + (data[s]||[]).length, 0);
+    document.getElementById('rev-tabs').innerHTML =
+      `<button class="tab all-tab${current==='All'?' active':''}" onclick="revSwitchTab('All')">
+        ⭐ All <span style="opacity:.6;font-size:11px">${allCount}</span>
+      </button>` +
+      subjects.map(s => {
       const count = (data[s]||[]).length;
       return `<button class="tab${s===current?' active':''}" onclick="revSwitchTab('${esc(s)}')">
         ${esc(s)} <span style="opacity:.6;font-size:11px">${count}</span>
@@ -902,7 +916,7 @@ const RevisionTool = (function () {
     let ov=0,so=0,fr=0,nv=0;
     subjects.forEach(s => (data[s]||[]).forEach(ch => {
       const d = daysSince(ch.lastRevised);
-      if (d===null) nv++; else if (d>=7) ov++; else if (d>=4) so++; else fr++;
+      if (d===null) nv++; else if (d>=15) ov++; else if (d>=5) so++; else fr++;
     }));
     document.getElementById('rev-s-overdue').textContent = ov;
     document.getElementById('rev-s-soon').textContent = so;
@@ -912,6 +926,9 @@ const RevisionTool = (function () {
       document.getElementById('rev-stat-'+f)?.classList.toggle('active-filter', filter === f);
     });
 
+    const toolbar = document.getElementById('rev-toolbar');
+    if (toolbar) toolbar.style.display = (current === 'All') ? 'none' : 'flex';
+
     const list = document.getElementById('rev-chapter-list');
     if (!current) { list.innerHTML = '<div class="empty">No subjects yet.</div>'; return; }
 
@@ -920,19 +937,20 @@ const RevisionTool = (function () {
       chs = chs.filter(ch => {
         const d = daysSince(ch.lastRevised);
         if (filter === 'never')   return d === null;
-        if (filter === 'overdue') return d !== null && d >= 7;
-        if (filter === 'soon')    return d !== null && d >= 4 && d < 7;
-        if (filter === 'fresh')   return d !== null && d < 4;
+        if (filter === 'overdue') return d !== null && d >= 15;
+        if (filter === 'soon')    return d !== null && d >= 5 && d < 15;
+        if (filter === 'fresh')   return d !== null && d < 5;
       });
     }
     const FILTER_LABELS = {
-      overdue: '🔴 Overdue Chapters (7d+)',
-      soon:    '🟡 Due Soon (4–7 days)',
-      fresh:   '🟢 Recently Revised (0–3 days)',
+      overdue: '🔴 Overdue Chapters (15d+)',
+      soon:    '🟡 Due Soon (5–14 days)',
+      fresh:   '🟢 Recently Revised (0–4 days)',
       never:   '⚪ Never Revised'
     };
+    const scopeLabel = current === 'All' ? 'all subjects' : ('in ' + esc(current));
     const headingHtml = filter
-      ? `<div class="filter-heading">${FILTER_LABELS[filter]} <span style="opacity:.5">— ${chs.length} chapter${chs.length!==1?'s':''} in ${esc(current)}</span>
+      ? `<div class="filter-heading">${FILTER_LABELS[filter]} <span style="opacity:.5">— ${chs.length} chapter${chs.length!==1?'s':''} ${scopeLabel}</span>
            <button class="filter-clear" onclick="revClearFilter()">✕ Clear filter</button>
          </div>`
       : '';
@@ -940,7 +958,9 @@ const RevisionTool = (function () {
     if (!chs.length) {
       list.innerHTML = headingHtml + (filter
         ? '<div class="empty"><div class="empty-icon">✅</div>No chapters in this category.</div>'
-        : `<div class="empty"><div class="empty-icon">📖</div>No chapters in ${esc(current)} yet.<br>Type a chapter name above and press Enter.</div>`);
+        : (current === 'All'
+            ? `<div class="empty"><div class="empty-icon">📖</div>No chapters yet in any subject.</div>`
+            : `<div class="empty"><div class="empty-icon">📖</div>No chapters in ${esc(current)} yet.<br>Type a chapter name above and press Enter.</div>`));
       return;
     }
 
@@ -951,6 +971,7 @@ const RevisionTool = (function () {
       return `<div class="ch-card ${b.cls}">
         <div class="ch-head" onclick="revToggleExpand('${ch.id}')">
           <span class="ch-name">${esc(ch.name)}</span>
+          ${current === 'All' ? `<span class="subject-tag">${esc(ch._subject)}</span>` : ''}
           ${revLabel ? `<span class="rev-count">${revLabel}</span>` : ''}
           <span class="badge ${b.cls}">${b.text}</span>
           <div class="ch-actions" onclick="event.stopPropagation()">
