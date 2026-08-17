@@ -173,6 +173,13 @@
   .legacy button{padding:8px 14px;margin-right:8px;border:1px solid #999;border-radius:6px;background:#fff;cursor:pointer;font-size:13px}
   .legacy button:hover{background:#eee}
   .legacy .delbtn{border:none;background:transparent;color:#a32d2d;cursor:pointer;font-size:15px}
+  .legacy .confirmbtn{border:none;background:transparent;color:#0a6e56;cursor:pointer;font-size:15px;font-weight:700;margin-right:2px}
+  .legacy .confirmbtn:hover{background:#EAF3DE;border-radius:4px}
+  .legacy .editbtn{border:none;background:transparent;color:#4A43A8;cursor:pointer;font-size:14px;margin-right:2px}
+  .legacy .editbtn:hover{background:#EEEDFE;border-radius:4px}
+  #tool-daily tr.confirmed-row td{background:#E3F5E3 !important}
+  #tool-daily tr.confirmed-row input:disabled,#tool-daily tr.confirmed-row select:disabled{background:transparent;color:#1A1A18;opacity:1;border-color:transparent}
+  #tool-daily tr.confirmed-row .edittext{border-color:transparent;background:transparent}
   .legacy .legend{margin-top:20px;font-size:13px;line-height:1.6}
   .legacy .legend b{color:#0a6e56}
   .legacy .empty{text-align:center;padding:3rem;color:#888;font-size:13px;background:#fff;border:1px solid #ddd;border-radius:8px}
@@ -186,7 +193,7 @@
     #app-header,#main-tabs,#tool-revision header,#tool-revision .header-btns,
     #tool-revision .toolbar,#tool-revision .add-subject-btn,#tool-revision .icon-btn,
     #tool-revision .tab-del,#tool-revision .ch-actions .icon-btn,
-    .legacy .btns,.legacy .add-subject-btn,.legacy .tab-del,.legacy .delbtn,
+    .legacy .btns,.legacy .add-subject-btn,.legacy .tab-del,.legacy .delbtn,.legacy .confirmbtn,.legacy .editbtn,
     #rev-import-input,input[type=file]{display:none !important}
     body{background:#fff}
     .tool-panel{display:none !important}
@@ -199,6 +206,7 @@
     .legacy th,.legacy td{font-size:8px;padding:2px}
     .legacy input[type="text"],.legacy input[type="time"],.legacy input[type="date"],
     .legacy select.relaxsel,.legacy .edittext{border:none;padding:1px;font-size:8px;background:transparent}
+    .legacy select.relaxsel{-webkit-appearance:none;-moz-appearance:none;appearance:none;background-image:none}
     #tool-daily td:last-child,#tool-daily th:last-child{display:none}
   }
 </style>
@@ -1302,7 +1310,7 @@ const DailyTool = (function () {
   }
 
   function blankRow() {
-    const r = { date: todayStr(), wake: '' };
+    const r = { date: todayStr(), wake: '', confirmed: false };
     sessions.forEach(s => { r[`s${s}_from`]=''; r[`s${s}_to`]=''; r[`s${s}_subject`]=''; r[`s${s}_relaxing`]=''; });
     return r;
   }
@@ -1377,16 +1385,22 @@ const DailyTool = (function () {
     body.innerHTML = '';
     rows.forEach((row, i) => {
       const tr = document.createElement('tr');
-      let html = `<td class="datecell"><input type="date" data-i="${i}" data-f="date" value="${row.date || ''}" style="min-width:130px;font-weight:bold;"/></td>`;
-      html += `<td><input type="time" data-i="${i}" data-f="wake" value="${row.wake || ''}"/></td>`;
+      const locked = !!row.confirmed;
+      if (locked) tr.classList.add('confirmed-row');
+      const dis = locked ? 'disabled' : '';
+      const ce = locked ? 'false' : 'true';
+      let html = `<td class="datecell"><input type="date" ${dis} data-i="${i}" data-f="date" value="${row.date || ''}" style="min-width:130px;font-weight:bold;"/></td>`;
+      html += `<td><input type="time" ${dis} data-i="${i}" data-f="wake" value="${row.wake || ''}"/></td>`;
       sessions.forEach(s => {
-        html += `<td><input type="time" data-i="${i}" data-f="s${s}_from" value="${row['s'+s+'_from'] || ''}"/></td>`;
-        html += `<td><input type="time" data-i="${i}" data-f="s${s}_to" value="${row['s'+s+'_to'] || ''}"/></td>`;
-        html += `<td><div class="edittext" contenteditable="true" data-i="${i}" data-f="s${s}_subject" data-placeholder="Subject">${row['s'+s+'_subject'] || ''}</div></td>`;
-        html += `<td><select class="relaxsel" data-i="${i}" data-f="s${s}_relaxing">${relaxOptions(row['s'+s+'_relaxing'])}</select></td>`;
+        html += `<td><input type="time" ${dis} data-i="${i}" data-f="s${s}_from" value="${row['s'+s+'_from'] || ''}"/></td>`;
+        html += `<td><input type="time" ${dis} data-i="${i}" data-f="s${s}_to" value="${row['s'+s+'_to'] || ''}"/></td>`;
+        html += `<td><div class="edittext" contenteditable="${ce}" data-i="${i}" data-f="s${s}_subject" data-placeholder="Subject">${row['s'+s+'_subject'] || ''}</div></td>`;
+        html += `<td><select class="relaxsel" ${dis} data-i="${i}" data-f="s${s}_relaxing">${relaxOptions(row['s'+s+'_relaxing'])}</select></td>`;
       });
       html += `<td class="hourscell" id="day-hours-${i}">${formatHours(computeTotalMinutes(row))}</td>`;
-      html += `<td><button class="delbtn" data-del="${i}" title="Delete row">✕</button></td>`;
+      html += locked
+        ? `<td><button class="editbtn" data-edit="${i}" title="Edit row">✎</button><button class="delbtn" data-del="${i}" title="Remove row">✕</button></td>`
+        : `<td><button class="confirmbtn" data-confirm="${i}" title="Confirm as complete">✓</button><button class="delbtn" data-del="${i}" title="Delete row">✕</button></td>`;
       tr.innerHTML = html;
       body.appendChild(tr);
     });
@@ -1416,6 +1430,18 @@ const DailyTool = (function () {
     });
     body.querySelectorAll('button[data-del]').forEach(btn => {
       btn.addEventListener('click', e => { rows.splice(parseInt(e.currentTarget.dataset.del), 1); render(); save(); });
+    });
+    body.querySelectorAll('button[data-confirm]').forEach(btn => {
+      btn.addEventListener('click', e => {
+        rows[parseInt(e.currentTarget.dataset.confirm)].confirmed = true;
+        render(); save();
+      });
+    });
+    body.querySelectorAll('button[data-edit]').forEach(btn => {
+      btn.addEventListener('click', e => {
+        rows[parseInt(e.currentTarget.dataset.edit)].confirmed = false;
+        render(); save();
+      });
     });
   }
 
