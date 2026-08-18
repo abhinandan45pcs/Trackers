@@ -209,15 +209,14 @@
     .legacy select.relaxsel{-webkit-appearance:none;-moz-appearance:none;appearance:none;background-image:none}
     #tool-daily td:last-child,#tool-daily th:last-child{display:none}
     #tool-daily .wrap{display:none !important}
-    #day-print-view{display:block !important}
-    #day-print-view .print-section-label{font-size:12px;font-weight:700;margin:14px 0 4px;color:#333}
-    #day-print-view .print-section-label:first-child{margin-top:0}
-    #day-print-view table{width:100%;border-collapse:collapse;table-layout:fixed;margin-bottom:10px;page-break-inside:avoid}
-    #day-print-view th,#day-print-view td{border:1px solid #000;padding:3px;font-size:9px;text-align:center;word-break:break-word;overflow:hidden}
+    #day-print-view{position:static !important;left:auto !important;top:auto !important;display:block !important}
+    #day-print-scale-wrap{overflow:hidden}
+    #day-print-view table{border-collapse:collapse}
+    #day-print-view th,#day-print-view td{border:1px solid #000;padding:3px 5px;font-size:11px;text-align:center;white-space:nowrap}
     #day-print-view thead th{background:#eee !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
     #day-print-view tr.confirmed-row td{background:#E3F5E3 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   }
-  #day-print-view{display:none}
+  #day-print-view{position:absolute;left:-99999px;top:0;display:block}
 </style>
 </head>
 <body>
@@ -384,7 +383,7 @@
       <tbody id="day-body"></tbody>
     </table>
     </div>
-    <div id="day-print-view"></div>
+    <div id="day-print-view"><div id="day-print-scale-wrap"></div></div>
     <div class="btns">
       <button id="day-add">+ Add Day</button>
       <button id="day-reset">Reset All</button>
@@ -1463,31 +1462,40 @@ const DailyTool = (function () {
 
   function esc(s) { return (s || '').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-  function buildSessionTable(sessionGroup, includeTotal) {
+  function buildFullTable() {
     let html = '<table><thead><tr><th rowspan="2">Date</th><th rowspan="2">Wake Up</th>';
-    sessionGroup.forEach(s => { html += `<th colspan="4">Session ${s}</th>`; });
-    if (includeTotal) html += '<th rowspan="2">Total<br>Hours</th>';
-    html += '</tr><tr>';
-    sessionGroup.forEach(() => { html += '<th>From</th><th>To</th><th>Subject</th><th>Relax</th>'; });
+    sessions.forEach(s => { html += `<th colspan="4">Session ${s}</th>`; });
+    html += '<th rowspan="2">Total<br>Hours</th></tr><tr>';
+    sessions.forEach(() => { html += '<th>From</th><th>To</th><th>Subject</th><th>Relax</th>'; });
     html += '</tr></thead><tbody>';
     rows.forEach(row => {
       html += `<tr class="${row.confirmed ? 'confirmed-row' : ''}"><td>${esc(row.date)}</td><td>${esc(row.wake)}</td>`;
-      sessionGroup.forEach(s => {
+      sessions.forEach(s => {
         html += `<td>${esc(row['s'+s+'_from'])}</td><td>${esc(row['s'+s+'_to'])}</td><td>${esc(row['s'+s+'_subject'])}</td><td>${relaxLabel(row['s'+s+'_relaxing'])}</td>`;
       });
-      if (includeTotal) html += `<td>${formatHours(computeTotalMinutes(row))}</td>`;
-      html += '</tr>';
+      html += `<td>${formatHours(computeTotalMinutes(row))}</td></tr>`;
     });
     html += '</tbody></table>';
     return html;
   }
 
+  const PRINT_TARGET_WIDTH_PX = 1100; // ~A4/Letter landscape usable width at 96dpi
+
   function buildPrintView() {
-    const container = document.getElementById('day-print-view');
-    if (!container) return;
-    container.innerHTML =
-      '<div class="print-section-label">Sessions 1–3</div>' + buildSessionTable([1,2,3], false) +
-      '<div class="print-section-label">Sessions 4–6</div>' + buildSessionTable([4,5,6], true);
+    const wrap = document.getElementById('day-print-scale-wrap');
+    if (!wrap) return;
+    wrap.style.width = '';
+    wrap.style.height = '';
+    wrap.innerHTML = buildFullTable();
+    const table = wrap.querySelector('table');
+    if (!table) return;
+    const naturalWidth = table.scrollWidth;
+    const naturalHeight = table.scrollHeight;
+    const scale = Math.min(1, PRINT_TARGET_WIDTH_PX / naturalWidth);
+    table.style.transformOrigin = 'top left';
+    table.style.transform = `scale(${scale})`;
+    wrap.style.width = (naturalWidth * scale) + 'px';
+    wrap.style.height = (naturalHeight * scale) + 'px';
   }
 
   window.addEventListener('beforeprint', buildPrintView);
