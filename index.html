@@ -208,7 +208,14 @@
     .legacy select.relaxsel,.legacy .edittext{border:none;padding:1px;font-size:8px;background:transparent}
     .legacy select.relaxsel{-webkit-appearance:none;-moz-appearance:none;appearance:none;background-image:none}
     #tool-daily td:last-child,#tool-daily th:last-child{display:none}
+    #tool-daily .wrap{display:none !important}
+    #day-print-view{display:block !important}
+    #day-print-view table{width:100%;border-collapse:collapse;table-layout:fixed}
+    #day-print-view th,#day-print-view td{border:1px solid #000;padding:2px;font-size:7px;text-align:center;word-break:break-word;overflow:hidden}
+    #day-print-view thead th{background:#eee !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    #day-print-view tr.confirmed-row td{background:#E3F5E3 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   }
+  #day-print-view{display:none}
 </style>
 </head>
 <body>
@@ -375,6 +382,7 @@
       <tbody id="day-body"></tbody>
     </table>
     </div>
+    <div id="day-print-view"></div>
     <div class="btns">
       <button id="day-add">+ Add Day</button>
       <button id="day-reset">Reset All</button>
@@ -1445,6 +1453,35 @@ const DailyTool = (function () {
     });
   }
 
+  function relaxLabel(val) {
+    const n = parseInt(val, 10) || 0;
+    if (!n) return '—';
+    return (n % 60 === 0) ? (n / 60) + 'h' : n + 'm';
+  }
+
+  function esc(s) { return (s || '').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function buildPrintView() {
+    const container = document.getElementById('day-print-view');
+    if (!container) return;
+    let html = '<table><thead><tr><th rowspan="2">Date</th><th rowspan="2">Wake Up</th>';
+    sessions.forEach(s => { html += `<th colspan="4">Session ${s}</th>`; });
+    html += '<th rowspan="2">Total<br>Hours</th></tr><tr>';
+    sessions.forEach(() => { html += '<th>From</th><th>To</th><th>Subject</th><th>Relax</th>'; });
+    html += '</tr></thead><tbody>';
+    rows.forEach(row => {
+      html += `<tr class="${row.confirmed ? 'confirmed-row' : ''}"><td>${esc(row.date)}</td><td>${esc(row.wake)}</td>`;
+      sessions.forEach(s => {
+        html += `<td>${esc(row['s'+s+'_from'])}</td><td>${esc(row['s'+s+'_to'])}</td><td>${esc(row['s'+s+'_subject'])}</td><td>${relaxLabel(row['s'+s+'_relaxing'])}</td>`;
+      });
+      html += `<td>${formatHours(computeTotalMinutes(row))}</td></tr>`;
+    });
+    html += '</tbody></table>';
+    container.innerHTML = html;
+  }
+
+  window.addEventListener('beforeprint', buildPrintView);
+
   document.getElementById('day-add').addEventListener('click', () => { rows.push(blankRow()); render(); save(); });
   document.getElementById('day-reset').addEventListener('click', () => {
     if (confirm('Reset all data? This cannot be undone.')) { rows = defaultRows(); render(); save(); }
@@ -1482,4 +1519,4 @@ const DailyTool = (function () {
 
 </body>
 </html>
-<!-- redeploy trigger: 2026-08-17T18:27:58Z 
+<!-- redeploy trigger: 2026-08-17T18:27:58Z -->
