@@ -181,7 +181,7 @@
 
   /* ===== PRINT ===== */
   @media print {
-    @page { size: landscape; margin: 8mm; }
+    @page { size: A4 landscape; margin: 8mm; }
     #login-screen{display:none !important}
     #app-header,#main-tabs,#tool-revision header,#tool-revision .header-btns,
     #tool-revision .toolbar,#tool-revision .add-subject-btn,#tool-revision .icon-btn,
@@ -196,10 +196,39 @@
     .legacy{background:#fff;padding:0}
     .legacy .wrap{overflow:visible}
     .legacy table{min-width:0 !important;width:100%;table-layout:fixed}
-    .legacy th,.legacy td{font-size:8px;padding:2px}
+    .legacy th,.legacy td{font-size:8px;padding:2px;overflow:hidden}
     .legacy input[type="text"],.legacy input[type="time"],.legacy input[type="date"],
     .legacy select.relaxsel,.legacy .edittext{border:none;padding:1px;font-size:8px;background:transparent}
     #tool-daily td:last-child,#tool-daily th:last-child{display:none}
+
+    /* ---- Remove native time/date picker icon and spinner arrows ---- */
+    .legacy input[type="time"],.legacy input[type="date"]{
+      -webkit-appearance:none;appearance:none;
+      text-align:center;
+    }
+    .legacy input[type="time"]::-webkit-calendar-picker-indicator,
+    .legacy input[type="date"]::-webkit-calendar-picker-indicator{
+      display:none;-webkit-appearance:none;opacity:0;width:0;height:0;
+    }
+    .legacy input[type="time"]::-webkit-inner-spin-button,
+    .legacy input[type="time"]::-webkit-outer-spin-button,
+    .legacy input[type="date"]::-webkit-inner-spin-button,
+    .legacy input[type="date"]::-webkit-outer-spin-button{
+      -webkit-appearance:none;display:none;margin:0;
+    }
+    .legacy input[type="time"]::-webkit-clear-button,
+    .legacy input[type="date"]::-webkit-clear-button{display:none}
+
+    /* ---- Remove dropdown arrow on the Relaxing select ---- */
+    .legacy select.relaxsel{
+      -webkit-appearance:none;-moz-appearance:none;appearance:none;
+      background-image:none;padding-right:1px;
+    }
+
+    /* ---- Keep each column's data confined to its own column (no bleed/wrap into neighbours) ---- */
+    .legacy table{table-layout:fixed;word-break:break-word}
+    .legacy td,.legacy th{white-space:normal;word-wrap:break-word;vertical-align:middle}
+    .legacy .edittext{white-space:pre-wrap;word-break:break-word;max-width:100%}
   }
 </style>
 </head>
@@ -1456,4 +1485,3 @@ const DailyTool = (function () {
 
 </body>
 </html>
-
