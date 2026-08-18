@@ -188,7 +188,7 @@
 
   /* ===== PRINT ===== */
   @media print {
-    @page { size: landscape; margin: 8mm; }
+    @page { size: A3 landscape; margin: 8mm; }
     #login-screen{display:none !important}
     #app-header,#main-tabs,#tool-revision header,#tool-revision .header-btns,
     #tool-revision .toolbar,#tool-revision .add-subject-btn,#tool-revision .icon-btn,
@@ -210,13 +210,13 @@
     #tool-daily td:last-child,#tool-daily th:last-child{display:none}
     #tool-daily .wrap{display:none !important}
     #day-print-view{position:static !important;left:auto !important;top:auto !important;display:block !important}
-    #day-print-scale-wrap{overflow:hidden}
-    #day-print-view table{border-collapse:collapse}
-    #day-print-view th,#day-print-view td{border:1px solid #000;padding:3px 5px;font-size:11px;text-align:center;white-space:nowrap}
     #day-print-view thead th{background:#eee !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
     #day-print-view tr.confirmed-row td{background:#E3F5E3 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   }
   #day-print-view{position:absolute;left:-99999px;top:0;display:block}
+  #day-print-scale-wrap{overflow:hidden}
+  #day-print-view table{border-collapse:collapse;table-layout:fixed}
+  #day-print-view th,#day-print-view td{border:1px solid #000;padding:3px 5px;font-size:11px;text-align:center;overflow:hidden;text-overflow:clip;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -1463,15 +1463,20 @@ const DailyTool = (function () {
   function esc(s) { return (s || '').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
   function buildFullTable() {
-    let html = '<table><thead><tr><th rowspan="2">Date</th><th rowspan="2">Wake Up</th>';
+    let colgroup = '<colgroup><col style="width:110px"><col style="width:60px">';
+    sessions.forEach(() => { colgroup += '<col style="width:55px"><col style="width:55px"><col style="width:36px"><col style="width:46px">'; });
+    colgroup += '<col style="width:70px"></colgroup>';
+
+    let html = '<table>' + colgroup + '<thead><tr><th rowspan="2">Date</th><th rowspan="2">Wake Up</th>';
     sessions.forEach(s => { html += `<th colspan="4">Session ${s}</th>`; });
     html += '<th rowspan="2">Total<br>Hours</th></tr><tr>';
-    sessions.forEach(() => { html += '<th>From</th><th>To</th><th>Subject</th><th>Relax</th>'; });
+    sessions.forEach(() => { html += '<th>From</th><th>To</th><th>Sub</th><th>Relax</th>'; });
     html += '</tr></thead><tbody>';
     rows.forEach(row => {
       html += `<tr class="${row.confirmed ? 'confirmed-row' : ''}"><td>${esc(row.date)}</td><td>${esc(row.wake)}</td>`;
       sessions.forEach(s => {
-        html += `<td>${esc(row['s'+s+'_from'])}</td><td>${esc(row['s'+s+'_to'])}</td><td>${esc(row['s'+s+'_subject'])}</td><td>${relaxLabel(row['s'+s+'_relaxing'])}</td>`;
+        const subj = (row['s'+s+'_subject'] || '').slice(0, 3);
+        html += `<td>${esc(row['s'+s+'_from'])}</td><td>${esc(row['s'+s+'_to'])}</td><td>${esc(subj)}</td><td>${relaxLabel(row['s'+s+'_relaxing'])}</td>`;
       });
       html += `<td>${formatHours(computeTotalMinutes(row))}</td></tr>`;
     });
@@ -1479,7 +1484,7 @@ const DailyTool = (function () {
     return html;
   }
 
-  const PRINT_TARGET_WIDTH_PX = 1100; // ~A4/Letter landscape usable width at 96dpi
+  const PRINT_TARGET_WIDTH_PX = 1500; // A3 landscape usable width at 96dpi
 
   function buildPrintView() {
     const wrap = document.getElementById('day-print-scale-wrap');
