@@ -169,6 +169,14 @@
   .legacy select.relaxsel:focus{outline:2px solid #5CE1E6}
   #day-pdf{background:#0a6e56;color:#fff;border-color:#0a6e56}
   #day-pdf:hover{background:#085945}
+  #day-toggle{background:#FFF200;border-color:#cbbf00;font-weight:bold}
+  #day-toggle:hover{background:#ffe600}
+  #day-toggle.on{background:#0a6e56;color:#fff;border-color:#0a6e56}
+  #day-toggle.on:hover{background:#085945}
+  #tool-daily .viewtext{padding:3px 2px;font-size:12px;white-space:pre-wrap;word-break:break-word}
+  #tool-daily.viewmode .btns > button:not(#day-toggle):not(#day-pdf){display:none}
+  .legacy .datecellinput{min-width:130px;font-weight:bold}
+  .legacy input[type="time"]::-webkit-datetime-edit-ampm-field{display:none}
   .legacy .btns{margin-top:14px}
   .legacy button{padding:8px 14px;margin-right:8px;border:1px solid #999;border-radius:6px;background:#fff;cursor:pointer;font-size:13px}
   .legacy button:hover{background:#eee}
@@ -181,14 +189,15 @@
 
   /* ===== PRINT ===== */
   @media print {
-    @page { size: A4 landscape; margin: 8mm; }
+    @page { size: landscape; margin: 8mm; }
     #login-screen{display:none !important}
     #app-header,#main-tabs,#tool-revision header,#tool-revision .header-btns,
     #tool-revision .toolbar,#tool-revision .add-subject-btn,#tool-revision .icon-btn,
     #tool-revision .tab-del,#tool-revision .ch-actions .icon-btn,
     .legacy .btns,.legacy .add-subject-btn,.legacy .tab-del,.legacy .delbtn,
     #rev-import-input,input[type=file]{display:none !important}
-    body{background:#fff}
+    body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    * {-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
     .tool-panel{display:none !important}
     .tool-panel.active{display:block !important}
     #tool-revision main{max-width:100%;padding:0}
@@ -196,39 +205,13 @@
     .legacy{background:#fff;padding:0}
     .legacy .wrap{overflow:visible}
     .legacy table{min-width:0 !important;width:100%;table-layout:fixed}
-    .legacy th,.legacy td{font-size:8px;padding:2px;overflow:hidden}
+    .legacy th,.legacy td{font-size:8px;padding:2px}
     .legacy input[type="text"],.legacy input[type="time"],.legacy input[type="date"],
-    .legacy select.relaxsel,.legacy .edittext{border:none;padding:1px;font-size:8px;background:transparent}
-    #tool-daily td:last-child,#tool-daily th:last-child{display:none}
-
-    /* ---- Remove native time/date picker icon and spinner arrows ---- */
-    .legacy input[type="time"],.legacy input[type="date"]{
-      -webkit-appearance:none;appearance:none;
-      text-align:center;
-    }
+    .legacy select.relaxsel,.legacy .edittext{border:none;padding:1px;font-size:8px;background:transparent;-webkit-appearance:none;-moz-appearance:none;appearance:none}
     .legacy input[type="time"]::-webkit-calendar-picker-indicator,
-    .legacy input[type="date"]::-webkit-calendar-picker-indicator{
-      display:none;-webkit-appearance:none;opacity:0;width:0;height:0;
-    }
-    .legacy input[type="time"]::-webkit-inner-spin-button,
-    .legacy input[type="time"]::-webkit-outer-spin-button,
-    .legacy input[type="date"]::-webkit-inner-spin-button,
-    .legacy input[type="date"]::-webkit-outer-spin-button{
-      -webkit-appearance:none;display:none;margin:0;
-    }
-    .legacy input[type="time"]::-webkit-clear-button,
-    .legacy input[type="date"]::-webkit-clear-button{display:none}
-
-    /* ---- Remove dropdown arrow on the Relaxing select ---- */
-    .legacy select.relaxsel{
-      -webkit-appearance:none;-moz-appearance:none;appearance:none;
-      background-image:none;padding-right:1px;
-    }
-
-    /* ---- Keep each column's data confined to its own column (no bleed/wrap into neighbours) ---- */
-    .legacy table{table-layout:fixed;word-break:break-word}
-    .legacy td,.legacy th{white-space:normal;word-wrap:break-word;vertical-align:middle}
-    .legacy .edittext{white-space:pre-wrap;word-break:break-word;max-width:100%}
+    .legacy input[type="date"]::-webkit-calendar-picker-indicator{display:none;-webkit-appearance:none;opacity:0}
+    #tool-daily td:last-child,#tool-daily th:last-child{display:none}
+    #tool-daily .datecellinput{min-width:0;width:100%}
   }
 </style>
 </head>
@@ -371,6 +354,18 @@
     <h1>Daily Accountability & Productivity Sheet</h1>
     <div class="wrap">
     <table style="min-width:1300px">
+      <colgroup>
+        <col style="width:6%">
+        <col style="width:4.5%">
+        <col style="width:2.9%"><col style="width:2.9%"><col style="width:4.9%"><col style="width:3.4%">
+        <col style="width:2.9%"><col style="width:2.9%"><col style="width:4.9%"><col style="width:3.4%">
+        <col style="width:2.9%"><col style="width:2.9%"><col style="width:4.9%"><col style="width:3.4%">
+        <col style="width:2.9%"><col style="width:2.9%"><col style="width:4.9%"><col style="width:3.4%">
+        <col style="width:2.9%"><col style="width:2.9%"><col style="width:4.9%"><col style="width:3.4%">
+        <col style="width:2.9%"><col style="width:2.9%"><col style="width:4.9%"><col style="width:3.4%">
+        <col style="width:5%">
+        <col style="width:0">
+      </colgroup>
       <thead>
         <tr>
           <th class="yellow" rowspan="2">Date</th>
@@ -397,6 +392,7 @@
     </table>
     </div>
     <div class="btns">
+      <button id="day-toggle">🔒 Switch to View Mode (for printing)</button>
       <button id="day-add">+ Add Day</button>
       <button id="day-reset">Reset All</button>
       <button id="day-export">⬇ Export Backup</button>
@@ -1350,6 +1346,20 @@ const DailyTool = (function () {
   }
 
   let rows = [];
+  let viewMode = false;
+
+  function formatDateLabel(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso + 'T00:00:00');
+    if (isNaN(d.getTime())) return iso;
+    return d.toLocaleDateString(undefined, { weekday: 'short', day: '2-digit', month: 'short' });
+  }
+
+  function relaxLabel(val) {
+    const v = parseInt(val, 10) || 0;
+    if (v === 0) return '—';
+    return v % 60 === 0 ? `${v / 60}h` : `${v}m`;
+  }
 
   function timeToMinutes(t) {
     if (!t) return null;
@@ -1406,19 +1416,35 @@ const DailyTool = (function () {
     body.innerHTML = '';
     rows.forEach((row, i) => {
       const tr = document.createElement('tr');
-      let html = `<td class="datecell"><input type="date" data-i="${i}" data-f="date" value="${row.date || ''}" style="min-width:130px;font-weight:bold;"/></td>`;
-      html += `<td><input type="time" data-i="${i}" data-f="wake" value="${row.wake || ''}"/></td>`;
-      sessions.forEach(s => {
-        html += `<td><input type="time" data-i="${i}" data-f="s${s}_from" value="${row['s'+s+'_from'] || ''}"/></td>`;
-        html += `<td><input type="time" data-i="${i}" data-f="s${s}_to" value="${row['s'+s+'_to'] || ''}"/></td>`;
-        html += `<td><div class="edittext" contenteditable="true" data-i="${i}" data-f="s${s}_subject" data-placeholder="Subject">${row['s'+s+'_subject'] || ''}</div></td>`;
-        html += `<td><select class="relaxsel" data-i="${i}" data-f="s${s}_relaxing">${relaxOptions(row['s'+s+'_relaxing'])}</select></td>`;
-      });
-      html += `<td class="hourscell" id="day-hours-${i}">${formatHours(computeTotalMinutes(row))}</td>`;
-      html += `<td><button class="delbtn" data-del="${i}" title="Delete row">✕</button></td>`;
+      let html;
+      if (viewMode) {
+        html = `<td class="datecell"><div class="viewtext">${formatDateLabel(row.date)}</div></td>`;
+        html += `<td><div class="viewtext">${row.wake || '—'}</div></td>`;
+        sessions.forEach(s => {
+          html += `<td><div class="viewtext">${row['s'+s+'_from'] || '—'}</div></td>`;
+          html += `<td><div class="viewtext">${row['s'+s+'_to'] || '—'}</div></td>`;
+          html += `<td><div class="viewtext">${row['s'+s+'_subject'] || '—'}</div></td>`;
+          html += `<td><div class="viewtext">${relaxLabel(row['s'+s+'_relaxing'])}</div></td>`;
+        });
+        html += `<td class="hourscell" id="day-hours-${i}">${formatHours(computeTotalMinutes(row))}</td>`;
+        html += `<td></td>`;
+      } else {
+        html = `<td class="datecell"><input type="date" data-i="${i}" data-f="date" value="${row.date || ''}" class="narrow datecellinput"/></td>`;
+        html += `<td><input type="time" data-i="${i}" data-f="wake" value="${row.wake || ''}" class="narrow"/></td>`;
+        sessions.forEach(s => {
+          html += `<td><input type="time" data-i="${i}" data-f="s${s}_from" value="${row['s'+s+'_from'] || ''}" class="narrow"/></td>`;
+          html += `<td><input type="time" data-i="${i}" data-f="s${s}_to" value="${row['s'+s+'_to'] || ''}" class="narrow"/></td>`;
+          html += `<td><div class="edittext" contenteditable="true" data-i="${i}" data-f="s${s}_subject" data-placeholder="Subject">${row['s'+s+'_subject'] || ''}</div></td>`;
+          html += `<td><select class="relaxsel" data-i="${i}" data-f="s${s}_relaxing">${relaxOptions(row['s'+s+'_relaxing'])}</select></td>`;
+        });
+        html += `<td class="hourscell" id="day-hours-${i}">${formatHours(computeTotalMinutes(row))}</td>`;
+        html += `<td><button class="delbtn" data-del="${i}" title="Delete row">✕</button></td>`;
+      }
       tr.innerHTML = html;
       body.appendChild(tr);
     });
+
+    if (viewMode) return;
 
     body.querySelectorAll('input[type="time"], input[type="date"]').forEach(inp => {
       inp.addEventListener('input', e => {
@@ -1448,6 +1474,15 @@ const DailyTool = (function () {
     });
   }
 
+  document.getElementById('day-toggle').addEventListener('click', (e) => {
+    viewMode = !viewMode;
+    document.getElementById('tool-daily').classList.toggle('viewmode', viewMode);
+    e.currentTarget.classList.toggle('on', viewMode);
+    e.currentTarget.textContent = viewMode
+      ? '✏️ Switch to Edit Mode'
+      : '🔒 Switch to View Mode (for printing)';
+    render();
+  });
   document.getElementById('day-add').addEventListener('click', () => { rows.push(blankRow()); render(); save(); });
   document.getElementById('day-reset').addEventListener('click', () => {
     if (confirm('Reset all data? This cannot be undone.')) { rows = defaultRows(); render(); save(); }
