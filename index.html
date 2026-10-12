@@ -1122,11 +1122,20 @@ const PrelimsTool = (function () {
     const u = numOr0(row.total) - numOr0(row.correct) - numOr0(row.wrong);
     return u > 0 ? u : 0;
   }
+  // CSAT uses a different marking scheme: +2.5 per correct, -0.83 per wrong, 0 unattempted
+  const CSAT_MARKS_CORRECT = 2.5;
+  const CSAT_MARKS_WRONG = -0.83;
+  function schemeFor(subject) {
+    return subject === 'CSAT'
+      ? { c: CSAT_MARKS_CORRECT, w: CSAT_MARKS_WRONG }
+      : { c: MARKS_CORRECT, w: MARKS_WRONG };
+  }
   function computeMarksObtained(row) {
-    const marks = (numOr0(row.correct) * MARKS_CORRECT) + (numOr0(row.wrong) * MARKS_WRONG);
+    const sc = schemeFor(current);
+    const marks = (numOr0(row.correct) * sc.c) + (numOr0(row.wrong) * sc.w);
     return Math.round(marks * 100) / 100;
   }
-  function computeOutOf(row) { return Math.round(numOr0(row.total) * MARKS_CORRECT * 100) / 100; }
+  function computeOutOf(row) { return Math.round(numOr0(row.total) * schemeFor(current).c * 100) / 100; }
 
   function blankRow(name) {
     const r = {};
