@@ -271,8 +271,8 @@
     <main>
       <div class="stats">
         <div class="stat overdue" id="rev-stat-overdue" onclick="revSetFilter('overdue')"><div class="stat-val" id="rev-s-overdue">0</div><div class="stat-lbl">Overdue (15d+)</div></div>
-        <div class="stat soon" id="rev-stat-soon" onclick="revSetFilter('soon')"><div class="stat-val" id="rev-s-soon">0</div><div class="stat-lbl">Due soon (5–14d)</div></div>
-        <div class="stat fresh" id="rev-stat-fresh" onclick="revSetFilter('fresh')"><div class="stat-val" id="rev-s-fresh">0</div><div class="stat-lbl">Fresh (0–4d)</div></div>
+        <div class="stat soon" id="rev-stat-soon" onclick="revSetFilter('soon')"><div class="stat-val" id="rev-s-soon">0</div><div class="stat-lbl">Due soon (8–14d)</div></div>
+        <div class="stat fresh" id="rev-stat-fresh" onclick="revSetFilter('fresh')"><div class="stat-val" id="rev-s-fresh">0</div><div class="stat-lbl">Fresh (0–7d)</div></div>
         <div class="stat never" id="rev-stat-never" onclick="revSetFilter('never')"><div class="stat-val" id="rev-s-never">0</div><div class="stat-lbl">Never revised</div></div>
       </div>
       <div id="rev-daily-thought" class="daily-thought"></div>
@@ -894,7 +894,7 @@ const RevisionTool = (function () {
     const d = daysSince(ch.lastRevised);
     if (d === null) return { cls:'never', text:'Never revised' };
     if (d >= 15) return { cls:'overdue', text: d + 'd ago — revise now' };
-    if (d >= 5) return { cls:'soon', text: d + 'd ago — due soon' };
+    if (d >= 8) return { cls:'soon', text: d + 'd ago — due soon' };
     if (d === 0) return { cls:'fresh', text:'Revised today' };
     return { cls:'fresh', text: d + 'd ago' };
   }
@@ -903,7 +903,7 @@ const RevisionTool = (function () {
     const d = daysSince(ch.lastRevised);
     if (d === null) return 0;
     if (d >= 15) return 1;
-    if (d >= 5) return 2;
+    if (d >= 8) return 2;
     return 3;
   }
 
@@ -941,7 +941,7 @@ const RevisionTool = (function () {
     let ov=0,so=0,fr=0,nv=0;
     subjects.forEach(s => (data[s]||[]).forEach(ch => {
       const d = daysSince(ch.lastRevised);
-      if (d===null) nv++; else if (d>=15) ov++; else if (d>=5) so++; else fr++;
+      if (d===null) nv++; else if (d>=15) ov++; else if (d>=8) so++; else fr++;
     }));
     document.getElementById('rev-s-overdue').textContent = ov;
     document.getElementById('rev-s-soon').textContent = so;
@@ -963,14 +963,14 @@ const RevisionTool = (function () {
         const d = daysSince(ch.lastRevised);
         if (filter === 'never')   return d === null;
         if (filter === 'overdue') return d !== null && d >= 15;
-        if (filter === 'soon')    return d !== null && d >= 5 && d < 15;
-        if (filter === 'fresh')   return d !== null && d < 5;
+        if (filter === 'soon')    return d !== null && d >= 8 && d < 15;
+        if (filter === 'fresh')   return d !== null && d < 8;
       });
     }
     const FILTER_LABELS = {
       overdue: '🔴 Overdue Chapters (15d+)',
-      soon:    '🟡 Due Soon (5–14 days)',
-      fresh:   '🟢 Recently Revised (0–4 days)',
+      soon:    '🟡 Due Soon (8–14 days)',
+      fresh:   '🟢 Recently Revised (0–7 days)',
       never:   '⚪ Never Revised'
     };
     const scopeLabel = current === 'All' ? 'all subjects' : ('in ' + esc(current));
