@@ -366,6 +366,176 @@
     #tool-prelims .dateinput{width:100%}
     #tool-daily .datecellinput{min-width:0;width:100%}
   }
+/* ===== PNP TRACKER (scoped) ===== */
+#tool-pnp{--bg:#f7f1ec;--card:#fff;--tx:#241a1c;--mu:#7a6f70;--bd:#eadfd6;--ac:#8e1236;--ok:#22a06b;--pt:#e8a317;--ms:#d6402f}
+html[data-theme="dark"] #tool-pnp{--bg:#17110f;--card:#241b19;--tx:#f1e8e2;--mu:#a69a95;--bd:#3a2d2a;--ac:#e0647f}
+#tool-pnp *{box-sizing:border-box}
+#tool-pnp{margin:0;background:radial-gradient(900px 420px at 8% -8%,color-mix(in srgb,var(--ac) 16%,transparent),transparent),radial-gradient(700px 400px at 100% 0,color-mix(in srgb,var(--pt) 14%,transparent),transparent),var(--bg);color:var(--tx);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;min-height:calc(100vh - 46px);font-size:15px}
+#tool-pnp .pnp-head{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;flex-wrap:wrap;gap:8px}
+#tool-pnp h1{font-size:24px;margin:0;font-weight:800;background:linear-gradient(90deg,var(--ac),var(--pt));-webkit-background-clip:text;background-clip:text;color:transparent}
+#tool-pnp h1 span{display:block;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;-webkit-text-fill-color:var(--mu)}
+#tool-pnp h2{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--mu);margin:0 0 10px}
+#tool-pnp .pnp-wrap{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:14px;padding:0 18px 90px;max-width:1150px;margin:auto}
+@media(max-width:820px){#tool-pnp .pnp-wrap{grid-template-columns:1fr}}
+#tool-pnp .card{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:18px;margin-bottom:16px;box-shadow:0 6px 22px #5a1a2d14;transition:transform .2s,box-shadow .2s}
+#tool-pnp .card:hover{transform:translateY(-2px);box-shadow:0 12px 30px #5a1a2d22}
+#tool-pnp .big{font-size:26px;font-weight:700}
+#tool-pnp .pnp-pill{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;font-weight:600;color:#fff}
+#tool-pnp .bar{height:12px;background:var(--bd);border-radius:12px;position:relative;overflow:hidden;margin:8px 0}
+#tool-pnp .bar i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#22a06b,#7ad9a8);border-radius:12px;transition:width .8s}
+#tool-pnp .bar b{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--ac)}
+#tool-pnp button{font:inherit;cursor:pointer;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:9px;padding:6px 11px}
+#tool-pnp button.pnp-on{background:var(--ac);color:#fff;border-color:var(--ac)}
+#tool-pnp button.pnp-d.pnp-on{background:var(--ok)}
+#tool-pnp button.pnp-p.pnp-on{background:var(--pt)}
+#tool-pnp button.m.pnp-on{background:var(--ms)}
+#tool-pnp input{font:inherit;background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:5px 8px;width:80px}
+#tool-pnp textarea{width:100%;height:70px;background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:8px}
+#tool-pnp .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center}
+#tool-pnp .cal .h{font-size:11px;color:var(--mu)}
+#tool-pnp .c{min-height:48px;border:1px solid var(--bd);border-radius:8px;padding:2px;font-size:11px;cursor:pointer;position:relative;overflow:hidden}
+#tool-pnp .c.o{opacity:.35}
+#tool-pnp .c.pnp-t{outline:2px solid var(--ac)}
+#tool-pnp .c.pnp-s{background:var(--bd)}
+#tool-pnp .c em{font-style:normal;display:block;font-size:10px;color:var(--mu)}
+#tool-pnp .c .k{position:absolute;right:2px;top:1px;font-size:11px}
+#tool-pnp .c u{position:absolute;left:0;right:0;bottom:0;height:4px}
+#tool-pnp .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(30px,1fr));gap:4px}
+#tool-pnp .g{height:30px;border-radius:7px;font-size:11px;display:flex;align-items:center;justify-content:center;border:2px solid;cursor:pointer;background:var(--card)}
+#tool-pnp .row{display:flex;justify-content:space-between;font-size:13px;gap:8px}
+#tool-pnp .pnp-sub{color:var(--mu);font-size:13px}
+#tool-pnp .tp{display:inline-block;background:var(--bg);border:1px solid var(--bd);border-radius:99px;padding:2px 9px;margin:2px 2px 0 0;font-size:12px}
+#tool-pnp #pnp-pop{position:fixed;right:14px;top:70px;width:300px;max-width:calc(100vw - 28px);z-index:20;background:var(--card);border:1px solid var(--ac);border-left:6px solid var(--ac);border-radius:14px;padding:14px;box-shadow:0 8px 28px #0004;transform:translateX(120%);transition:transform .4s}
+#tool-pnp #pnp-pop.show{transform:none}
+@media(max-width:820px){#tool-pnp #pnp-pop{top:auto;bottom:calc(14px + env(safe-area-inset-bottom,0px));right:14px;left:14px;width:auto;max-width:none}}
+#tool-pnp svg{width:100%;height:60px}
+#tool-pnp #pnp-stat{border-top:5px solid var(--ac);background:linear-gradient(135deg,var(--card),color-mix(in srgb,var(--ac) 7%,var(--card)))}
+#tool-pnp #pnp-day{border-left:5px solid var(--pt)}
+#tool-pnp .pnp-ring{width:104px;height:104px;border-radius:50%;background:conic-gradient(var(--ok) calc(var(--p)*1%),var(--bd) 0);display:grid;place-items:center;position:relative;flex:none}
+#tool-pnp .pnp-ring::before{content:"";position:absolute;inset:10px;background:var(--card);border-radius:50%}
+#tool-pnp .pnp-ring *{position:relative;text-align:center;line-height:1.1}
+#tool-pnp .pnp-ring b{font-size:28px;display:block}
+#tool-pnp .pnp-ring small{color:var(--mu);font-size:12px}
+#tool-pnp .msg{margin:8px 0 0;color:var(--mu);font-size:13px}
+#tool-pnp .pnp-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+#tool-pnp .pnp-stats div{background:var(--bg);border-radius:14px;padding:10px;text-align:center;font-size:12px;color:var(--mu)}
+#tool-pnp .pnp-stats b{display:block;font-size:20px;color:var(--tx)}
+#tool-pnp .pnp-pill{font-size:13px;padding:5px 14px;box-shadow:0 3px 10px #0003}
+#tool-pnp button{border-radius:99px;transition:transform .15s,box-shadow .15s}
+#tool-pnp button:hover{transform:translateY(-1px);box-shadow:0 4px 12px #0002}
+#tool-pnp .c{border-radius:12px;transition:transform .15s}
+#tool-pnp .c:hover{transform:scale(1.06)}
+#tool-pnp .g{transition:transform .15s}
+#tool-pnp .g:hover{transform:scale(1.18)}
+#tool-pnp .c.pnp-t{background:color-mix(in srgb,var(--ac) 14%,transparent)}
+#tool-pnp .sform{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:8px;margin-top:12px}
+#tool-pnp .sform label{font-size:11px;color:var(--mu);display:flex;flex-direction:column;gap:3px;font-weight:600}
+#tool-pnp .sform input{width:100%}
+#tool-pnp .au{background:var(--bg);border-radius:12px;padding:6px 10px;font-size:11px;font-weight:600;color:var(--mu);display:flex;flex-direction:column;justify-content:center}
+#tool-pnp .au b{font-size:17px;color:var(--tx)}
+#tool-pnp .au.ok{background:color-mix(in srgb,var(--ok) 16%,var(--card))}
+#tool-pnp .au.ok b{color:var(--ok)}
+#tool-pnp .sform.an label{background:color-mix(in srgb,#2bb3c0 12%,var(--card));padding:6px 8px;border-radius:12px}
+#tool-pnp #pnp-stat{display:grid;grid-template-columns:1.1fr 1fr;gap:4px 28px;align-items:center}
+#tool-pnp #pnp-stat>.row:first-child{grid-column:1;grid-row:1/4}
+#tool-pnp #pnp-stat>.bar{grid-column:2;grid-row:1}
+#tool-pnp #pnp-stat>.row.pnp-sub{grid-column:2;grid-row:2}
+#tool-pnp #pnp-stat>.pnp-stats{grid-column:2;grid-row:3;margin-top:6px}
+@media(max-width:820px){#tool-pnp #pnp-stat{display:block}}
+#tool-pnp #pnp-stat>.row:first-child{justify-content:flex-start;gap:22px}
+#tool-pnp #pnp-stat>.row:first-child .pnp-ring{order:-1}
+#tool-pnp .cyls{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:12px}
+#tool-pnp .cy{display:flex;flex-direction:column;align-items:center;min-width:0}
+#tool-pnp .cy .cap{height:12px;width:100%;border-radius:7px 7px 3px 3px;background:#4a3518}
+#tool-pnp .cy .cap.b{border-radius:3px 3px 7px 7px}
+#tool-pnp .cy .tube{width:74%;height:140px;margin:3px 0;border-radius:7px;position:relative;overflow:hidden;background:#1b2347 repeating-linear-gradient(90deg,#ffffff0b 0 6px,transparent 6px 12px);box-shadow:inset 0 0 12px #0008}
+#tool-pnp .cy .tube i{position:absolute;left:0;right:0;bottom:0;background:repeating-linear-gradient(90deg,#ffffff26 0 6px,transparent 6px 12px),var(--c);box-shadow:0 0 14px var(--c);transition:height .9s}
+#tool-pnp .cy .nm{font-size:12px;font-weight:800;margin-top:7px;text-align:center}
+#tool-pnp .cy small{color:var(--mu);font-size:11px}
+@media(max-width:620px){#tool-pnp .cyls{grid-template-columns:repeat(4,minmax(0,1fr))}
+#tool-pnp .cy .tube{height:100px}}
+#tool-pnp #pnp-cylc{padding:12px 16px}
+#tool-pnp #pnp-cylc h2{margin-bottom:8px}
+#tool-pnp .cyls,#tool-pnp .cyls{grid-template-columns:repeat(8,minmax(0,1fr))!important;gap:8px;max-width:760px;margin:0 auto}
+#tool-pnp .cy .cap{height:7px;width:58%;background:var(--c);border-radius:5px 5px 2px 2px}
+#tool-pnp .cy .cap.b{border-radius:2px 2px 5px 5px}
+#tool-pnp .cy .tube{width:58%;height:76px!important;margin:2px 0;border-radius:4px;background:#fff;border:2px solid var(--c);box-shadow:none}
+#tool-pnp .cy .tube i{background:linear-gradient(180deg,#4ade80,#16a34a);box-shadow:none;border-radius:0}
+#tool-pnp .cy .nm{font-size:10px;margin-top:5px;line-height:1.1}
+#tool-pnp .cy small{font-size:9.5px;text-align:center}
+@media(min-width:821px){#tool-pnp #pnp-stat{grid-column:1!important}
+#tool-pnp #pnp-cylc{grid-column:2!important}}
+#tool-pnp #pnp-stat,#tool-pnp #pnp-cylc{padding:12px 14px}
+#tool-pnp #pnp-stat>.row.pnp-sub,#tool-pnp #pnp-stat .msg{display:none}
+#tool-pnp #pnp-stat{grid-template-columns:auto 1fr!important;gap:6px 16px!important}
+#tool-pnp #pnp-stat>.row:first-child{grid-row:1/3!important;gap:14px}
+#tool-pnp #pnp-stat>.pnp-stats{grid-row:2!important;margin-top:4px}
+#tool-pnp .pnp-ring{width:84px;height:84px}
+#tool-pnp .pnp-ring::before{inset:8px}
+#tool-pnp .pnp-ring b{font-size:22px}
+#tool-pnp .pnp-ring small{font-size:10px}
+#tool-pnp #pnp-stat h2{margin:0 0 6px}
+#tool-pnp .pnp-pill{font-size:12px;padding:4px 11px}
+#tool-pnp .pnp-stats{gap:6px}
+#tool-pnp .pnp-stats div{padding:6px 4px;font-size:10.5px;border-radius:11px}
+#tool-pnp .pnp-stats b{font-size:16px}
+#tool-pnp .cy .tube{height:62px!important}
+#tool-pnp .cyls{gap:6px}
+#tool-pnp #pnp-cylc h2{margin:0 0 8px}
+#tool-pnp .cy .tube{width:62%;border-width:4px;border-radius:7px}
+#tool-pnp .cy .pc{font-size:12px;font-weight:800;margin-bottom:3px;color:var(--c)}
+@media(min-width:821px){#tool-pnp .pnp-wrap{grid-template-columns:repeat(20,minmax(0,1fr))}
+#tool-pnp #pnp-stat{grid-column:span 6!important}
+#tool-pnp #pnp-cylc{grid-column:span 14!important}
+#tool-pnp .pnp-main{grid-column:span 11}
+#tool-pnp .pnp-aside{grid-column:span 9}}
+#tool-pnp #pnp-stat{grid-template-columns:1fr!important}
+#tool-pnp #pnp-stat>.row:first-child,#tool-pnp #pnp-stat>.bar,#tool-pnp #pnp-stat>.pnp-stats{grid-column:1!important;grid-row:auto!important}
+#tool-pnp .cyls{max-width:none!important;gap:10px}
+#tool-pnp .cy .tube{width:14px;height:84px!important;border-width:2px;border-radius:8px}
+#tool-pnp .cy .nm{font-size:11px}
+#tool-pnp .bg{display:flex;align-items:flex-end;gap:7px;height:136px;padding-top:16px;margin:12px 0 24px;border-bottom:1px solid var(--bd)}
+#tool-pnp .bc{flex:1;min-width:0;height:100%;position:relative;display:flex;align-items:flex-end;justify-content:center}
+#tool-pnp .bc i{width:100%;max-width:26px;min-height:2px;border-radius:6px 6px 0 0;transition:height .6s}
+#tool-pnp .bc b{position:absolute;font-size:10px}
+#tool-pnp #pnp-pop{width:340px;max-height:80vh;overflow-y:auto}
+#tool-pnp .fs{font-size:12.5px;margin:7px 0;line-height:1.4}
+#tool-pnp .fs b{display:block;color:var(--ac);font-size:12px}
+#tool-pnp .fsh{font-weight:800;margin-top:12px;padding-top:6px;border-top:1px solid var(--bd)}
+@media(max-width:820px){#tool-pnp #pnp-pop{width:auto;max-height:60vh}}
+#tool-pnp .bc span{position:absolute;bottom:-18px;font-size:10px;color:var(--mu)}
+#tool-pnp .sec{border:1px solid var(--bd);border-radius:16px;overflow:hidden;margin-top:12px}
+#tool-pnp .sh{padding:6px 12px;font-size:12px;font-weight:700;color:#241a1c}
+#tool-pnp .sh.y{background:#ffe94d}
+#tool-pnp .sh.c{background:#5ce1e6}
+#tool-pnp .sh.g{background:#d8cdfa}
+#tool-pnp .sg{display:grid;gap:8px;padding:10px}
+#tool-pnp .r5{grid-template-columns:repeat(5,minmax(0,1fr))}
+#tool-pnp .r4{grid-template-columns:repeat(4,minmax(0,1fr))}
+#tool-pnp .r2{grid-template-columns:repeat(2,minmax(0,1fr))}
+#tool-pnp .sec label,#tool-pnp .nt{font-size:11px;color:var(--mu);font-weight:600;display:flex;flex-direction:column;gap:3px}
+#tool-pnp .sec input,#tool-pnp .nt input{width:100%}
+#tool-pnp .nt{margin-top:12px}
+#tool-pnp .big2{margin:0 10px 10px;flex-direction:row!important;justify-content:space-between!important;align-items:center}
+#tool-pnp .two{display:grid;grid-template-columns:2fr 1fr;gap:0 12px}
+@media(max-width:620px){#tool-pnp .r5{grid-template-columns:repeat(2,minmax(0,1fr))}
+#tool-pnp .r4{grid-template-columns:repeat(2,minmax(0,1fr))}
+#tool-pnp .two{grid-template-columns:1fr}}
+#tool-pnp .fl{display:inline-block;font-size:11px;font-weight:800;padding:2px 10px;border-radius:8px;margin:8px 0 5px;color:#241a1c}
+#tool-pnp .fl.y{background:#ffe94d}
+#tool-pnp .fl.cy{background:#5ce1e6}
+#tool-pnp .fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(88px,1fr));gap:6px}
+#tool-pnp .fg label{font-size:10.5px;color:var(--mu);font-weight:700;display:flex;flex-direction:column;gap:2px;min-width:0}
+#tool-pnp .fg input,#tool-pnp .fg select,#tool-pnp .fg textarea{width:100%;font:inherit;font-size:13px;background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:4px 7px;min-height:30px}
+#tool-pnp .fg textarea{resize:none;overflow:hidden;height:30px;line-height:1.3}
+#tool-pnp .fg .au{min-height:48px;padding:3px 9px}
+#tool-pnp .fg .au b{font-size:16px}
+#tool-pnp .fg .w2{grid-column:span 2}
+#tool-pnp .fg .wf{grid-column:1/-1}
+#tool-pnp .fg .tc{background:color-mix(in srgb,#2bb3c0 14%,var(--card));padding:4px 6px;border-radius:10px}
+#tool-pnp{overflow-x:hidden}
+@media(max-width:620px){#tool-pnp .cyls{grid-template-columns:repeat(4,minmax(0,1fr))!important;row-gap:16px}}
+@media print{#tool-pnp #pnp-pop{display:none}}
 </style>
 </head>
 <body data-tool="dashboard">
@@ -397,6 +567,7 @@
     <div class="brand"><span class="logo-dot"></span><span class="bt">UPSC Prep Hub</span></div>
     <div id="main-tabs">
       <button class="main-tab active" data-tool="dashboard">Dashboard</button>
+      <button class="main-tab" data-tool="pnp">PNP</button>
       <button class="main-tab" data-tool="revision">Prelims Revision</button>
       <button class="main-tab" data-tool="mains">Mains Revision</button>
       <button class="main-tab" data-tool="prelims">Prelims Report Card</button>
@@ -449,6 +620,25 @@
       <section class="glass quote"><p id="cd-q">“It always seems impossible until it’s done.”</p><span id="cd-qa">Nelson Mandela</span></section>
       <p class="foot">Countdown uses your device clock, converted to IST.</p>
     </div>
+  </div>
+
+  <!-- ===== PNP 2027 TRACKER ===== -->
+  <div id="tool-pnp" class="tool-panel">
+<div class="pnp-head"><h1>📚 PNP 2027<span>Prelims Navigator Tracker</span></h1>
+<div><button id="pnp-bell">🔔 Tomorrow</button></div></div>
+<div id="pnp-pop"></div>
+<div class="pnp-wrap"><div class="card" id="pnp-stat" style="grid-column:1/-1;margin-bottom:0"></div><div class="card" id="pnp-cylc" style="grid-column:1/-1;margin-bottom:0"><h2>Subject progress</h2><div id="pnp-subj" class="cyls"></div></div><div class="pnp-main">
+<div class="card" id="pnp-day"></div>
+<div class="card"><h2>All 108 tests · tap to open</h2><div class="grid" id="pnp-grid"></div>
+<div class="pnp-sub" style="margin-top:8px">Border colour = subject · fill = ✓ done, ½ partial, ✗ missed</div></div>
+</div><div class="pnp-aside">
+<div class="card"><div class="row" style="align-items:center;margin-bottom:8px"><button id="pnp-pm">‹</button><b id="pnp-mt"></b><button id="pnp-nm">›</button></div><div class="cal" id="pnp-cal"></div>
+<div class="pnp-sub" id="pnp-leg" style="margin-top:8px"></div></div>
+
+<div class="card"><h2>Score trend (%)</h2><div id="pnp-trend"></div></div>
+<div class="card"><h2>Catch-up plan</h2><div id="pnp-plan"></div></div>
+<div class="card"><details><summary>Backup / restore progress</summary><p class="pnp-sub">Copy this text to save. Paste saved text and press Restore on another device.</p><textarea id="pnp-bk"></textarea><button id="pnp-rs">Restore</button></details></div>
+</div></div>
   </div>
 
   <!-- ===== TOOL 1: REVISION TRACKER ===== -->
@@ -662,6 +852,32 @@ let currentUser = null;
 let appState = { revision: null, mains: null, prelims: null, daily: null };
 let saveTimer = null;
 
+// ---- PNP tracker cloud sync (stored in users/{uid}.pnp) ----
+let pnpStored = null, pnpPending = null, pnpTimer = null;
+function pnpQueueSave(data) {
+  pnpPending = data;
+  setSyncStatus('Saving…');
+  clearTimeout(pnpTimer);
+  pnpTimer = setTimeout(pnpSaveNow, 1000);
+}
+async function pnpSaveNow() {
+  clearTimeout(pnpTimer);
+  if (!currentUser || !pnpPending) return;
+  const payload = JSON.parse(JSON.stringify(pnpPending));
+  pnpPending = null;
+  try {
+    // mergeFields replaces the whole `pnp` field, so restored/removed entries are really removed
+    await db.collection('users').doc(currentUser.uid).set({ pnp: payload }, { mergeFields: ['pnp'] });
+    setSyncStatus('Saved ✓');
+  } catch (e) {
+    console.error('PNP save failed', e);
+    pnpPending = pnpPending || payload;
+    setSyncStatus('Save failed — check connection');
+  }
+}
+document.addEventListener('visibilitychange', () => { if (document.hidden && pnpPending) pnpSaveNow(); });
+window.addEventListener('pagehide', () => { if (pnpPending) pnpSaveNow(); });
+
 function setSyncStatus(text) {
   const el = document.getElementById('sync-status');
   if (el) el.textContent = text;
@@ -694,8 +910,10 @@ async function loadState() {
     appState.mains = d.mains || null;
     appState.prelims = d.prelims || null;
     appState.daily = d.daily || null;
+    pnpStored = d.pnp || null;
   } else {
     appState = { revision: null, mains: null, prelims: null, daily: null };
+    pnpStored = null;
   }
 }
 
@@ -763,9 +981,11 @@ auth.onAuthStateChanged(async (user) => {
     MainsTool.init(appState.mains);
     PrelimsTool.init(appState.prelims);
     DailyTool.init(appState.daily);
+    PnpTool.init(pnpStored, pnpQueueSave);
     setSyncStatus('Saved ✓');
   } else {
     currentUser = null;
+    clearTimeout(pnpTimer); pnpPending = null; pnpStored = null;
     document.getElementById('app-shell').style.display = 'none';
     document.getElementById('login-screen').style.display = 'flex';
   }
@@ -2135,6 +2355,139 @@ const DailyTool = (function () {
 })();
 </script>
 
+
+<script>
+// ======================================================
+// PNP 2027 TRACKER (Firebase-synced via pnpQueueSave)
+// ======================================================
+const PnpTool=(function(){
+
+const T=`Political Theory;Constituent Assembly;Salient Features;Preamble|Basic Structure;Amendment;Union & Territory;Citizenship|Fundamental Rights (all of Part III)|DPSP;Fundamental Duties|Parliamentary System;Federal System;Emergency|President;Vice President|PM;Council of Ministers;Cabinet Committees|Governor;CM;State CoM|Parliament;Parliamentary Committees;Forums;Groups|State Legislature;Union Territories|Supreme Court;Judicial Review;Judicial Activism|High Court;Subordinate Courts;PIL|Centre-State Relations;Inter-State Relations|Panchayati Raj;Municipalities|Scheduled & Tribal Areas;Special Provisions;Official Language;Co-op Societies|Elections;Anti-Defection;Election Laws;Electoral Reforms;Parties;Coalitions;Voting;Pressure Groups|Constitutional Bodies;Public Services;Govt Rights & Liabilities|Non-Constitutional Bodies;Tribunals;National Integration;Foreign Policy;Politics Since Independence;Constitution Review|Microeconomics: Consumer, Demand, Elasticity, Supply, Costs, Markets|Macroeconomics: Circular Flow, AD, Income Determination, Output Gaps|National Income Accounting;GDP Concepts & Methods;GDP & Welfare|Unemployment;Workforce;Informal Economy;Labour Laws|Poverty;Inequality;Human Development;Human Capital|Inflation;Price Indices;Phillips Curve;Controlling Inflation|Money;Money Creation;Deposits;Digital Money|Monetary Policy;Policy Framework;Lending Rates;RBI|Banking;History of Indian Banking;Regulation & Health;Stressed Assets|Financial Institutions;Financial Regulation;NBFCs & Insolvency|Financial Markets Pt 1: Money Market;Securities|Financial Markets Pt 2: Stock Exchanges;Derivatives & Funds;GIFT City|Budgeting & Fiscal Policy Pt 1: Budget, Procedure, FRBM|Fiscal Policy Pt 2: Public Finance;Taxation;Tax System;Centre-State Finances|International Economics: BoP, Exchange Rates, Open Economy|World Bank/IMF;Bretton Woods;Foreign Investment|Agriculture;Land Reforms;Subsidies;Marketing;Allied Sectors|Industry;Schemes;Food Processing;Services;Planning;Infrastructure;Foreign Trade|Universe;Origin of Earth;Geological Time;Motions of Earth|Interior of Earth;Earthquakes;Volcanoes;Plate Tectonics|Rocks & Minerals;Geomorphic Processes;Landforms|Atmosphere;Heat Budget;Circulation;Water in Atmosphere|Weather Systems;Köppen Climates;Biomes|Oceanography: Relief, Properties, Currents, Tides|Indian Physiography|Indian Climate & Monsoon|Drainage;Vegetation;Soils;Natural Hazards|Minerals;Energy Resources;Industries|Agriculture;Crops;World Agri Regions;Revolutions|Demography;Settlements;Transport|Cell Biology;DNA & RNA;Cell Cycle|Genetics;Biotech Basics;GM Crops|Biotech Applications;CRISPR;Immunity;Viruses|Vaccination;Advanced Therapies;Indian Initiatives|Nutrition;Diseases;AMR;NCDs;Drugs Policy;Food Safety|Nanotechnology|Orbits;Launch Vehicles;Satellites;Astrophysics;Space Exploration|Indian Missions;Other Missions|Missiles;Missile Defence;Navy;Aircraft;Radars|Quantum;Web 3.0;Digital Tech;Digital Identity|AI;Communication Tech;Blockchain;BCI|Sensors;EVs;Cosmology;Particle Physics;IPR|Sources & Approaches;Mughal Decline;Autonomous States;Advent of Europeans|Anglo-French Struggle;Carnatic Wars|Conquest of Bengal;Mysore Wars;Maratha Wars|Sindh & Punjab;Paramountcy;Frontier;Economic Impact|Administration;Civil Services;Police;Judiciary;Policies|Revolt of 1857;Moderates;Extremists;Revolutionaries|Gandhi Early Phase;Rowlatt;NCM;Swarajists;Simon;CDM|1937 Elections;Congress Ministries;Acts 1773–1935|WWII Response;Quit India;INA;Cabinet Mission;Partition|Socio-Religious Reform Movements|Princely States;Press;Education|Civil Uprisings;Tribal Revolts;Peasants;Working Class;Left|Ecology Basics;Ecosystem Functioning;Biotic Interactions|Productivity;Succession;Biogeochemical Cycles;Ecosystem Concepts|Biodiversity;Conservation|Wetlands;Wildlife Act;Forest Acts|Afforestation;FRA 2006;Forest Status;Environmental Laws|Climate Basics;GHGs;Indices|Warming Impacts;Corals|IPCC;Mitigation;Negotiations;Early Summits|UNFCCC;Kyoto;Paris;COP28–30|UNCCD;CBD;Climate Finance|Adaptation (NAPCC);India Mitigation|Green Transition;Nuclear Energy|Biofuels;Renewables;Other Energy Sources|Air Pollutants;Ozone;Effects;Control Devices|Indian Air Initiatives;Stubble Burning;Water Pollution|Remediation;Ganga;Marine & Radioactive Pollution|Solid & Hazardous Waste;Heavy Metals;Noise|Plastics;E-waste;Polluting Industries|Prehistory;Indus Valley Civilisation|Vedic Age;Magadha & Invasions;Age of the Buddha|Orthodox & Heterodox Schools;Jainism;Buddhism|Mauryan Empire;Administration;Art|Post-Mauryan Powers;Economy;Art|Megalithic South;Sangam Age|Gupta Empire (all aspects)|Harsha to Pallavas;Society;Art Schools;Universities|Tripartite Struggle;Rajputs & Cholas;Early Muslim Invasions|Delhi Sultanate;Administration;Mongols;Architecture|Vijayanagara;Bahmani;Architecture;Bhakti & Sufi|Mughal Empire;Akbar;Aurangzeb;Economy & Culture|World Mapping 1: Asia|World Mapping 2: Africa|World Mapping 3: Europe & N. America|World Mapping 4: S. America, Oceania, Antarctica, Oceans|Indian Mapping 1: Ranges, Peaks, Passes, Drainage|Indian Mapping 2: Dams, Lakes, Protected Areas`.split('|').map(s=>s.split(';'));
+const SJ=[[1,18,'Polity','#c0392b'],[19,36,'Economy','#d49a00'],[37,48,'Geography','#2e8b57'],[49,60,'Sci & Tech','#7e57c2'],[61,72,'Modern History','#e0709a'],[73,90,'Environment','#00897b'],[91,102,'AMAC','#a0522d'],[103,108,'Mapping','#6b8e23']];
+const sj=n=>SJ.find(s=>n>=s[0]&&n<=s[1]);
+const FR={6:[1,6],12:[7,12],18:[1,18],24:[19,24],30:[25,30],36:[19,36],42:[37,42],48:[43,48],54:[49,54],60:[55,60],66:[61,66],72:[61,72],78:[73,78],84:[79,84],90:[73,90],96:[91,96],102:[91,102],108:[103,108]};
+const add=(d,k)=>{const x=new Date(d);x.setDate(x.getDate()+k);return x},p2=n=>String(n).padStart(2,'0');
+const K=d=>d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate());
+const D0=new Date(2026,10,16),tdate=n=>{let w=Math.floor((n-1)/6);if(n>90)w++;return add(D0,7*w+(n-1)%6)};
+const M={};for(let n=1;n<=108;n++)M[K(tdate(n))]={t:'T',n};
+for(const e in FR)M[K(add(tdate(+e),1))]={t:'F',a:FR[e][0],b:FR[e][1]};
+for(let i=0;i<6;i++)M[K(new Date(2026,2,1+i))]={t:'R'};
+[[3,4],[3,11],[3,18],[3,25],[4,2]].forEach((x,i)=>M[K(new Date(2027,x[0],x[1]))]={t:'G',n:i+1});
+const now=new Date(),today=new Date(now.getFullYear(),now.getMonth(),now.getDate()),TK=K(today);
+const blank=()=>({s:{},f:{},dis:''});let st=blank(),lastJson='',hook=null;
+const save=()=>{const j=JSON.stringify(st);$('bk').value=j;if(j!==lastJson){lastJson=j;if(hook)hook(st)}};
+function $(i){return document.getElementById('pnp-'+i)}
+let sel=TK,vm=new Date(today.getFullYear(),today.getMonth(),1);
+const stOf=it=>it.t=='T'?(st.s[it.n]||{}).st:it.t=='F'?st.f[it.a+'-'+it.b]:st.f['G'+it.n];
+const ic={d:'✓',p:'½',m:'✗'},cl={d:'var(--ok)',p:'var(--pt)',m:'var(--ms)'};
+const lab=it=>!it?'No scheduled test':it.t=='T'?`Test ${it.n} · ${sj(it.n)[2]}`:it.t=='F'?`FLT · Tests ${it.a}–${it.b}`:it.t=='G'?`FLT ${it.n} · GS 1 & GS 2`:'Reserve day';
+const tops=it=>it&&it.t=='T'?T[it.n-1]:it&&it.t=='F'?[...new Set(Array.from({length:it.b-it.a+1},(_,i)=>sj(it.a+i)[2]))].map(s=>s+' (Tests '+Math.max(it.a,sj(it.a)[0]>it.a?0:it.a)+'…)').slice(0,0).concat([`Full syllabus of Test ${it.a} to Test ${it.b}`,...[...new Set(Array.from({length:it.b-it.a+1},(_,i)=>sj(it.a+i)[2]))]]):it&&it.t=='G'?['Full-length GS 1 & GS 2 paper']:it&&it.t=='R'?['Catch up on backlog & revise']:[];
+function stats(){const due=[];for(let n=1;n<=108;n++)if(tdate(n)<today)due.push(n);
+const done=Object.keys(st.s).filter(n=>st.s[n].st=='d').length;const back=due.filter(n=>(st.s[n]||{}).st!='d');
+const tn=(M[TK]||{}).t=='T'?M[TK].n:0;return{due,done,back,tn}}
+function streak(){let c=0,d=new Date(today);if(M[TK]&&M[TK].t=='T'&&(st.s[M[TK].n]||{}).st!='d')d=add(d,-1);
+for(let i=0;i<200;i++){const it=M[K(d)];if(it&&it.t=='T'){if((st.s[it.n]||{}).st=='d')c++;else break}d=add(d,-1);if(d<D0)break}return c}
+function render(){const s=stats(),b=s.back.length,sc=Object.values(st.s).filter(x=>x.sc!=null&&x.sc!=='');
+const avg=sc.length?Math.round(sc.reduce((a,x)=>a+ +x.sc,0)/sc.length):'–';
+let tag,col;if(today<D0){tag='Not started';col='var(--mu)'}else if(b==0){tag=s.done>s.due.length?'Ahead of schedule 🚀':'On track ✅';col='var(--ok)'}else if(b<=2){tag=`Slightly behind (${b})`;col='var(--pt)'}else{tag=`Behind by ${b} tests`;col='var(--ms)'}
+$('stat').innerHTML=`<div class="row" style="align-items:center"><div><h2>Am I on track?</h2><span class="pnp-pill" style="background:${col}">${tag}</span><p class="msg">${b==0?'Great pace. Keep the streak alive! 🔥':'Clear '+b+' backlog test'+(b>1?'s':'')+' to get back on track. You can do it 💪'}</p></div><div class="pnp-ring" style="--p:${s.done/1.08}"><div><b>${s.done}</b><small>of 108</small></div></div></div>
+<div class="bar"><i style="width:${s.done/1.08}%"></i><b style="left:${s.due.length/1.08}%"></b></div>
+<div class="row pnp-sub"><span>Bar = your progress · line = where you should be (${s.due.length} tests due before today)</span></div>
+<div class="pnp-stats"><div>🔥 Streak<b>${streak()}d</b></div><div>🎯 Avg score<b>${avg}${avg=='–'?'':'%'}</b></div><div>📅 Days left<b>${Math.max(0,Math.ceil((new Date(2027,4,8)-today)/864e5))}</b></div></div>`;
+const it=M[sel],cur=it?stOf(it):'',o=it?st.s[kk(it)]||{}:{};
+$('day').innerHTML=`<h2>${sel==TK?'Today':'Selected'} · ${new Date(sel+'T00:00').toDateString()}</h2><div class="big" style="font-size:20px">${lab(it)}</div><div style="margin:8px 0">${tops(it).map(x=>`<span class="tp">${x}</span>`).join('')}</div>
+${it&&it.t!='R'?`<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><button class="pnp-d ${cur=='d'?'pnp-on':''}" data-s="d">✓ Done</button><button class="m ${cur=='m'?'pnp-on':''}" data-s="m">✗ Missed</button>
+</div>${form3(o,sel)}`:''}`;
+document.querySelectorAll('#pnp-day [data-s]').forEach(x=>x.onclick=()=>{const v=cur==x.dataset.s?'':x.dataset.s;if(it.t=='T')st.s[it.n]=Object.assign(st.s[it.n]||{},{st:v});else st.f[it.t=='F'?it.a+'-'+it.b:'G'+it.n]=v;save();render()});
+document.querySelectorAll('#pnp-day .sf').forEach(x=>{x.oninput=()=>{const r=st.s[kk(it)]=st.s[kk(it)]||{};r[x.dataset.k]=x.value;const m=cm(r);$('un').innerHTML='Unattempted<b>'+m.un+'</b>';$('mk').innerHTML='Marks obtained<b>'+m.mk+' / '+m.out+'</b>';if(m.t)r.sc=Math.round(m.mk/m.out*100);save()};x.onchange=()=>setTimeout(()=>{const a=document.activeElement,k=a&&a.dataset&&a.dataset.k;if(a&&a.tagName=='BUTTON')return;render();if(k){const e=document.querySelector('#pnp-day .sf[data-k="'+k+'"]');e&&e.focus()}},0)});
+$('grid').innerHTML='';for(let n=1;n<=108;n++){const v=(st.s[n]||{}).st,g=document.createElement('div');g.className='g';g.textContent=v?ic[v]:n;g.title='Test '+n;g.style.borderColor=sj(n)[3];if(v){g.style.background=cl[v];g.style.color='#fff'}g.onclick=()=>{sel=K(tdate(n));vm=new Date(tdate(n).getFullYear(),tdate(n).getMonth(),1);render()};$('grid').append(g)}
+$('subj').innerHTML=SJ.map(x=>{if(1){const t=x[1]-x[0]+1;let d=0;for(let n=x[0];n<=x[1];n++)if((st.s[n]||{}).st=='d')d++;return cyl(x,d,t)}const t=x[1]-x[0]+1;let d=0;for(let n=x[0];n<=x[1];n++)if((st.s[n]||{}).st=='d')d++;return`<div class="row"><span>${x[2]}</span><span class="pnp-sub">${d}/${t}</span></div><div class="bar"><i style="width:${d/t*100}%;background:${x[3]}"></i></div>`}).join('');
+const pts=[];for(let n=1;n<=108;n++){const v=(st.s[n]||{}).sc;if(v!==undefined&&v!=='')pts.push(+v)}
+$('trend').innerHTML=pts.length<2?'<span class="pnp-sub">Enter scores on 2+ tests to see your trend.</span>':`<svg viewBox="0 0 200 60" preserveAspectRatio="none"><polyline fill="none" stroke="var(--ac)" stroke-width="2" points="${pts.map((v,i)=>(i/(pts.length-1)*196+2)+','+(58-v*0.56)).join(' ')}"/></svg>`;
+$('trend').insertAdjacentHTML('beforeend',bars());
+$('plan').innerHTML=b==0?'<span class="pnp-sub">No backlog. Keep the daily rhythm.</span>':`<div>Backlog: ${s.back.map(n=>`<span class="tp" style="cursor:pointer" data-n="${n}">T${n}</span>`).join('')}</div><p class="pnp-sub">Add 1 backlog test per day beside the daily test and you clear it by <b>${add(today,b).toDateString().slice(4,10)}</b>. Use Reserve days (1–6 Mar) as the safety net.</p>`;
+document.querySelectorAll('#pnp-plan [data-n]').forEach(x=>x.onclick=()=>{sel=K(tdate(+x.dataset.n));render()});
+cal();popup(false);save();document.querySelectorAll('#tool-pnp .fg textarea').forEach(grow)}
+const f2=n=>+n.toFixed(2),kk=it=>it.t=='T'?it.n:it.t=='F'?'F'+it.a+'-'+it.b:'G'+it.n;
+function grow(e){e.style.height='auto';e.style.height=Math.max(30,e.scrollHeight+2)+'px'}
+document.addEventListener('input',e=>{if(e.target.matches&&e.target.matches('.fg textarea'))grow(e.target)});
+function cm(r){const t=parseFloat(r.t)||0,c=parseFloat(r.c)||0,w=parseFloat(r.w)||0,q=r.sch=='c'?[2.5,.83]:[2,.66];return{t,un:Math.max(0,t-c-w),mk:f2(c*q[0]-w*q[1]),out:f2(t*q[0])}}
+function form(o,d){const m=cm(o),i=(k,l,ty)=>`<label>${l}<input class="sf" data-k="${k}" type="${ty||'number'}" ${ty?'':'min="0"'} value="${o[k]??''}"></label>`;
+return`<div class="sform"><label>Date<input class="sf" data-k="dt" type="date" value="${o.dt||d}"></label>${i('t','Total questions')}${i('c','Correct')}${i('w','Wrong')}<div class="au" id="pnp-un">Unattempted<b>${m.un}</b></div><div class="au ok" id="pnp-mk">Marks obtained<b>${m.mk} / ${m.out}</b></div></div><div class="pnp-sub" style="margin:12px 0 0">Mistake analysis</div><div class="sform an">${i('sm','Silly mistake')}${i('aw','Awareness gap')}${i('co','Conceptual gap')}${i('rv','Revision gap')}${i('fa','Factual gap')}${i('gu','Guesswork')}</div><div class="sform"><label style="grid-column:1/-1">Notes<input class="sf" data-k="nt" type="text" placeholder="Add notes..." value="${(o.nt||'').replace(/"/g,'&quot;')}"></label></div>`}
+function form2(o,d){const m=cm(o),i=(k,l)=>`<label>${l}<input class="sf" data-k="${k}" type="number" min="0" value="${o[k]??''}"></label>`;
+return`<div class="sec"><div class="sh y">📝 Result</div><div class="sg r5"><label>Date<input class="sf" data-k="dt" type="date" value="${o.dt||d}"></label>${i('t','Total Qs')}${i('c','Correct')}${i('w','Wrong')}<div class="au" id="pnp-un">Unattempted<b>${m.un}</b></div></div><div class="au ok big2" id="pnp-mk">Marks obtained<b>${m.mk} / ${m.out}</b></div></div><div class="two"><div class="sec"><div class="sh c">🔍 Incorrect analysis</div><div class="sg r4">${i('aw','Awareness gap')}${i('co','Conceptual gap')}${i('rv','Revision gap')}${i('fa','Factual gap')}</div></div><div class="sec"><div class="sh g">⚡ Other</div><div class="sg r2">${i('sm','Silly mistake')}${i('gu','Guesswork')}</div></div></div><label class="nt">Notes<input class="sf" data-k="nt" type="text" placeholder="Add notes..." value="${(o.nt||'').replace(/"/g,'&quot;')}"></label>`}
+function form3(o,d){const m=cm(o),esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;'),
+t=(k,l,x,y)=>`<label class="${x||''}">${l}<textarea class="sf" data-k="${k}" rows="1" ${y?'inputmode="decimal"':''}>${esc(o[k])}</textarea></label>`;
+return`<div class="fm"><span class="fl y">📝 Result</span><div class="fg"><label>Date<input class="sf" data-k="dt" type="date" value="${o.dt||d}"></label><label class="w2">Marking scheme<select class="sf" data-k="sch"><option value="g" ${o.sch!='c'?'selected':''}>GS  +2 / −0.66</option><option value="c" ${o.sch=='c'?'selected':''}>CSAT  +2.5 / −0.83</option></select></label>${t('t','Total Qs','',1)}${t('c','Correct','',1)}${t('w','Wrong','',1)}<div class="au" id="pnp-un">Unattempted<b>${m.un}</b></div><div class="au ok w2" id="pnp-mk">Marks obtained<b>${m.mk} / ${m.out}</b></div></div>
+<span class="fl cy">🔍 Mistake analysis</span><div class="fg">${t('sm','Silly mistake')}${t('gu','Guesswork')}${t('aw','Awareness gap','tc')}${t('co','Conceptual gap','tc')}${t('rv','Revision gap','tc')}${t('fa','Factual gap','tc')}${t('nt','Notes','wf')}</div></div>`}
+function cyl(x,d,t){const p=Math.round(d/t*100);return`<div class="cy" style="--c:${x[3]}"><span class="pc">${p}%</span><div class="tube" title="${p}%"><i style="height:${p}%;--c:${x[3]}"></i></div><span class="nm" style="color:${x[3]}">${x[2]}</span><small>${d}/${t}</small></div>`}
+function bars(){const a=[];for(let n=1;n<=108;n++){const r=st.s[n];if(r&&r.sc!=null&&r.sc!=='')a.push(n)}const l=a.slice(-10);if(!l.length)return'';
+return`<div class="bg">${l.map(n=>{const r=st.s[n],v=Math.max(0,Math.min(100,r.sc)),m=cm(r);return`<div class="bc" title="Test ${n}: ${m.mk}/${m.out}"><b style="bottom:calc(${v}% + 2px)">${r.sc}</b><i style="height:${v}%;background:${sj(n)[3]}"></i><span>T${n}</span></div>`}).join('')}</div><div class="pnp-sub">Last ${l.length} tests · bar colour = subject</div>`}
+const FS={
+1:'Political Theory: Freedom, Equality, Social Justice, Rights, Citizenship, Nationalism, Secularism|Evolution of Constitution: Demand for a Constituent Assembly, Composition, Working, Committees of the Constituent Assembly, Enactment, Enforcement, Experts Committee of the Congress, Criticism of the Constituent Assembly|Salient Features: Lengthiest written Constitution, Sources (borrowed features), Blend of rigidity and flexibility, Parliamentary form, Independent judiciary, Single citizenship, Emergency provisions, Three-tier government, Parts, Schedules and Articles|Preamble: Text, Ingredients, Key Words, Significance, Preamble as Part of the Constitution, Amendability of the Preamble',
+2:'Basic Structure: Emergence of the Basic Structure, Elements of the Basic Structure|Amendment: Procedure, Types, Criticism of the Amendment Procedure|Union and its Territory: Union of States, Parliament’s Power to Reorganise the States, Exchange of Territories with Bangladesh, Evolution of States and Union Territories|Citizenship: Meaning and Significance, Constitutional Provisions, Citizenship Act 1955, Single Citizenship, Overseas Citizenship of India',
+3:'Fundamental Rights: Features, Definition of State, Laws Inconsistent with FRs, Right to Equality, Right to Freedom, Right Against Exploitation, Right to Freedom of Religion, Cultural and Educational Rights, Right to Constitutional Remedies, Writs—Types and Scope, Armed Forces and FRs, Martial Law and FRs, Effecting Certain FRs, Present Position of Right to Property, Exceptions to FRs, Criticism of FRs, Significance of FRs, Rights Outside Part III',
+4:'DPSP: Features, Classification, New Directive Principles, Sanction Behind DPSP, Criticism, Utility, Conflict Between FRs and DPSPs, Implementation, Directives Outside Part IV|Fundamental Duties: Swaran Singh Committee Recommendations, List, Features, Criticism, Significance, Verma Committee Observations',
+5:'Parliamentary System: Parliamentary System, Features of Parliamentary Government, Features of Presidential Government, Merits, Demerits, Reasons for Adopting, Distinction between Indian and British Models|Federal System: Federal Features, Unitary Features, Critical Evaluation of the Federal System|Emergency: National Emergency, President’s Rule, Financial Emergency, Criticism of the Emergency Provisions',
+6:'President: Election, Qualifications, Oath and Conditions, Term, Impeachment and Vacancy, Powers and Functions, Veto Power, Ordinance-Making Power, Pardoning Power, Constitutional Position|Vice President: Elections, Qualifications, Oath and Conditions, Term and Vacancy, Powers and Functions, Indian and American Vice-Presidents Compared',
+7:'PM: Appointment, Oath, Term and Salary, Powers and Functions, Role Descriptions, Relationship with the President|CoM: Constitutional Provisions, Nature of Advice by Ministers, Appointment, Oath and Salary, Responsibility, Composition, Council of Ministers vs Cabinet, Role of Cabinet, Role Descriptions, Kitchen Cabinet|Cabinet Committees: Features, List, Functions',
+8:'Governor: Appointment, Conditions of Office, Term, Powers and Functions, Constitutional Position|CM: Appointment, Oath, Term and Salary, Powers and Functions, Relationship with the Governor|State CoM: Constitutional Provisions, Nature of Advice by Ministers, Appointment, Oath and Salary, Responsibility, Composition, Cabinet',
+9:'Parliament: Organisation, Composition of the Two Houses, System of Elections to Lok Sabha, Duration, Membership, Presiding Officers, Leaders in Parliament, Sessions, Devices of Parliamentary Proceedings, Legislative Procedure, Joint Sitting, Budget in Parliament, Multifunctional Role, Ineffectiveness of Parliamentary Control, Position of Rajya Sabha, Parliamentary Privileges, Sovereignty of Parliament|Parliamentary Committees: Classification (standing and ad hoc), PAC, Estimates Committee, COPU, Departmental Standing Committees, Joint Parliamentary Committees, Committees on petitions, privileges, ethics and rules|Parliamentary Forums: Water Conservation, Children, Youth, Population and Public Health, Global Warming and Climate Change|Parliamentary Group: Indian Parliamentary Group, Inter-Parliamentary Union, Commonwealth Parliamentary Association, Parliamentary Research and Training Institute',
+10:'State Legislature: Organisation, Composition of Two Houses, Duration, Membership, Presiding Officers, Sessions, Legislative Procedure, Position of Legislative Council, Privileges|Union Territories: Creation, Administration, Special Provisions for Delhi, Advisory Committees',
+11:'Supreme Court: Composition and Appointment, Qualifications, Oath and Salaries, Tenure and Removal, Acting, Adhoc and Retired Judges, Seat and Procedure, Independence, Jurisdiction and Powers, Supreme Court Advocates|Judicial Review: Meaning, Importance, Constitutional Provisions, Scope, Judicial Review of the Ninth Schedule|Judicial Activism: Meaning, Judicial Review and Judicial Activism, Justification, Activators, Apprehensions, Judicial Activism vs. Judicial Restraint',
+12:'High Court: Composition and Appointment, Qualifications, Oath and Salaries, Tenure, Removal and Transfer, Acting, Additional and Retired Judges, Independence, Jurisdiction and Powers|Subordinate Courts: Constitutional Provisions, Structure and Jurisdiction, NALSA, Lok Adalats, Permanent Lok Adalats, Family Courts, Gram Nyayalayas|PIL: Meaning, Features, Scope, Principles, Guidelines for Admitting PIL',
+13:'Centre-State Relations: Legislative Relations, Administrative Relations, Financial Relations, Trends|Inter-State Relations: Inter-State Water Disputes, Inter-State Councils, Public Acts, Records and Judicial Proceedings, Inter-State Trade and Commerce, Zonal Councils',
+14:'Panchayati Raj: Evolution, 73rd Amendment Act 1992, Compulsory and Voluntary Provisions, PESA Act 1996, Finances, Reasons for Ineffective Performance|Municipalities: Evolution of Urban Bodies, 74th Amendment Act 1992, Types of Urban Governments, Municipal Personnel, Municipal Revenue, Central Council of Local Government',
+15:'Scheduled and Tribal Areas: Administration of Scheduled Areas, Administration of Tribal Areas|Special Provisions for Some States: Maharashtra and Gujarat, Nagaland, Assam and Manipur, Andhra Pradesh or Telangana, Sikkim, Mizoram, Arunachal Pradesh and Goa, Karnataka|Special Provisions for Certain Classes: SCs, STs, Anglo-Indian community, OBCs, EWS, Reservation in legislatures and services, Safeguards for minorities|Official Language: Language of the Union, Regional Languages, Language of the Judiciary and Texts of Laws, Special Directives, Committee of Parliament on Official Language, Classical Language Status|Co-operative Societies: Constitutional Provisions, Reasons for the 97th Amendment',
+16:'Elections: Electoral System, Election Machinery, Election Process|Anti-Defection Law: Provisions, Evaluation, 91st Amendment Act (2003)|Election Laws: RPA 1950, RPA 1951, Delimitation Act 2002, Other Acts, Rules and Orders Relating to Elections|Electoral Reforms: Committees, Reforms Before 1996, of 1996, After 1996, Since 2010|Political Parties: Party system in India, National and State parties and recognition criteria, One-party dominance and the Congress system, Challenges to Congress dominance|Role of Regional Parties: Rise, Role in federal politics, Merits and demerits|Coalition Government: Coalition era since 1989, Merits and demerits, Alliance politics|Voting Behaviour: Factors (caste, religion, region, class, issues), Turnout trends, Role of media|Pressure Groups: Types and techniques, Role in Indian politics, Difference from political parties',
+17:'Constitutional Bodies: Election Commission, UPSC, State PSC, Finance Commission, GST Council, NCSC, NCST, NCBC, Special Officer for Linguistic Minorities, CAG, Attorney General, Advocate General|Public Services: All-India Services, Central Services, State Services, Constitutional provisions (Part XIV), Doctrine of pleasure, Safeguards for civil servants|Rights and Liabilities of the Government: Property of the Union and States, Contracts, Suits and proceedings, Escheat, Immunities',
+18:'Non-Constitutional Bodies: NITI Aayog, NHRC, SHRC, CIC, SIC, CVC, CBI, Lokpal and Lokayuktas, NIA, NDMA|Tribunals: Administrative Tribunals, Tribunals for Other Matters|National Integration: Obstacles (communalism, regionalism, casteism, linguism), National Integration Council, Measures to promote integration|Foreign Policy: Constitutional provisions, Treaty-making power, Principles (Panchsheel, Non-Alignment, Gujral Doctrine, Look East and Act East, Neighbourhood First)|Politics Since Independence: Planned development, Crisis of democratic order (JP movement, Emergency, Janata experiment), Popular movements (Chipko, Narmada Bachao, Dalit Panthers, BKU, RTI), Regional aspirations (J&K, Punjab, North-East), Recent developments (Mandal, Ayodhya, new economic policy)|Constitution Review: Venkatachaliah Commission'};
+Object.assign(FS,{
+19:'Microeconomics: Basics of Economics, scarcity, choice, marginal utility, basic economic problem, factors of production, PPC, Law of demand and its determinants, types of goods, elasticities, law of supply, determinants, supply and demand diagram, government interventions, types of markets|Economic Organisation: Central problems of an economy (what, how, for whom), Centrally planned, market and mixed economies, Positive and normative economics, Micro vs macro, Four sectors of economy|Consumer Theory: Utility (cardinal and ordinal), Budget set and budget line, Indifference curves, Optimal choice of the consumer|Demand: Demand curve, Normal and inferior goods, Substitutes and complements, Shifts vs movements along the curve, Market demand|Elasticity: Price elasticity of demand and its determinants, Elasticity and total expenditure, Income and cross elasticity|Supply and Equilibrium: Firm and market supply, Price elasticity of supply, Equilibrium, excess demand and excess supply, Price ceiling and price floor|Production and Costs: Production function, Short run and long run, Total, average and marginal product, Law of diminishing marginal product, Returns to scale, Short run and long run costs|Market Structures: Perfect competition (profit maximisation, shut down point, break-even), Monopoly, Monopolistic competition, Oligopoly',
+20:'Macroeconomics: Circular flow of income, aggregate demand, aggregate supply, macroeconomic equilibrium|Circular Flow: Two, three and four sector models, Leakages and injections, Stock and flow variables|Aggregate Demand: Consumption and saving functions, Investment (autonomous and induced), Government spending, Net exports|Income Determination: Ex-ante and ex-post, Equilibrium level of income, Investment multiplier, Autonomous change, Paradox of thrift|Output Gaps: Full employment, Inflationary gap, Deflationary gap, Short run fixed-price analysis',
+21:'National Income Accounting: Factors of production, methods of measuring national income|Concepts: GDP, GNP, NDP, NNP, GVA, Factor cost vs market prices, Personal and disposable income, Nominal vs real GDP, GDP deflator|Methods: Product (value added), Income and Expenditure methods, Double counting, Problems in measurement|GDP Estimation: Investment, base effect, estimation of GDP, alternatives to GDP, ICOR|GDP Methodology: NSO methodology and base year revision, Productivity and capital-output ratio, Potential GDP and output gap|GDP and Welfare: GDP and development, Human capital, World Bank and IMF classification of countries',
+22:'Unemployment: LFPR, demographic dividend, unemployment surveys in India, unemployment rate, employment measurement (usual status, CWS, CDS), Keynesian unemployment, types of unemployment, Shapes of recovery, employment elasticity, skilling in India|Workforce Structure: Workers and employment, Self-employed, Regular salaried and casual workers, Participation of people in employment, Underemployment, Growth and changing structure of employment|Formal and Informal Economy: Informalisation of the Indian workforce, Organised vs unorganised sector, Government initiatives for employment generation|Labour Laws: Labour codes, Fixed term employment, Migrant labour, EPFO, National Pension System',
+23:'Poverty: Definition, poverty measurement (poverty line, committees), India’s progress|Poverty Analysis: International poverty lines, MPI, poverty-growth correlation, causes of poverty, solutions (credit, insurance, pension, microfinance), poverty trap|Poverty Alleviation: Growth-oriented approach, Employment and self-employment programmes (MGNREGA, NRLM, PMGSY), Food and nutrition security, Social security|Inequality and Human Development: Reasons for inequality, resource curse, Marxist view, inequality curves, growth–inequality models, inclusive growth, HDI and other indices|Human Capital: Human capital vs physical capital, State of human capital in India, Education sector, Health sector, Human capital and economic growth',
+24:'Inflation: Demand-side and supply-side causes, measurement (MoM, YoY, QoQ), hyperinflation, skewflation, shrinkflation, stagflation etc|Price Indices: CPI and its indicators, core vs headline inflation, WPI, effects of inflation|Phillips Curve: Inflation–unemployment trade-off, Short run and long run Phillips curve, Disinflation and reflation|Controlling Inflation: Fiscal and administrative measures, Supply management, Winners and losers from inflation',
+25:'Money: Why money? evolution of money, demand for money, supply of money|Functions of Money: Medium of exchange, Unit of account, Store of value, Legal tender, Velocity and money circulation|Money Creation: Money aggregates (M0, M1, M2, M3, M4), Creation of money, money multiplier|Deposits and Accounts: Savings, current, fixed and recurring deposits, Jan Dhan and basic accounts|Digital Money: Cryptocurrency, CBDC (e-rupee), Digital payments',
+26:'Monetary Policy: Monetary policy, MPC, stances and tools, effectiveness|Policy Framework: Inflation targeting, Monetary Policy Committee, Repo, reverse repo, SDF, MSF, CRR, SLR, OMO, Bank rate, Transmission of policy|Lending Rates: Base rate, MCLR, External benchmark lending rate|Reserve Bank of India: Functions of RBI, Sources of income and Economic Capital Framework, Relationship between RBI and the Government',
+27:'Banking: Banks and types, bank health, Basel norms, financial inclusion, liquidity trap, NPA, classification and causes, twin balance sheet crisis|History of Indian Banking: Nationalisation, Narasimham reforms, Priority sector lending, Payments banks, Small finance banks, Regional rural banks, Cooperative banks|Regulation and Health: Prompt Corrective Action, Systemically Important Banks, Categorisation of loans, Large corporates and banking licences|Stressed Assets: NPA crisis and bad bank, RBI circular of June 2019 on resolution of NPAs',
+28:'Financial Institutions and Intermediaries: Role of banks, NBFCs, mutual funds, insurance companies, microfinance institutions etc., financial inclusion, Regulation by RBI, SEBI, IRDAI, NABARD etc.|Financial Regulation: Financial Stability and Development Council, Development Financial Institutions, National Strategy for Financial Inclusion|NBFCs and Insolvency: NBFCs and types, Credit rating agencies, SARFAESI Act, IBC, CIRP, PPIRP, bank recapitalisation',
+29:'Financial System and Markets (Part 1): Capital market, money market|Financial Markets: Money market instruments (call money, T-bills, commercial paper, certificates of deposit), Primary and secondary markets, IPO, FPO, OFS|Securities: Government securities (dated securities, SDLs), Corporate bond market, Types of company',
+30:'Financial System and Markets (Part 2): Stock exchanges|Stock Exchanges: BSE, NSE, Sensex and Nifty, Depositories, SEBI and market regulation|Derivatives and Funds: Futures, options and swaps, Participatory notes, Alternative investment funds, InvITs and REITs|Public Sector Investment: Strategic disinvestment, GIFT City',
+31:'Government Budgeting and Fiscal Policy (Part 1): Annual Financial Statement, budget components, stabilisation function, budgeting techniques, revenue and capital budget, types of deficits, monetisation of deficit|Budget Procedure: Stages of budget, Vote on account, Appropriation and Finance Bills, Government accounts (Consolidated Fund, Contingency Fund, Public Account)|Budget Classification: Balanced, surplus and deficit budgets, Zero-based and outcome budgeting, Gender budgeting|Fiscal Responsibility: FRBM Act 2003 and its review, Perspectives on deficit and debt, Fiscal Council, Fiscal policy (expansionary and contractionary)',
+32:'Government Budgeting and Fiscal Policy (Part 2): Public finance- role and importance, public expenditure (revenue and capital, development and non-development), public revenue, public debt, deficit financing|Taxation: Social and economic objectives of Taxes, taxes (direct/indirect, specific/ad valorem), GST|India’s Tax System: Structure of taxes, Direct tax reforms, Surcharge and cess|Centre–State Finances: Funds transfer from Centre to States and UTs, Grants, Centrally sponsored schemes, GST compensation',
+33:'International Economics: Exchange rates, Balance of Payments, components of BoP, CAD, Dutch disease, currency convertibility, Marshall-Lerner condition, J-Curve, Market Stabilization Scheme (MSS), transfer pricing|Open Economy: Foreign exchange market, Determination of exchange rate, Nominal, real and PPP exchange rates, Appreciation and depreciation, Devaluation|Tax and Trade Practices: Advance Pricing Agreement, Transfer pricing',
+34:'International Economics: World Bank Group and other financial organisations, foreign investments, exchange rate systems, demand and supply of currency, East Asian crisis, currency swap agreements, currency movements and its impact|Bretton Woods Institutions: Bretton Woods Conference, IMF (quotas, SDR), World Bank, AIIB, New Development Bank|Foreign Investment: FDI, FPI, FII, FDI in retail and insurance, Currency swap and forex swap',
+35:'Agriculture: Trends in food production and consumption, food security and food policies, Major crops and cropping patterns, Irrigation systems, Issues in agricultural marketing, Use of technology, farm distress and government initiatives, Farm subsidies and MSP, PDS, Buffer stocks, Organic farming, Cooperative farming|Land Reforms: Land rights before independence, Land reforms after independence (zamindari abolition, tenancy, ceilings, consolidation), Land Acquisition Act 2013, Model Land Leasing Act 2016, Land pooling, Digitisation of land records|Prices and Income Support: MSP, PM-AASHA, PM-KISAN, PMFBY, Doubling farmers’ income, Agriculture export policy|Marketing: APMC Acts, e-NAM, Contract farming, FPOs, Agriculture infrastructure fund, Agri clusters|Subsidies: Price subsidies, DBT, Fertiliser and fuel subsidies, Food subsidy, FCI, PDS, NFSA 2013, Shanta Kumar Committee|Cropping Policy: Irrigation schemes (PMKSY, micro-irrigation), Crop diversification and shifts in cropping pattern, Food systems|Allied Sectors: Animal husbandry and National Livestock Mission, Horticulture (MIDH), National Bamboo Mission, Fisheries|Sustainable Farming: Integrated farming system, Agroecology, Conservation agriculture, Protected cultivation, Permaculture|Rural Development: Rural credit and self-help groups, Diversification into productive activities, Rural banking',
+36:'Industrial Sector: Policies, licensing, MSME, labour reforms, Companies Act, PPP, Make in India, Skill India, challenges in industrial development, organised and unorganised sector, investment models, recent government initiatives|Industrial Schemes: PLI, Start-ups and innovation policy, Smart manufacturing (Industry 4.0), IIP and core industries, National Single Window System, Aatmanirbhar Bharat|Food Processing: Scope and significance, Supply chain schemes (SAMPADA, PMMSY, Operation Greens), Essential Commodities Act 1955, Warehouse receipts|Services Sector: Banking, insurance, tourism, aviation, issues and potential, government policies, e-commerce|Planning and Reforms: Five-year plans (priorities and performance, planning issues), NITI Aayog, economic policies till 1991, reforms since 1991 (end of licence Raj, liberalisation, privatisation, globalisation, FDI, FII, challenges), Impact of British rule on the economy|Infrastructure: IT, communication, urbanisation, transport (roads, railways, ports, airports), Logistics (Sagarmala, Multi-modal logistics parks, PM Gati Shakti), Coal Mines Act and MMDR Act, Power and oil and gas policy, SEZ, Smart cities and AMRUT, Real estate act, National Infrastructure Pipeline and Monetisation Pipeline|Foreign Trade: Trade policy, product-wise and region-wise trade, subsidy boxes, WTO-related issues and India (GATT, Agreement on Agriculture, SPS, TRIMS, GATS), Free trade agreements and RCEP'});
+function fsHTML(it){if(!it)return'';const ns=it.t=='T'?[it.n]:it.t=='F'?Array.from({length:it.b-it.a+1},(_,i)=>it.a+i):[],f=ns.filter(n=>FS[n]);
+if(!f.length)return tops(it).map(x=>`<span class="tp">${x}</span>`).join('')+(ns.length?'<div class="pnp-sub" style="margin-top:6px">Full syllabus text for this test is not added yet.</div>':'');
+return`<div>${f.map(n=>(ns.length>1?`<div class="fsh">Test ${n} · ${sj(n)[2]}</div>`:'')+FS[n].split('|').map(s=>{const i=s.indexOf(':');return`<div class="fs"><b>${s.slice(0,i)}</b>${s.slice(i+1)}</div>`}).join('')).join('')}</div>`}
+function cal(){$('mt').textContent=vm.toLocaleString('en',{month:'long',year:'numeric'});let h='';'MTWTFSS'.split('').forEach(d=>h+=`<div class="h">${d}</div>`);
+const off=(vm.getDay()+6)%7,dim=new Date(vm.getFullYear(),vm.getMonth()+1,0).getDate();for(let i=0;i<off;i++)h+='<div></div>';
+for(let d=1;d<=dim;d++){const dt=new Date(vm.getFullYear(),vm.getMonth(),d),k=K(dt),it=M[k],v=it?stOf(it):'';
+h+=`<div class="c ${k==TK?'pnp-t':''} ${k==sel?'pnp-s':''}" data-k="${k}">${d}<em>${it?it.t=='T'?'T'+it.n:it.t=='F'?'FLT':it.t=='G'?'FLT'+it.n:'Rsv':''}</em>${v?`<span class="k" style="color:${cl[v]}">${ic[v]}</span>`:''}${it&&it.t=='T'?`<u style="background:${sj(it.n)[3]}"></u>`:it?'<u style="background:var(--mu)"></u>':''}</div>`}
+$('cal').innerHTML=h;$('cal').querySelectorAll('.c').forEach(c=>c.onclick=()=>{sel=c.dataset.k;render()});
+$('leg').innerHTML=SJ.map(x=>`<span style="color:${x[3]}">■</span> ${x[2]}`).join(' · ')+' · <span>■</span> FLT/Reserve'}
+function popup(force){const tm=add(today,1),it=M[TK];if(!force&&st.dis==TK){$('pop').classList.remove('show');return}
+$('pop').innerHTML=`<div class="row"><b>📌 Tomorrow · ${tm.toDateString().slice(0,10)}</b><button id="pnp-x">✕</button></div><div style="font-weight:600;margin:6px 0">${lab(it)}</div>${fsHTML(it)}<p class="pnp-sub" style="margin:10px 0 0">${it&&it.t=='T'?'Skim these headings tonight, then do a 20-min recall before sleeping.':it&&it.t=='F'?'Revise your notes and backlog tests today. Do not start new topics.':'Plan your day.'}</p>`;
+$('pop').classList.add('show');$('x').onclick=()=>{st.dis=TK;save();$('pop').classList.remove('show')}}
+$('bell').onclick=()=>popup(true);$('pm').onclick=()=>{vm=new Date(vm.getFullYear(),vm.getMonth()-1,1);cal()};$('nm').onclick=()=>{vm=new Date(vm.getFullYear(),vm.getMonth()+1,1);cal()};
+$('rs').onclick=()=>{try{const o=JSON.parse($('bk').value);if(!o||typeof o!=='object')throw 0;st=Object.assign(blank(),o);render()}catch(e){alert('Invalid backup text')}};
+function init(data,onSave){
+  hook=null;let migrated=false;
+  if(data&&typeof data==='object'){st=Object.assign(blank(),data)}
+  else{st=blank();try{const old=localStorage.getItem('pnp27');if(old){st=Object.assign(blank(),JSON.parse(old));migrated=true}}catch(e){}}
+  lastJson=migrated?'':JSON.stringify(st);
+  sel=TK;
+  render();
+  hook=onSave;
+  if(migrated)save();
+}
+return{init};
+})();
+</script>
 
 <script>
 // ======================================================
