@@ -44,94 +44,98 @@
 
   /* ===== APP SHELL ===== */
   #app-shell{display:none;min-height:100vh}
-  #app-header{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20}
+  #app-header{background:var(--surface);border-bottom:1px solid var(--border);height:58px;padding:0 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20}
   #app-header .brand{font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px}
   #app-header .brand .logo-dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+  #main-tabs{display:flex;gap:6px;padding:10px 20px;background:var(--surface);border-bottom:1px solid var(--border);flex-wrap:nowrap;overflow-x:auto;position:sticky;top:58px;z-index:19;scrollbar-width:thin}
+  .main-tab{flex:none;white-space:nowrap;font-size:13px;padding:8px 16px;border-radius:20px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);cursor:pointer;font-weight:500}
+  .main-tab:hover{background:var(--accent-bg);color:var(--accent-text)}
+  .main-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
   .tool-panel{display:none}
   .tool-panel.active{display:block}
 
   /* ===== REVISION TRACKER (scoped) ===== */
-  #tool-revision header{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
-  #tool-revision .logo{font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px}
-  #tool-revision .header-btns{display:flex;gap:8px}
-  #tool-revision .hbtn{font-size:12px;padding:6px 12px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:5px}
-  #tool-revision .hbtn:hover{background:var(--surface2);color:var(--text);border-color:#C8C6BC}
-  #tool-revision .hbtn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
-  #tool-revision .hbtn.primary:hover{background:var(--accent-text)}
-  #tool-revision main{max-width:860px;margin:0 auto;padding:24px 16px}
-  :is(#tool-revision,#tool-dashboard,#sidebar) .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
-  :is(#tool-revision,#tool-dashboard,#sidebar) .stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;box-shadow:var(--shadow);cursor:pointer;user-select:none}
-  :is(#tool-revision,#tool-dashboard,#sidebar) .stat:hover{box-shadow:0 3px 10px rgba(0,0,0,0.12)}
-  :is(#tool-revision,#tool-dashboard,#sidebar) .stat.active-filter{border-width:2px}
-  :is(#tool-revision,#tool-dashboard,#sidebar) .stat.overdue.active-filter{border-color:var(--red);background:var(--red-bg)}
-  :is(#tool-revision,#tool-dashboard,#sidebar) .stat.soon.active-filter{border-color:#BA7517;background:var(--amber-bg)}
-  :is(#tool-revision,#tool-dashboard,#sidebar) .stat.fresh.active-filter{border-color:#639922;background:var(--green-bg)}
-  :is(#tool-revision,#tool-dashboard,#sidebar) .stat.never.active-filter{border-color:var(--accent);background:var(--accent-bg)}
-  #tool-revision .filter-heading{font-size:13px;font-weight:600;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:8px}
-  #tool-revision .filter-clear{font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer}
-  #tool-revision .filter-clear:hover{background:var(--surface2);color:var(--text)}
-  :is(#tool-revision,#tool-dashboard,#sidebar) .daily-thought{background:var(--accent-bg);border:1px solid var(--accent-border);border-radius:var(--radius);padding:14px 16px;margin-bottom:20px}
-  :is(#tool-revision,#tool-dashboard,#sidebar) .thought-label{font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--accent-text);text-transform:uppercase;margin-bottom:6px}
-  :is(#tool-revision,#tool-dashboard,#sidebar) .thought-text{font-size:13px;color:var(--accent-text);line-height:1.65}
-  :is(#tool-revision,#tool-dashboard,#sidebar) .stat-val{font-size:22px;font-weight:600}
-  :is(#tool-revision,#tool-dashboard,#sidebar) .stat-lbl{font-size:11px;color:var(--muted);margin-top:2px}
-  :is(#tool-revision,#tool-dashboard,#sidebar) .stat.overdue .stat-val{color:var(--red)}
-  :is(#tool-revision,#tool-dashboard,#sidebar) .stat.soon .stat-val{color:var(--amber)}
-  :is(#tool-revision,#tool-dashboard,#sidebar) .stat.fresh .stat-val{color:var(--green)}
-  :is(#tool-revision,#tool-dashboard,#sidebar) .tabs-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:16px;flex-wrap:wrap}
-  :is(#tool-revision,#tool-dashboard,#sidebar) .tabs{display:flex;gap:6px;flex-wrap:wrap;flex:1}
-  :is(#tool-revision,#tool-dashboard,#sidebar) .tab{font-size:13px;padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;font-weight:500;display:flex;align-items:center;gap:5px}
-  :is(#tool-revision,#tool-dashboard,#sidebar) .tab:hover:not(.active){background:var(--surface2);color:var(--text)}
-  :is(#tool-revision,#tool-dashboard,#sidebar) .tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-  :is(#tool-revision,#tool-dashboard,#sidebar) .tab-del{font-size:11px;opacity:0.55;cursor:pointer;margin-left:2px;line-height:1}
-  :is(#tool-revision,#tool-dashboard,#sidebar) .tab-del:hover{opacity:1}
-  :is(#tool-revision,#tool-dashboard,#sidebar) .tab.active .tab-del{color:#fff}
-  :is(#tool-revision,#tool-dashboard,#sidebar) .add-subject-btn{font-size:12px;padding:6px 12px;border-radius:20px;border:1px dashed var(--border);background:transparent;color:var(--muted);cursor:pointer;white-space:nowrap}
-  :is(#tool-revision,#tool-dashboard,#sidebar) .add-subject-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
-  #tool-revision .toolbar{display:flex;gap:8px;margin-bottom:14px}
-  #tool-revision .toolbar input{flex:1;font-size:13px;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);outline:none}
-  #tool-revision .toolbar input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-bg)}
-  #tool-revision .toolbar select{font-size:12px;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--muted);cursor:pointer;outline:none}
-  #tool-revision .add-btn{font-size:13px;padding:8px 16px;border-radius:var(--radius);border:none;background:var(--accent);color:#fff;cursor:pointer;font-weight:500;white-space:nowrap}
-  #tool-revision .add-btn:hover{background:var(--accent-text)}
-  #tool-revision .chapter-list{display:flex;flex-direction:column;gap:6px}
-  #tool-revision .ch-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
-  #tool-revision .ch-card.overdue{border-left:3px solid var(--red)}
-  #tool-revision .ch-card.soon{border-left:3px solid #BA7517}
-  #tool-revision .ch-card.fresh{border-left:3px solid #639922}
-  #tool-revision .ch-card.never{border-left:3px solid var(--border)}
-  #tool-revision .ch-head{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;user-select:none}
-  #tool-revision .ch-head:hover{background:var(--surface2)}
-  #tool-revision .ch-name{font-size:13px;font-weight:500;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  #tool-revision .badge{font-size:11px;font-weight:500;padding:3px 9px;border-radius:20px;white-space:nowrap;flex-shrink:0}
-  #tool-revision .badge.overdue{background:var(--red-bg);color:var(--red)}
-  #tool-revision .badge.soon{background:var(--amber-bg);color:var(--amber)}
-  #tool-revision .badge.fresh{background:var(--green-bg);color:var(--green)}
-  #tool-revision .badge.never{background:var(--surface2);color:var(--muted)}
-  #tool-revision .ch-actions{display:flex;gap:4px;flex-shrink:0;align-items:center}
-  #tool-revision .icon-btn{background:none;border:none;cursor:pointer;padding:4px 6px;color:var(--muted);font-size:14px;border-radius:4px}
-  #tool-revision .icon-btn:hover{color:var(--red);background:var(--red-bg)}
-  #tool-revision .chevron{font-size:11px;color:var(--muted);transition:transform .2s;display:inline-block;padding:4px 6px}
-  #tool-revision .chevron.open{transform:rotate(180deg)}
-  #tool-revision .rev-count{font-size:11px;color:var(--muted);background:var(--surface2);border-radius:20px;padding:2px 7px;flex-shrink:0}
-  :is(#tool-revision,#tool-dashboard,#sidebar) .tab.all-tab{font-weight:700}
-  :is(#tool-revision,#tool-dashboard,#sidebar) .tab.all-tab:not(.active){background:var(--accent-bg);color:var(--accent-text);border-color:var(--accent-border)}
-  #tool-revision .subject-tag{font-size:10px;font-weight:600;color:var(--accent-text);background:var(--accent-bg);border-radius:20px;padding:2px 8px;flex-shrink:0}
-  #tool-revision .ch-body{border-top:1px solid var(--border);padding:12px 14px;display:flex;flex-direction:column;gap:10px;background:var(--ch-body)}
-  #tool-revision .field-row{display:flex;align-items:center;gap:10px}
-  #tool-revision .field-row label{font-size:12px;color:var(--muted);width:96px;flex-shrink:0}
-  #tool-revision .field-row input[type=date],#tool-revision .field-row select{font-size:12px;padding:5px 8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);outline:none}
-  #tool-revision .field-row.note-row{align-items:flex-start}
-  #tool-revision .field-row.note-row label{padding-top:6px}
-  #tool-revision textarea{width:100%;font-size:12px;padding:7px 9px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);resize:vertical;min-height:64px;font-family:inherit;outline:none;line-height:1.6}
-  #tool-revision .empty{text-align:center;padding:3rem;color:var(--muted);font-size:13px}
-  #tool-revision .empty-icon{font-size:32px;margin-bottom:10px}
-  #tool-revision .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center;z-index:100}
-  #tool-revision .modal{background:var(--surface);border-radius:12px;padding:24px;width:320px;border:1px solid var(--border);box-shadow:0 8px 32px rgba(0,0,0,0.15)}
-  #tool-revision .modal h3{font-size:15px;font-weight:600;margin-bottom:14px}
-  #tool-revision .modal input{background:var(--surface);width:100%;font-size:13px;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);outline:none;color:var(--text)}
-  #tool-revision .modal-btns{display:flex;gap:8px;margin-top:14px;justify-content:flex-end}
-  #rev-import-input{display:none}
+  :is(#tool-revision,#tool-mains) header{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+  :is(#tool-revision,#tool-mains) .logo{font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px}
+  :is(#tool-revision,#tool-mains) .header-btns{display:flex;gap:8px}
+  :is(#tool-revision,#tool-mains) .hbtn{font-size:12px;padding:6px 12px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:5px}
+  :is(#tool-revision,#tool-mains) .hbtn:hover{background:var(--surface2);color:var(--text);border-color:#C8C6BC}
+  :is(#tool-revision,#tool-mains) .hbtn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  :is(#tool-revision,#tool-mains) .hbtn.primary:hover{background:var(--accent-text)}
+  :is(#tool-revision,#tool-mains) main{max-width:860px;margin:0 auto;padding:24px 16px}
+  :is(#tool-revision,#tool-mains) .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+  :is(#tool-revision,#tool-mains) .stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;box-shadow:var(--shadow);cursor:pointer;user-select:none}
+  :is(#tool-revision,#tool-mains) .stat:hover{box-shadow:0 3px 10px rgba(0,0,0,0.12)}
+  :is(#tool-revision,#tool-mains) .stat.active-filter{border-width:2px}
+  :is(#tool-revision,#tool-mains) .stat.overdue.active-filter{border-color:var(--red);background:var(--red-bg)}
+  :is(#tool-revision,#tool-mains) .stat.soon.active-filter{border-color:#BA7517;background:var(--amber-bg)}
+  :is(#tool-revision,#tool-mains) .stat.fresh.active-filter{border-color:#639922;background:var(--green-bg)}
+  :is(#tool-revision,#tool-mains) .stat.never.active-filter{border-color:var(--accent);background:var(--accent-bg)}
+  :is(#tool-revision,#tool-mains) .filter-heading{font-size:13px;font-weight:600;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+  :is(#tool-revision,#tool-mains) .filter-clear{font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer}
+  :is(#tool-revision,#tool-mains) .filter-clear:hover{background:var(--surface2);color:var(--text)}
+  :is(#tool-revision,#tool-mains) .daily-thought{background:var(--accent-bg);border:1px solid var(--accent-border);border-radius:var(--radius);padding:14px 16px;margin-bottom:20px}
+  :is(#tool-revision,#tool-mains) .thought-label{font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--accent-text);text-transform:uppercase;margin-bottom:6px}
+  :is(#tool-revision,#tool-mains) .thought-text{font-size:13px;color:var(--accent-text);line-height:1.65}
+  :is(#tool-revision,#tool-mains) .stat-val{font-size:22px;font-weight:600}
+  :is(#tool-revision,#tool-mains) .stat-lbl{font-size:11px;color:var(--muted);margin-top:2px}
+  :is(#tool-revision,#tool-mains) .stat.overdue .stat-val{color:var(--red)}
+  :is(#tool-revision,#tool-mains) .stat.soon .stat-val{color:var(--amber)}
+  :is(#tool-revision,#tool-mains) .stat.fresh .stat-val{color:var(--green)}
+  :is(#tool-revision,#tool-mains) .tabs-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+  :is(#tool-revision,#tool-mains) .tabs{display:flex;gap:6px;flex-wrap:wrap;flex:1}
+  :is(#tool-revision,#tool-mains) .tab{font-size:13px;padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;font-weight:500;display:flex;align-items:center;gap:5px}
+  :is(#tool-revision,#tool-mains) .tab:hover:not(.active){background:var(--surface2);color:var(--text)}
+  :is(#tool-revision,#tool-mains) .tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+  :is(#tool-revision,#tool-mains) .tab-del{font-size:11px;opacity:0.55;cursor:pointer;margin-left:2px;line-height:1}
+  :is(#tool-revision,#tool-mains) .tab-del:hover{opacity:1}
+  :is(#tool-revision,#tool-mains) .tab.active .tab-del{color:#fff}
+  :is(#tool-revision,#tool-mains) .add-subject-btn{font-size:12px;padding:6px 12px;border-radius:20px;border:1px dashed var(--border);background:transparent;color:var(--muted);cursor:pointer;white-space:nowrap}
+  :is(#tool-revision,#tool-mains) .add-subject-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+  :is(#tool-revision,#tool-mains) .toolbar{display:flex;gap:8px;margin-bottom:14px}
+  :is(#tool-revision,#tool-mains) .toolbar input{flex:1;font-size:13px;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);outline:none}
+  :is(#tool-revision,#tool-mains) .toolbar input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-bg)}
+  :is(#tool-revision,#tool-mains) .toolbar select{font-size:12px;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--muted);cursor:pointer;outline:none}
+  :is(#tool-revision,#tool-mains) .add-btn{font-size:13px;padding:8px 16px;border-radius:var(--radius);border:none;background:var(--accent);color:#fff;cursor:pointer;font-weight:500;white-space:nowrap}
+  :is(#tool-revision,#tool-mains) .add-btn:hover{background:var(--accent-text)}
+  :is(#tool-revision,#tool-mains) .chapter-list{display:flex;flex-direction:column;gap:6px}
+  :is(#tool-revision,#tool-mains) .ch-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+  :is(#tool-revision,#tool-mains) .ch-card.overdue{border-left:3px solid var(--red)}
+  :is(#tool-revision,#tool-mains) .ch-card.soon{border-left:3px solid #BA7517}
+  :is(#tool-revision,#tool-mains) .ch-card.fresh{border-left:3px solid #639922}
+  :is(#tool-revision,#tool-mains) .ch-card.never{border-left:3px solid var(--border)}
+  :is(#tool-revision,#tool-mains) .ch-head{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;user-select:none}
+  :is(#tool-revision,#tool-mains) .ch-head:hover{background:var(--surface2)}
+  :is(#tool-revision,#tool-mains) .ch-name{font-size:13px;font-weight:500;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  :is(#tool-revision,#tool-mains) .badge{font-size:11px;font-weight:500;padding:3px 9px;border-radius:20px;white-space:nowrap;flex-shrink:0}
+  :is(#tool-revision,#tool-mains) .badge.overdue{background:var(--red-bg);color:var(--red)}
+  :is(#tool-revision,#tool-mains) .badge.soon{background:var(--amber-bg);color:var(--amber)}
+  :is(#tool-revision,#tool-mains) .badge.fresh{background:var(--green-bg);color:var(--green)}
+  :is(#tool-revision,#tool-mains) .badge.never{background:var(--surface2);color:var(--muted)}
+  :is(#tool-revision,#tool-mains) .ch-actions{display:flex;gap:4px;flex-shrink:0;align-items:center}
+  :is(#tool-revision,#tool-mains) .icon-btn{background:none;border:none;cursor:pointer;padding:4px 6px;color:var(--muted);font-size:14px;border-radius:4px}
+  :is(#tool-revision,#tool-mains) .icon-btn:hover{color:var(--red);background:var(--red-bg)}
+  :is(#tool-revision,#tool-mains) .chevron{font-size:11px;color:var(--muted);transition:transform .2s;display:inline-block;padding:4px 6px}
+  :is(#tool-revision,#tool-mains) .chevron.open{transform:rotate(180deg)}
+  :is(#tool-revision,#tool-mains) .rev-count{font-size:11px;color:var(--muted);background:var(--surface2);border-radius:20px;padding:2px 7px;flex-shrink:0}
+  :is(#tool-revision,#tool-mains) .tab.all-tab{font-weight:700}
+  :is(#tool-revision,#tool-mains) .tab.all-tab:not(.active){background:var(--accent-bg);color:var(--accent-text);border-color:var(--accent-border)}
+  :is(#tool-revision,#tool-mains) .subject-tag{font-size:10px;font-weight:600;color:var(--accent-text);background:var(--accent-bg);border-radius:20px;padding:2px 8px;flex-shrink:0}
+  :is(#tool-revision,#tool-mains) .ch-body{border-top:1px solid var(--border);padding:12px 14px;display:flex;flex-direction:column;gap:10px;background:var(--ch-body)}
+  :is(#tool-revision,#tool-mains) .field-row{display:flex;align-items:center;gap:10px}
+  :is(#tool-revision,#tool-mains) .field-row label{font-size:12px;color:var(--muted);width:96px;flex-shrink:0}
+  :is(#tool-revision,#tool-mains) .field-row input[type=date],:is(#tool-revision,#tool-mains) .field-row select{font-size:12px;padding:5px 8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);outline:none}
+  :is(#tool-revision,#tool-mains) .field-row.note-row{align-items:flex-start}
+  :is(#tool-revision,#tool-mains) .field-row.note-row label{padding-top:6px}
+  :is(#tool-revision,#tool-mains) textarea{width:100%;font-size:12px;padding:7px 9px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);resize:vertical;min-height:64px;font-family:inherit;outline:none;line-height:1.6}
+  :is(#tool-revision,#tool-mains) .empty{text-align:center;padding:3rem;color:var(--muted);font-size:13px}
+  :is(#tool-revision,#tool-mains) .empty-icon{font-size:32px;margin-bottom:10px}
+  :is(#tool-revision,#tool-mains) .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center;z-index:100}
+  :is(#tool-revision,#tool-mains) .modal{background:var(--surface);border-radius:12px;padding:24px;width:320px;border:1px solid var(--border);box-shadow:0 8px 32px rgba(0,0,0,0.15)}
+  :is(#tool-revision,#tool-mains) .modal h3{font-size:15px;font-weight:600;margin-bottom:14px}
+  :is(#tool-revision,#tool-mains) .modal input{background:var(--surface);width:100%;font-size:13px;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);outline:none;color:var(--text)}
+  :is(#tool-revision,#tool-mains) .modal-btns{display:flex;gap:8px;margin-top:14px;justify-content:flex-end}
+  #rev-import-input,#mrev-import-input{display:none}
 
   /* ===== SHARED "LEGACY" TABLE-STYLE TOOLS (Prelims + Daily) ===== */
   .legacy{background:#f4f4f2;padding:24px;font-family:'Segoe UI',Arial,sans-serif;color:#222;min-height:calc(100vh - 100px)}
@@ -188,23 +192,20 @@
   .legacy .legend b{color:#0a6e56}
   .legacy .empty{text-align:center;padding:3rem;color:#888;font-size:13px;background:#fff;border:1px solid #ddd;border-radius:8px}
 
-  @media(max-width:540px){:is(#tool-revision,#tool-dashboard,#sidebar) .stats{grid-template-columns:repeat(2,1fr)}#tool-revision header{padding:12px 14px}#tool-revision main{padding:14px 10px}}
+  @media(max-width:540px){:is(#tool-revision,#tool-mains) .stats{grid-template-columns:repeat(2,1fr)}:is(#tool-revision,#tool-mains) header{padding:12px 14px}:is(#tool-revision,#tool-mains) main{padding:14px 10px}}
 
 
   /* ===== TOP BAR ===== */
   #app-header{gap:10px}
-  .hdr-left{display:flex;align-items:center;gap:12px;min-width:0}
-  #menu-btn{width:38px;height:38px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;display:grid;place-items:center;flex:none}
-  #menu-btn:hover{background:var(--surface2)}
-  #menu-btn svg{width:20px;height:20px}
+  .hdr-left{display:flex;align-items:center;gap:14px;min-width:0}
   #hdr-timer{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--text);background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:6px 12px;white-space:nowrap}
   #hdr-timer small{font-weight:500;color:var(--muted);margin-right:4px}
   #app-header .right{position:relative;display:flex;align-items:center}
-  #profile-btn{position:relative;width:38px;height:38px;border-radius:50%;border:2px solid var(--accent-border);background:var(--accent);color:#fff;font-weight:700;font-size:15px;cursor:pointer;display:grid;place-items:center}
+  #profile-btn{position:relative;width:36px;height:36px;border-radius:50%;border:2px solid var(--accent-border);background:var(--accent);color:#fff;font-weight:700;font-size:15px;cursor:pointer;display:grid;place-items:center}
   #profile-btn .sync-dot{position:absolute;right:-2px;bottom:-2px;width:11px;height:11px;border-radius:50%;background:#2ecc71;border:2px solid var(--surface)}
   html[data-sync="busy"] .sync-dot{background:#f0ad2b}
   html[data-sync="error"] .sync-dot{background:#e5484d}
-  #profile-menu{position:absolute;top:48px;right:0;width:270px;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.18);padding:14px;z-index:70}
+  #profile-menu{position:absolute;top:46px;right:0;width:270px;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.18);padding:14px;z-index:70}
   #profile-menu[hidden]{display:none}
   .pm-user{display:flex;align-items:center;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:10px}
   .pm-avatar{width:40px;height:40px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:700;flex:none}
@@ -224,43 +225,16 @@
   .pm-btn:hover{background:var(--surface2)}
   .pm-btn.danger{color:var(--red)}
   .pm-tip{font-size:11px;color:var(--muted);line-height:1.5;margin:10px 0 8px;padding:8px 10px;background:var(--accent-bg);border-radius:var(--radius)}
-
-  /* ===== SIDEBAR ===== */
-  #sidebar-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .2s;z-index:55}
-  #sidebar{position:fixed;top:0;left:0;bottom:0;width:290px;max-width:86vw;background:var(--surface);border-right:1px solid var(--border);transform:translateX(-102%);transition:transform .25s ease;z-index:60;overflow-y:auto;padding:14px;box-shadow:0 0 30px rgba(0,0,0,.15)}
-  body.side-open #sidebar{transform:none}
-  body.side-open #sidebar-backdrop{opacity:1;pointer-events:auto}
-  .side-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding:2px 2px 12px;border-bottom:1px solid var(--border)}
-  #side-close{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;font-size:14px}
-  #side-close:hover{background:var(--surface2);color:var(--text)}
-  #main-tabs{display:flex;flex-direction:column;gap:4px}
-  .main-tab{display:flex;align-items:center;gap:10px;width:100%;text-align:left;font-size:14px;padding:10px 12px;border-radius:10px;border:1px solid transparent;background:transparent;color:var(--text);cursor:pointer;font-weight:500}
-  .main-tab:hover{background:var(--surface2)}
-  .main-tab.active{background:var(--accent);color:#fff}
-  .main-tab .ic{font-size:16px;width:20px;text-align:center}
-  .side-sub{display:none;margin:2px 0 8px 14px;padding:6px 0 6px 10px;border-left:2px solid var(--border)}
-  body[data-tool="revision"] .side-sub[data-for="revision"],body[data-tool="prelims"] .side-sub[data-for="prelims"]{display:block}
-  .side-sub-title{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin:0 0 6px 4px}
-  #sidebar .tabs{display:flex;flex-direction:column;gap:3px;flex:none}
-  #sidebar .tab{width:100%;justify-content:flex-start;text-align:left;font-size:13px;padding:6px 10px;border-radius:8px;border-color:transparent;background:transparent;color:var(--text)}
-  #sidebar .tab > span:not(.tab-del){margin-left:auto}
-  #sidebar .tab .tab-del{margin-left:6px}
-  #sidebar .tab:hover:not(.active){background:var(--surface2)}
-  #sidebar .tab.active{background:var(--accent-bg);color:var(--accent-text);border-color:var(--accent-border);font-weight:600}
-  #sidebar .tab.all-tab:not(.active){background:transparent;border-color:transparent;color:var(--text)}
-  #sidebar .tab.active .tab-del{color:var(--accent-text)}
-  #sidebar .add-subject-btn{margin:8px 0 0 4px}
-  .scope-chip{font-size:11px;font-weight:600;color:var(--accent-text);background:var(--accent-bg);border-radius:20px;padding:2px 10px;margin-left:6px}
-  .scope-chip:empty{display:none}
-  #tool-prelims .scope-chip{vertical-align:6px;margin-left:10px}
+  @media (max-width:560px){#app-header .brand span.bt{display:none}}
+  @media (max-width:420px){#hdr-timer small{display:none}#hdr-timer{padding:6px 9px;font-size:12px}}
 
   /* ===== DASHBOARD ===== */
-  #tool-dashboard{position:relative;overflow:hidden;min-height:calc(100vh - 62px)}
+  #tool-dashboard{position:relative;overflow:hidden;min-height:calc(100vh - 110px)}
   #tool-dashboard .orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.2;z-index:0;pointer-events:none}
   #tool-dashboard .o1{width:420px;height:420px;background:var(--orb1);top:-120px;right:-100px}
   #tool-dashboard .o2{width:460px;height:460px;background:var(--orb2);bottom:-160px;left:-140px}
   #tool-dashboard .o3{width:280px;height:280px;background:var(--orb3);top:42%;left:55%;opacity:.12}
-  #tool-dashboard .dwrap{position:relative;z-index:1;max-width:1040px;margin:0 auto;padding:clamp(24px,5vw,48px) 16px 40px}
+  #tool-dashboard .dwrap{position:relative;z-index:1;max-width:1040px;margin:0 auto;padding:clamp(24px,5vw,56px) 16px 40px}
   #tool-dashboard .glass{background:var(--glass);border:1px solid var(--border);border-radius:24px;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
   #tool-dashboard .hero{text-align:center}
   #tool-dashboard .pill{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:99px;border:1px solid var(--border);background:var(--glass);font-size:13px;color:var(--muted)}
@@ -277,21 +251,13 @@
   #tool-dashboard .ring .p{stroke-dasharray:289;stroke-dashoffset:289;transition:stroke-dashoffset .9s linear}
   #tool-dashboard .num{font-family:Fraunces,Georgia,serif;font-weight:600;font-variant-numeric:tabular-nums;font-size:clamp(28px,7vw,62px);letter-spacing:-.03em;line-height:1}
   #tool-dashboard .lbl{margin-top:12px;color:var(--muted);font-weight:500;font-size:clamp(12px,1.8vw,15px)}
-  #tool-dashboard .quote{padding:26px;text-align:center;margin-bottom:28px}
+  #tool-dashboard .quote{padding:26px;text-align:center;margin-bottom:20px}
   #tool-dashboard .quote p{font-family:Fraunces,Georgia,serif;font-size:clamp(18px,3vw,26px);font-weight:300;margin:0 0 10px;line-height:1.35;transition:opacity .5s}
   #tool-dashboard .quote span{color:var(--muted);font-size:14px}
   #tool-dashboard .done-msg{display:none;text-align:center;font-family:Fraunces,serif;font-size:clamp(28px,6vw,52px);margin:40px 0}
-  #tool-dashboard .dsec{margin-bottom:24px}
-  #tool-dashboard .dsec h2{font-size:15px;font-weight:600;margin:0 0 4px}
-  #tool-dashboard .dsec .hint{font-size:12px;color:var(--muted);margin:0 0 12px}
-  #tool-dashboard .dcard{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow)}
-  #tool-dashboard .legend{font-size:13px;line-height:1.7;color:var(--text)}
-  #tool-dashboard .legend b{color:var(--accent-text)}
-  #tool-dashboard .daily-thought{margin-bottom:0}
   #tool-dashboard .foot{text-align:center;color:var(--muted);font-size:12px}
   @media (max-width:760px){#tool-dashboard .clock{grid-template-columns:repeat(2,1fr)}#tool-dashboard .ring{width:min(100%,150px)}}
-  @media (prefers-reduced-motion:reduce){#tool-dashboard *,#sidebar{transition:none!important}}
-  @media (max-width:420px){#hdr-timer small{display:none}#hdr-timer{padding:6px 9px;font-size:12px}}
+  @media (prefers-reduced-motion:reduce){#tool-dashboard *{transition:none!important}}
 
   /* ===== DARK MODE — table tools ===== */
   html[data-theme="dark"] .legacy{background:var(--bg);color:var(--text)}
@@ -299,6 +265,11 @@
   html[data-theme="dark"] .legacy table{background:var(--surface)}
   html[data-theme="dark"] .legacy th,html[data-theme="dark"] .legacy td{border-color:#4a4a54}
   html[data-theme="dark"] .legacy thead th{color:#1a1a18}
+  html[data-theme="dark"] .legacy .tab{background:var(--surface);color:var(--muted);border-color:#4a4a54}
+  html[data-theme="dark"] .legacy .tab:hover:not(.active){background:var(--surface2);color:var(--text)}
+  html[data-theme="dark"] .legacy .tab.active{background:#5CE1E6;border-color:#3bbfc4;color:#003b3d}
+  html[data-theme="dark"] .legacy .add-subject-btn{border-color:#777;color:var(--muted)}
+  html[data-theme="dark"] .legacy .add-subject-btn:hover{background:var(--surface2);color:var(--text);border-color:#5CE1E6}
   html[data-theme="dark"] .legacy td.datecell,html[data-theme="dark"] .legacy td.testname{background:#3d3a12;color:#fff6a8}
   html[data-theme="dark"] .legacy td.testcol{background:#2f2e17;color:#eee}
   html[data-theme="dark"] .legacy td.hourscell,html[data-theme="dark"] .legacy td.computed{background:#14301f;color:#6fe0b5}
@@ -312,25 +283,25 @@
   html[data-theme="dark"] .legacy button:hover{background:var(--surface2)}
   html[data-theme="dark"] .legacy .delbtn{background:transparent;color:var(--red)}
   html[data-theme="dark"] .legacy .empty{background:var(--surface);border-color:var(--border);color:var(--muted)}
+  html[data-theme="dark"] .legacy .legend b{color:#6fe0b5}
   html[data-theme="dark"] #day-toggle{background:#FFF200;color:#222;border-color:#cbbf00}
   html[data-theme="dark"] #day-toggle.on,html[data-theme="dark"] #day-pdf{background:#0a6e56;color:#fff;border-color:#0a6e56}
-  html[data-theme="dark"] .legacy .legend b{color:#6fe0b5}
 
   /* ===== PRINT ===== */
   @media print {
     @page { size: landscape; margin: 8mm; }
     #login-screen{display:none !important}
-    #sidebar,#sidebar-backdrop,#profile-menu,#app-header,#main-tabs,#tool-revision header,#tool-revision .header-btns,
-    #tool-revision .toolbar,:is(#tool-revision,#tool-dashboard,#sidebar) .add-subject-btn,#tool-revision .icon-btn,
-    :is(#tool-revision,#tool-dashboard,#sidebar) .tab-del,#tool-revision .ch-actions .icon-btn,
+    #profile-menu,#app-header,#main-tabs,:is(#tool-revision,#tool-mains) header,:is(#tool-revision,#tool-mains) .header-btns,
+    :is(#tool-revision,#tool-mains) .toolbar,:is(#tool-revision,#tool-mains) .add-subject-btn,:is(#tool-revision,#tool-mains) .icon-btn,
+    :is(#tool-revision,#tool-mains) .tab-del,:is(#tool-revision,#tool-mains) .ch-actions .icon-btn,
     .legacy .btns,.legacy .add-subject-btn,.legacy .tab-del,.legacy .delbtn,
-    #rev-import-input,input[type=file]{display:none !important}
+    #rev-import-input,#mrev-import-input,input[type=file]{display:none !important}
     body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
     * {-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
     .tool-panel{display:none !important}
     .tool-panel.active{display:block !important}
-    #tool-revision main{max-width:100%;padding:0}
-    #tool-revision .ch-body{display:flex !important}
+    :is(#tool-revision,#tool-mains) main{max-width:100%;padding:0}
+    :is(#tool-revision,#tool-mains) .ch-body{display:flex !important}
     .legacy{background:#fff;padding:0}
     .legacy .wrap{overflow:visible}
     .legacy table{min-width:0 !important;width:100%;table-layout:fixed}
@@ -371,9 +342,7 @@
   <!-- ===== TOP BAR ===== -->
   <div id="app-header">
     <div class="hdr-left">
-      <button id="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="sidebar">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-      </button>
+      <div class="brand"><span class="logo-dot"></span><span class="bt">UPSC Prep Hub</span></div>
       <div id="hdr-timer" title="Time left until UPSC Prelims 2027 (23 May 2027, 9:30 AM IST)"><small>⏳</small><span id="ht">--d --h --m --s</span></div>
     </div>
     <div class="right">
@@ -394,30 +363,14 @@
     </div>
   </div>
 
-  <!-- ===== SIDEBAR ===== -->
-  <div id="sidebar-backdrop"></div>
-  <aside id="sidebar" aria-label="Main menu">
-    <div class="side-head">
-      <div class="brand" style="font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px"><span class="logo-dot" style="width:8px;height:8px;border-radius:50%;background:var(--accent)"></span>UPSC Prep Hub</div>
-      <button id="side-close" aria-label="Close menu">✕</button>
-    </div>
-    <nav id="main-tabs">
-      <button class="main-tab active" data-tool="dashboard"><span class="ic">🏠</span>Dashboard</button>
-      <button class="main-tab" data-tool="revision"><span class="ic">📚</span>Revision Tracker</button>
-      <div class="side-sub" data-for="revision">
-        <div class="side-sub-title">Subjects</div>
-        <div class="tabs" id="rev-tabs"></div>
-        <button class="add-subject-btn" onclick="revOpenAddSubject()">+ Subject</button>
-      </div>
-      <button class="main-tab" data-tool="prelims"><span class="ic">📝</span>Prelims Report Card</button>
-      <div class="side-sub" data-for="prelims">
-        <div class="side-sub-title">Subjects</div>
-        <div class="tabs" id="pr-tabs"></div>
-        <button class="add-subject-btn" id="pr-add-subject">+ Subject</button>
-      </div>
-      <button class="main-tab" data-tool="daily"><span class="ic">🗓️</span>Daily Study Log</button>
-    </nav>
-  </aside>
+  <!-- ===== NAVBAR ===== -->
+  <div id="main-tabs">
+    <button class="main-tab active" data-tool="dashboard">🏠 Dashboard</button>
+    <button class="main-tab" data-tool="revision">Prelims Revision Tracker</button>
+    <button class="main-tab" data-tool="prelims">Prelims Report Card</button>
+    <button class="main-tab" data-tool="daily">Daily Study Log</button>
+    <button class="main-tab" data-tool="mains">Mains Revision Tracker</button>
+  </div>
 
   <!-- ===== DASHBOARD ===== -->
   <div id="tool-dashboard" class="tool-panel active">
@@ -436,35 +389,6 @@
       </section>
       <div class="done-msg" id="cd-done">The exam has begun. Best of luck! 🍀</div>
       <section class="glass quote"><p id="cd-q">“It always seems impossible until it’s done.”</p><span id="cd-qa">Nelson Mandela</span></section>
-
-      <section class="dsec">
-        <h2>📚 Revision snapshot</h2>
-        <p class="hint">Across all subjects — tap a card to open those chapters in the Revision Tracker.</p>
-        <div class="stats">
-          <div class="stat overdue" id="rev-stat-overdue" onclick="openRevisionFilter('overdue')"><div class="stat-val" id="rev-s-overdue">0</div><div class="stat-lbl">Overdue (15d+)</div></div>
-          <div class="stat soon" id="rev-stat-soon" onclick="openRevisionFilter('soon')"><div class="stat-val" id="rev-s-soon">0</div><div class="stat-lbl">Due soon (8–14d)</div></div>
-          <div class="stat fresh" id="rev-stat-fresh" onclick="openRevisionFilter('fresh')"><div class="stat-val" id="rev-s-fresh">0</div><div class="stat-lbl">Fresh (0–7d)</div></div>
-          <div class="stat never" id="rev-stat-never" onclick="openRevisionFilter('never')"><div class="stat-val" id="rev-s-never">0</div><div class="stat-lbl">Never revised</div></div>
-        </div>
-      </section>
-      <section class="dsec">
-        <h2>📜 Constitution — article of the day</h2>
-        <p class="hint">A new random article each time you open the app.</p>
-        <div id="rev-daily-thought" class="daily-thought"></div>
-      </section>
-      <section class="dsec">
-        <h2>📝 Prelims marking scheme &amp; gap guide</h2>
-        <p class="hint">Reference for filling the Prelims Report Card.</p>
-        <div class="dcard"><div class="legend">
-      <b>Marking scheme:</b> +2 for each correct answer, −2/3 for each incorrect answer, 0 for unattempted. <b>Marks Obtained</b> and <b>Out of</b> are calculated automatically from Total/Correct/Wrong — you don't need to enter them.<br>
-      <b>Awareness Gap</b> – didn't know the topic existed &nbsp;|&nbsp;
-      <b>Conceptual Gap</b> – misunderstood the concept &nbsp;|&nbsp;
-      <b>Revision Gap</b> – knew it, forgot due to no revision &nbsp;|&nbsp;
-      <b>Factual Gap</b> – got a specific fact wrong<br>
-      <b>Interpretation/Silly Mistake Gap</b> – misread the question &nbsp;|&nbsp;
-      <b>Guesswork/Intuition Gap</b> – answered by guessing
-    </div></div>
-      </section>
       <p class="foot">Countdown uses your device clock, converted to IST.</p>
     </div>
   </div>
@@ -472,7 +396,7 @@
   <!-- ===== TOOL 1: REVISION TRACKER ===== -->
   <div id="tool-revision" class="tool-panel">
     <header>
-      <div class="logo"><div class="logo-dot"></div>Revision Tracker<span class="scope-chip" id="rev-scope"></span></div>
+      <div class="logo"><div class="logo-dot"></div>Prelims Revision Tracker</div>
       <div class="header-btns">
         <button class="hbtn" onclick="revImportData()">&#8593; Import</button>
         <button class="hbtn" onclick="revExportData()">&#8595; Export</button>
@@ -480,6 +404,17 @@
     </header>
     <input type="file" id="rev-import-input" accept=".json" onchange="revHandleImport(event)">
     <main>
+      <div class="stats">
+        <div class="stat overdue" id="rev-stat-overdue" onclick="revSetFilter('overdue')"><div class="stat-val" id="rev-s-overdue">0</div><div class="stat-lbl">Overdue (15d+)</div></div>
+        <div class="stat soon" id="rev-stat-soon" onclick="revSetFilter('soon')"><div class="stat-val" id="rev-s-soon">0</div><div class="stat-lbl">Due soon (8–14d)</div></div>
+        <div class="stat fresh" id="rev-stat-fresh" onclick="revSetFilter('fresh')"><div class="stat-val" id="rev-s-fresh">0</div><div class="stat-lbl">Fresh (0–7d)</div></div>
+        <div class="stat never" id="rev-stat-never" onclick="revSetFilter('never')"><div class="stat-val" id="rev-s-never">0</div><div class="stat-lbl">Never revised</div></div>
+      </div>
+      <div id="rev-daily-thought" class="daily-thought"></div>
+      <div class="tabs-row">
+        <div class="tabs" id="rev-tabs"></div>
+        <button class="add-subject-btn" onclick="revOpenAddSubject()">+ Subject</button>
+      </div>
       <div class="toolbar" id="rev-toolbar">
         <input id="rev-ch-input" placeholder="Add chapter name and press Enter…" onkeydown="if(event.key==='Enter')revAddChapter()">
         <button class="add-btn" onclick="revAddChapter()">+ Add</button>
@@ -494,9 +429,49 @@
     <div id="rev-modal-layer"></div>
   </div>
 
+  <!-- ===== MAINS REVISION TRACKER (copy of Prelims Revision Tracker) ===== -->
+  <div id="tool-mains" class="tool-panel">
+    <header>
+      <div class="logo"><div class="logo-dot"></div>Mains Revision Tracker</div>
+      <div class="header-btns">
+        <button class="hbtn" onclick="mrevImportData()">&#8593; Import</button>
+        <button class="hbtn" onclick="mrevExportData()">&#8595; Export</button>
+      </div>
+    </header>
+    <input type="file" id="mrev-import-input" accept=".json" onchange="mrevHandleImport(event)">
+    <main>
+      <div class="stats">
+        <div class="stat overdue" id="mrev-stat-overdue" onclick="mrevSetFilter('overdue')"><div class="stat-val" id="mrev-s-overdue">0</div><div class="stat-lbl">Overdue (15d+)</div></div>
+        <div class="stat soon" id="mrev-stat-soon" onclick="mrevSetFilter('soon')"><div class="stat-val" id="mrev-s-soon">0</div><div class="stat-lbl">Due soon (8–14d)</div></div>
+        <div class="stat fresh" id="mrev-stat-fresh" onclick="mrevSetFilter('fresh')"><div class="stat-val" id="mrev-s-fresh">0</div><div class="stat-lbl">Fresh (0–7d)</div></div>
+        <div class="stat never" id="mrev-stat-never" onclick="mrevSetFilter('never')"><div class="stat-val" id="mrev-s-never">0</div><div class="stat-lbl">Never revised</div></div>
+      </div>
+      <div id="mrev-daily-thought" class="daily-thought"></div>
+      <div class="tabs-row">
+        <div class="tabs" id="mrev-tabs"></div>
+        <button class="add-subject-btn" onclick="mrevOpenAddSubject()">+ Subject</button>
+      </div>
+      <div class="toolbar" id="mrev-toolbar">
+        <input id="mrev-ch-input" placeholder="Add chapter name and press Enter…" onkeydown="if(event.key==='Enter')mrevAddChapter()">
+        <button class="add-btn" onclick="mrevAddChapter()">+ Add</button>
+        <select id="mrev-sort-sel" onchange="mrevRender()">
+          <option value="priority">Priority</option>
+          <option value="name">Name</option>
+          <option value="default">Default order</option>
+        </select>
+      </div>
+      <div class="chapter-list" id="mrev-chapter-list"></div>
+    </main>
+    <div id="mrev-modal-layer"></div>
+  </div>
+
   <!-- ===== TOOL 2: PRELIMS REPORT CARD ===== -->
   <div id="tool-prelims" class="tool-panel legacy">
-    <h1>Prelims Report Card</h1><span class="scope-chip" id="pr-scope"></span>
+    <h1>Prelims Report Card</h1>
+    <div class="tabs-row">
+      <div class="tabs" id="pr-tabs"></div>
+      <button class="add-subject-btn" id="pr-add-subject">+ Subject</button>
+    </div>
     <div class="wrap">
     <table>
       <thead>
@@ -533,6 +508,15 @@
       <button id="pr-export">⬇ Export Backup (All Subjects)</button>
       <button id="pr-import-btn">⬆ Import Backup</button>
       <input type="file" id="pr-import" accept=".json" style="display:none;"/>
+    </div>
+    <div class="legend">
+      <b>Marking scheme:</b> +2 for each correct answer, −2/3 for each incorrect answer, 0 for unattempted. <b>Marks Obtained</b> and <b>Out of</b> are calculated automatically from Total/Correct/Wrong — you don't need to enter them.<br>
+      <b>Awareness Gap</b> – didn't know the topic existed &nbsp;|&nbsp;
+      <b>Conceptual Gap</b> – misunderstood the concept &nbsp;|&nbsp;
+      <b>Revision Gap</b> – knew it, forgot due to no revision &nbsp;|&nbsp;
+      <b>Factual Gap</b> – got a specific fact wrong<br>
+      <b>Interpretation/Silly Mistake Gap</b> – misread the question &nbsp;|&nbsp;
+      <b>Guesswork/Intuition Gap</b> – answered by guessing
     </div>
   </div>
 
@@ -616,7 +600,7 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 let currentUser = null;
-let appState = { revision: null, prelims: null, daily: null };
+let appState = { revision: null, mains: null, prelims: null, daily: null };
 let saveTimer = null;
 
 function setSyncStatus(text) {
@@ -648,10 +632,11 @@ async function loadState() {
   if (snap.exists) {
     const d = snap.data() || {};
     appState.revision = d.revision || null;
+    appState.mains = d.mains || null;
     appState.prelims = d.prelims || null;
     appState.daily = d.daily || null;
   } else {
-    appState = { revision: null, prelims: null, daily: null };
+    appState = { revision: null, mains: null, prelims: null, daily: null };
   }
 }
 
@@ -716,6 +701,7 @@ auth.onAuthStateChanged(async (user) => {
     setSyncStatus('Loading…');
     await loadState();
     RevisionTool.init(appState.revision);
+    MainsTool.init(appState.mains);
     PrelimsTool.init(appState.prelims);
     DailyTool.init(appState.daily);
     setSyncStatus('Saved ✓');
@@ -1102,7 +1088,6 @@ const RevisionTool = (function () {
 
   function render() {
     renderDailyThought();
-    const _sc = document.getElementById('rev-scope'); if (_sc) _sc.textContent = (current === 'All') ? '⭐ All subjects' : (current || '');
     const allCount = subjects.reduce((sum,s) => sum + (data[s]||[]).length, 0);
     document.getElementById('rev-tabs').innerHTML =
       `<button class="tab all-tab${current==='All'?' active':''}" onclick="revSwitchTab('All')">
@@ -1215,7 +1200,6 @@ const RevisionTool = (function () {
     render();
   }
   function clearFilter() { filter = null; render(); }
-  function showFilter(f) { current = 'All'; filter = f; render(); }
 
   function renderDailyThought() {
     const el = document.getElementById('rev-daily-thought');
@@ -1264,7 +1248,7 @@ const RevisionTool = (function () {
 
   return { init, render, switchTab, toggleExpand, addChapter, setField, markToday, deleteChapter,
            openAddSubject, closeModal, confirmAddSubject, deleteSubject, importData, exportData, handleImport,
-           setFilter, clearFilter, showFilter };
+           setFilter, clearFilter, randomArticle };
 })();
 
 window.revRender = RevisionTool.render;
@@ -1283,7 +1267,341 @@ window.revExportData = RevisionTool.exportData;
 window.revHandleImport = RevisionTool.handleImport;
 window.revSetFilter = RevisionTool.setFilter;
 window.revClearFilter = RevisionTool.clearFilter;
-window.revShowFilter = RevisionTool.showFilter;
+</script>
+
+<script>
+// ======================================================
+// MAINS REVISION TRACKER (copy of Prelims Revision Tracker, own data: appState.mains)
+// ======================================================
+const MainsTool = (function () {
+  const DEFAULT_SUBJECTS = ['GS I','GS II','GS III','GS IV','Essay','Optional'];
+
+  // ── Constitutional Articles ───────────────────────────────────────────────────
+  const randomArticle = RevisionTool.randomArticle;
+
+  function makeChapters(names) {
+    return names.map((name, i) => ({
+      id: 'preset-' + i + '-' + name.slice(0,8).replace(/\s/g,''),
+      name, lastRevised:'', status:'Not Started', note:'', revisionCount:0
+    }));
+  }
+
+  let subjects = [...DEFAULT_SUBJECTS];
+  let data = {};
+  let current = subjects[0];
+  let expanded = {};
+  let filter = null; // null | 'overdue' | 'soon' | 'fresh' | 'never'
+
+  function initData() { subjects.forEach(s => { if (!data[s]) data[s] = []; }); }
+
+  function init(saved) {
+    if (saved && saved.subjects) {
+      subjects = saved.subjects;
+      data = saved.data || {};
+    } else {
+      subjects = [...DEFAULT_SUBJECTS];
+      data = {};
+    }
+    initData();
+    if (current !== 'All' && !subjects.includes(current)) current = subjects[0];
+    render();
+  }
+
+  function save() { appState.mains = { subjects, data }; scheduleSave(); }
+
+  function exportData() {
+    const blob = new Blob([JSON.stringify({ subjects, data }, null, 2)], { type:'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'upsc-mains-revision-backup-' + new Date().toISOString().slice(0,10) + '.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function importData() { document.getElementById('mrev-import-input').click(); }
+
+  function handleImport(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function (ev) {
+      try {
+        const imported = JSON.parse(ev.target.result);
+        if (confirm('Replace current data with this backup?')) {
+          subjects = imported.subjects || [...DEFAULT_SUBJECTS];
+          data = imported.data || {};
+          initData();
+          current = subjects[0];
+          save(); render();
+          alert('Import successful!');
+        }
+      } catch (err) { alert('Invalid backup file.'); }
+      e.target.value = '';
+    };
+    reader.readAsText(file);
+  }
+
+  function openAddSubject() {
+    document.getElementById('mrev-modal-layer').innerHTML = `
+      <div class="modal-bg" onclick="mrevCloseModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+          <h3>Add subject</h3>
+          <input id="mrev-m-subj" placeholder="e.g. Science & Technology" onkeydown="if(event.key==='Enter')mrevConfirmAddSubject()">
+          <div class="modal-btns">
+            <button class="hbtn" onclick="mrevCloseModal()">Cancel</button>
+            <button class="hbtn primary" onclick="mrevConfirmAddSubject()">Add</button>
+          </div>
+        </div>
+      </div>`;
+    setTimeout(() => document.getElementById('mrev-m-subj')?.focus(), 50);
+  }
+
+  function closeModal(e) {
+    if (e && e.target !== e.currentTarget) return;
+    document.getElementById('mrev-modal-layer').innerHTML = '';
+  }
+
+  function confirmAddSubject() {
+    const name = document.getElementById('mrev-m-subj')?.value.trim();
+    if (!name) return;
+    if (subjects.includes(name)) { alert('Subject already exists.'); return; }
+    subjects.push(name);
+    data[name] = [];
+    current = name;
+    save(); closeModal(); render();
+  }
+
+  function deleteSubject(s) {
+    const count = (data[s]||[]).length;
+    const msg = count > 0 ? `"${s}" has ${count} chapter(s). Delete subject and all chapters?` : `Delete subject "${s}"?`;
+    if (!confirm(msg)) return;
+    subjects = subjects.filter(x => x !== s);
+    delete data[s];
+    if (current === s) current = subjects[0] || '';
+    save(); render();
+  }
+
+  function daysSince(d) {
+    if (!d) return null;
+    const diff = new Date().setHours(0,0,0,0) - new Date(d).setHours(0,0,0,0);
+    return Math.floor(diff / 86400000);
+  }
+
+  function badgeInfo(ch) {
+    const d = daysSince(ch.lastRevised);
+    if (d === null) return { cls:'never', text:'Never revised' };
+    if (d >= 15) return { cls:'overdue', text: d + 'd ago — revise now' };
+    if (d >= 8) return { cls:'soon', text: d + 'd ago — due soon' };
+    if (d === 0) return { cls:'fresh', text:'Revised today' };
+    return { cls:'fresh', text: d + 'd ago' };
+  }
+
+  function priorityOf(ch) {
+    const d = daysSince(ch.lastRevised);
+    if (d === null) return 0;
+    if (d >= 15) return 1;
+    if (d >= 8) return 2;
+    return 3;
+  }
+
+  function sortedChapters() {
+    const sort = document.getElementById('mrev-sort-sel').value;
+    let chs;
+    if (current === 'All') {
+      chs = [];
+      subjects.forEach(s => (data[s]||[]).forEach((ch,i) => chs.push({...ch, _i:i, _subject:s})));
+    } else {
+      chs = (data[current]||[]).map((ch,i) => ({...ch, _i:i, _subject:current}));
+    }
+    if (sort === 'priority') return chs.sort((a,b) => priorityOf(a) - priorityOf(b));
+    if (sort === 'name') return chs.sort((a,b) => a.name.localeCompare(b.name));
+    return chs;
+  }
+
+  function esc(s){ return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') }
+
+  function render() {
+    renderDailyThought();
+    const allCount = subjects.reduce((sum,s) => sum + (data[s]||[]).length, 0);
+    document.getElementById('mrev-tabs').innerHTML =
+      `<button class="tab all-tab${current==='All'?' active':''}" onclick="mrevSwitchTab('All')">
+        ⭐ All <span style="opacity:.6;font-size:11px">${allCount}</span>
+      </button>` +
+      subjects.map(s => {
+      const count = (data[s]||[]).length;
+      return `<button class="tab${s===current?' active':''}" onclick="mrevSwitchTab('${esc(s)}')">
+        ${esc(s)} <span style="opacity:.6;font-size:11px">${count}</span>
+        <span class="tab-del" onclick="event.stopPropagation();mrevDeleteSubject('${esc(s)}')" title="Remove subject">✕</span>
+      </button>`;
+    }).join('');
+
+    let ov=0,so=0,fr=0,nv=0;
+    subjects.forEach(s => (data[s]||[]).forEach(ch => {
+      const d = daysSince(ch.lastRevised);
+      if (d===null) nv++; else if (d>=15) ov++; else if (d>=8) so++; else fr++;
+    }));
+    document.getElementById('mrev-s-overdue').textContent = ov;
+    document.getElementById('mrev-s-soon').textContent = so;
+    document.getElementById('mrev-s-fresh').textContent = fr;
+    document.getElementById('mrev-s-never').textContent = nv;
+    ['overdue','soon','fresh','never'].forEach(f => {
+      document.getElementById('mrev-stat-'+f)?.classList.toggle('active-filter', filter === f);
+    });
+
+    const toolbar = document.getElementById('mrev-toolbar');
+    if (toolbar) toolbar.style.display = (current === 'All') ? 'none' : 'flex';
+
+    const list = document.getElementById('mrev-chapter-list');
+    if (!current) { list.innerHTML = '<div class="empty">No subjects yet.</div>'; return; }
+
+    let chs = sortedChapters();
+    if (filter) {
+      chs = chs.filter(ch => {
+        const d = daysSince(ch.lastRevised);
+        if (filter === 'never')   return d === null;
+        if (filter === 'overdue') return d !== null && d >= 15;
+        if (filter === 'soon')    return d !== null && d >= 8 && d < 15;
+        if (filter === 'fresh')   return d !== null && d < 8;
+      });
+    }
+    const FILTER_LABELS = {
+      overdue: '🔴 Overdue Chapters (15d+)',
+      soon:    '🟡 Due Soon (8–14 days)',
+      fresh:   '🟢 Recently Revised (0–7 days)',
+      never:   '⚪ Never Revised'
+    };
+    const scopeLabel = current === 'All' ? 'all subjects' : ('in ' + esc(current));
+    const headingHtml = filter
+      ? `<div class="filter-heading">${FILTER_LABELS[filter]} <span style="opacity:.5">— ${chs.length} chapter${chs.length!==1?'s':''} ${scopeLabel}</span>
+           <button class="filter-clear" onclick="mrevClearFilter()">✕ Clear filter</button>
+         </div>`
+      : '';
+
+    if (!chs.length) {
+      list.innerHTML = headingHtml + (filter
+        ? '<div class="empty"><div class="empty-icon">✅</div>No chapters in this category.</div>'
+        : (current === 'All'
+            ? `<div class="empty"><div class="empty-icon">📖</div>No chapters yet in any subject.</div>`
+            : `<div class="empty"><div class="empty-icon">📖</div>No chapters in ${esc(current)} yet.<br>Type a chapter name above and press Enter.</div>`));
+      return;
+    }
+
+    list.innerHTML = headingHtml + chs.map(ch => {
+      const b = badgeInfo(ch);
+      const isOpen = expanded[ch.id];
+      const mrevLabel = ch.revisionCount > 0 ? `${ch.revisionCount}× revised` : '';
+      return `<div class="ch-card ${b.cls}">
+        <div class="ch-head" onclick="mrevToggleExpand('${ch.id}')">
+          <span class="ch-name">${esc(ch.name)}</span>
+          ${current === 'All' ? `<span class="subject-tag">${esc(ch._subject)}</span>` : ''}
+          ${mrevLabel ? `<span class="rev-count">${mrevLabel}</span>` : ''}
+          <span class="badge ${b.cls}">${b.text}</span>
+          <div class="ch-actions" onclick="event.stopPropagation()">
+            <button class="icon-btn" onclick="mrevDeleteChapter('${ch.id}')" title="Delete chapter">✕</button>
+            <span class="chevron ${isOpen?'open':''}">▼</span>
+          </div>
+        </div>
+        ${isOpen ? `<div class="ch-body">
+          <div class="field-row">
+            <label>Last revised</label>
+            <input type="date" value="${ch.lastRevised||''}" onchange="mrevSetField('${ch.id}','lastRevised',this.value)">
+            <button class="hbtn primary" style="font-size:11px;padding:4px 10px" onclick="mrevMarkToday('${ch.id}')">Mark today</button>
+          </div>
+          <div class="field-row">
+            <label>Status</label>
+            <select onchange="mrevSetField('${ch.id}','status',this.value)">
+    <option value="Not Started"${ch.status==='Not Started'?' selected':''}>Not Started</option>
+    <option value="In Progress"${ch.status==='In Progress'?' selected':''}>In Progress</option>
+    <option value="Lectures Done"${ch.status==='Lectures Done'?' selected':''}>Lectures Done</option>
+    <option value="Revised"${ch.status==='Revised'?' selected':''}>Revised</option>
+    <option value="Mastered"${ch.status==='Mastered'?' selected':''}>Mastered</option>
+  </select>
+          </div>
+          <div class="field-row note-row">
+            <label>Notes</label>
+            <textarea placeholder="Key concepts, exam tips, important dates…" onchange="mrevSetField('${ch.id}','note',this.value)">${esc(ch.note||'')}</textarea>
+          </div>
+        </div>` : ''}
+      </div>`;
+    }).join('');
+  }
+
+  function switchTab(s){ current=s; render() }
+  function toggleExpand(id){ expanded[id]=!expanded[id]; render() }
+
+  function setFilter(f) {
+    filter = (filter === f) ? null : f; // clicking same filter again clears it
+    render();
+  }
+  function clearFilter() { filter = null; render(); }
+
+  function renderDailyThought() {
+    const el = document.getElementById('mrev-daily-thought');
+    if (!el) return;
+    el.innerHTML = `
+      <div class="thought-label">📜 ${randomArticle.part || ''}</div>
+      <div class="thought-text" style="font-style:normal;font-weight:600;font-size:14px;margin-bottom:4px">${randomArticle.num} — ${randomArticle.title}</div>
+      <div class="thought-text" style="font-style:normal">${randomArticle.desc}</div>`;
+  }
+
+  function addChapter() {
+    const inp = document.getElementById('mrev-ch-input');
+    const name = inp.value.trim();
+    if (!name || !current) return;
+    if (!data[current]) data[current]=[];
+    data[current].push({ id: Date.now().toString(), name, lastRevised:'', status:'Not Started', note:'', revisionCount:0 });
+    inp.value='';
+    save(); render();
+    inp.focus();
+  }
+
+  function setField(id, field, val) {
+    for (const s of subjects) {
+      const ch = (data[s]||[]).find(c => c.id===id);
+      if (ch) {
+        if (field==='lastRevised' && val && val!==ch.lastRevised) ch.revisionCount=(ch.revisionCount||0)+1;
+        ch[field]=val;
+        save(); render(); return;
+      }
+    }
+  }
+
+  function markToday(id){ setField(id,'lastRevised',new Date().toISOString().slice(0,10)) }
+
+  function deleteChapter(id) {
+    for (const s of subjects) {
+      const idx=(data[s]||[]).findIndex(c=>c.id===id);
+      if (idx!==-1) {
+        if (!confirm(`Delete "${data[s][idx].name}"?`)) return;
+        data[s].splice(idx,1);
+        delete expanded[id];
+        save(); render(); return;
+      }
+    }
+  }
+
+  return { init, render, switchTab, toggleExpand, addChapter, setField, markToday, deleteChapter,
+           openAddSubject, closeModal, confirmAddSubject, deleteSubject, importData, exportData, handleImport,
+           setFilter, clearFilter, randomArticle };
+})();
+
+window.mrevRender = MainsTool.render;
+window.mrevSwitchTab = MainsTool.switchTab;
+window.mrevToggleExpand = MainsTool.toggleExpand;
+window.mrevAddChapter = MainsTool.addChapter;
+window.mrevSetField = MainsTool.setField;
+window.mrevMarkToday = MainsTool.markToday;
+window.mrevDeleteChapter = MainsTool.deleteChapter;
+window.mrevOpenAddSubject = MainsTool.openAddSubject;
+window.mrevCloseModal = MainsTool.closeModal;
+window.mrevConfirmAddSubject = MainsTool.confirmAddSubject;
+window.mrevDeleteSubject = MainsTool.deleteSubject;
+window.mrevImportData = MainsTool.importData;
+window.mrevExportData = MainsTool.exportData;
+window.mrevHandleImport = MainsTool.handleImport;
+window.mrevSetFilter = MainsTool.setFilter;
+window.mrevClearFilter = MainsTool.clearFilter;
 </script>
 
 <script>
@@ -1349,7 +1667,6 @@ const PrelimsTool = (function () {
   function save() { appState.prelims = { subjects, data, current }; scheduleSave(); }
 
   function renderTabs() {
-    const _ps = document.getElementById('pr-scope'); if (_ps) _ps.textContent = current || '';
     document.getElementById('pr-tabs').innerHTML = subjects.map(s => {
       const count = (data[s] || []).length;
       return `<button class="tab${s === current ? ' active' : ''}" data-tab="${esc(s)}">
@@ -1711,33 +2028,23 @@ const DailyTool = (function () {
 
 <script>
 // ======================================================
-// UI LAYER: sidebar, profile menu, dark mode, countdown (no Firebase logic here)
+// UI LAYER: profile menu, dark mode, countdown (no Firebase logic here)
 // ======================================================
 (function(){
   var html=document.documentElement, body=document.body;
   var $=function(i){return document.getElementById(i)};
   var p2=function(n){return String(n).padStart(2,'0')};
 
-  /* sidebar */
-  function setSide(o){body.classList.toggle('side-open',o);$('menu-btn').setAttribute('aria-expanded',String(o))}
-  $('menu-btn').addEventListener('click',function(){setSide(!body.classList.contains('side-open'))});
-  $('sidebar-backdrop').addEventListener('click',function(){setSide(false)});
-  $('side-close').addEventListener('click',function(){setSide(false)});
   document.querySelectorAll('.main-tab').forEach(function(b){
-    b.addEventListener('click',function(){body.dataset.tool=b.dataset.tool;setSide(false);window.scrollTo(0,0)});
+    b.addEventListener('click',function(){body.dataset.tool=b.dataset.tool;window.scrollTo(0,0);b.scrollIntoView({inline:'nearest',block:'nearest'})});
   });
-  $('sidebar').addEventListener('click',function(e){
-    var t=e.target; if(!t.closest) return;
-    if(t.closest('.add-subject-btn')||(t.closest('.tab')&&!t.closest('.tab-del'))) setSide(false);
-  });
-  window.openRevisionFilter=function(f){ revShowFilter(f); document.querySelector('.main-tab[data-tool="revision"]').click(); };
 
   /* profile menu */
   var pm=$('profile-menu'), pb=$('profile-btn');
   function closeProfile(){pm.hidden=true;pb.setAttribute('aria-expanded','false')}
   pb.addEventListener('click',function(e){e.stopPropagation();pm.hidden=!pm.hidden;pb.setAttribute('aria-expanded',String(!pm.hidden))});
   document.addEventListener('click',function(e){if(!pm.hidden&&!pm.contains(e.target))closeProfile()});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'){setSide(false);closeProfile()}});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeProfile()});
   new MutationObserver(function(){
     var ch=(($('user-email').textContent||'U').trim().charAt(0)||'U').toUpperCase();
     $('avatar-letter').textContent=ch;$('pm-avatar-letter').textContent=ch;
