@@ -175,8 +175,8 @@
   .legacy input.dateinput{width:128px}
   .legacy select.relaxsel{width:100%;min-width:70px;box-sizing:border-box;border:1px solid #ccc;border-radius:4px;padding:3px;text-align:center;text-align-last:center;font-size:12px;background:#fff}
   .legacy select.relaxsel:focus{outline:2px solid #5CE1E6}
-  #day-pdf{background:#0a6e56;color:#fff;border-color:#0a6e56}
-  #day-pdf:hover{background:#085945}
+  #day-pdf,#pr-pdf{background:#0a6e56;color:#fff;border-color:#0a6e56}
+  #day-pdf:hover,#pr-pdf:hover{background:#085945}
   #day-toggle{background:#FFF200;border-color:#cbbf00;font-weight:bold}
   #day-toggle:hover{background:#ffe600}
   #day-toggle.on{background:#0a6e56;color:#fff;border-color:#0a6e56}
@@ -203,8 +203,6 @@
   #app-header .brand{flex:none}
   .main-tab.active{background:var(--blue);border-color:var(--blue);color:#fff}
   .main-tab:hover:not(.active){background:var(--blue-bg);color:var(--blue-text)}
-  #hdr-timer{font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--blue-text);background:var(--blue-bg);border:1px solid var(--blue-border);border-radius:20px;padding:6px 12px;white-space:nowrap}
-  #hdr-timer small{font-weight:500;margin-right:4px}
   #app-header .right{position:relative;display:flex;align-items:center;gap:10px;flex:none}
   #profile-btn{position:relative;width:36px;height:36px;border-radius:50%;border:2px solid var(--accent-border);background:var(--accent);color:#fff;font-weight:700;font-size:15px;cursor:pointer;display:grid;place-items:center}
   #profile-btn .sync-dot{position:absolute;right:-2px;bottom:-2px;width:11px;height:11px;border-radius:50%;background:#2ecc71;border:2px solid var(--surface)}
@@ -232,7 +230,56 @@
   .pm-tip{font-size:11px;color:var(--muted);line-height:1.5;margin:10px 0 8px;padding:8px 10px;background:var(--accent-bg);border-radius:var(--radius)}
   @media (max-width:1180px){#app-header .brand span.bt{display:none}}
   @media (max-width:760px){#app-header{flex-wrap:wrap;row-gap:8px;padding:8px 12px}#app-header .brand{order:1;flex:1}#app-header .right{order:2}#main-tabs{order:3;flex:0 0 100%}#app-header .brand span.bt{display:inline}}
-  @media (max-width:420px){#hdr-timer small{display:none}#hdr-timer{padding:6px 9px;font-size:12px}}
+
+
+  /* ===== NAVBAR UPGRADE: buttons + clock ===== */
+  #app-header{box-shadow:0 2px 14px rgba(20,26,51,.07);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+  #main-tabs{gap:8px;padding:4px 2px}
+  .main-tab{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;padding:6px 15px 6px 7px;border-radius:999px;
+    border:1px solid var(--border);background:var(--surface);color:var(--muted);
+    transition:transform .15s ease,box-shadow .15s ease,background .15s ease,color .15s ease,border-color .15s ease}
+  .main-tab .ti{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:14px;line-height:1;background:var(--surface2);transition:background .15s ease}
+  .main-tab:hover:not(.active){transform:translateY(-1px);box-shadow:0 4px 12px rgba(37,99,235,.18);border-color:var(--blue-border);background:var(--blue-bg);color:var(--blue-text)}
+  .main-tab:hover:not(.active) .ti{background:var(--surface)}
+  .main-tab:active{transform:translateY(0) scale(.97)}
+  .main-tab.active{background:linear-gradient(135deg,var(--blue) 0%,var(--accent) 100%);border-color:transparent;color:#fff;box-shadow:0 6px 16px rgba(74,67,168,.38)}
+  .main-tab.active .ti{background:rgba(255,255,255,.22)}
+  .main-tab:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+
+  #hdr-timer{display:flex;align-items:center;gap:9px;padding:5px 10px 5px 8px;border-radius:16px;white-space:nowrap;
+    background:linear-gradient(135deg,var(--blue-bg),var(--accent-bg));border:1px solid var(--blue-border);box-shadow:0 3px 12px rgba(37,99,235,.14)}
+  #hdr-timer .ht-ico{font-size:18px;line-height:1;animation:htSpin 6s ease-in-out infinite}
+  #hdr-timer .ht-cap{display:flex;flex-direction:column;line-height:1.15}
+  #hdr-timer .ht-cap b{font-size:10px;letter-spacing:.9px;text-transform:uppercase;color:var(--blue-text)}
+  #hdr-timer .ht-cap span{font-size:10px;color:var(--muted)}
+  #hdr-timer .ht-units{display:flex;gap:4px;align-items:center}
+  #hdr-timer .ht-u{display:flex;flex-direction:column;align-items:center;min-width:36px;padding:3px 5px 2px;border-radius:9px;background:var(--surface);border:1px solid var(--blue-border)}
+  #hdr-timer .ht-u b{font-size:15px;font-weight:800;line-height:1.15;font-variant-numeric:tabular-nums;color:var(--blue-text)}
+  #hdr-timer .ht-u i{font-style:normal;font-size:8px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--muted)}
+  #hdr-timer .ht-u.d{background:linear-gradient(135deg,var(--blue),var(--accent));border-color:transparent}
+  #hdr-timer .ht-u.d b{color:#fff}#hdr-timer .ht-u.d i{color:rgba(255,255,255,.8)}
+  #hdr-timer .ht-u.s b{color:var(--accent);animation:htPulse 1s ease-in-out infinite}
+  #hdr-timer .ht-done{font-size:13px;font-weight:700;color:var(--blue-text);padding:4px 6px}
+  @keyframes htPulse{0%,100%{opacity:1}50%{opacity:.55}}
+  @keyframes htSpin{0%,45%{transform:rotate(0)}55%,100%{transform:rotate(180deg)}}
+  @media (max-width:1280px){#hdr-timer .ht-cap{display:none}}
+  @media (max-width:420px){#hdr-timer{padding:4px 6px;gap:5px}#hdr-timer .ht-ico{display:none}#hdr-timer .ht-u{min-width:28px;padding:2px 3px}#hdr-timer .ht-u b{font-size:12px}}
+  @media (prefers-reduced-motion:reduce){#hdr-timer .ht-ico,#hdr-timer .ht-u.s b{animation:none}.main-tab{transition:none}}
+  html[data-theme="dark"] .main-tab{background:var(--surface2)}
+  html[data-theme="dark"] .main-tab .ti{background:var(--surface)}
+  html[data-theme="dark"] #hdr-timer{box-shadow:0 3px 12px rgba(0,0,0,.4)}
+
+  /* ===== PRC: drag & drop reorder ===== */
+  #tool-prelims .tcell{display:flex;align-items:center;gap:4px}
+  #tool-prelims .tcell input{flex:1;min-width:90px}
+  .drag-handle{cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;padding:4px 5px;border-radius:5px;color:#8a8a80;font-weight:700;font-size:14px;line-height:1;letter-spacing:-3px;flex:none}
+  .drag-handle:hover{background:rgba(0,0,0,.08);color:#0a6e56}
+  .drag-handle:active{cursor:grabbing}
+  #tool-prelims tr.dragging{opacity:.45}
+  #tool-prelims tr.dragging td{background:#d9f7f8 !important}
+  #tool-prelims tr.drop-above td{box-shadow:inset 0 3px 0 #0a6e56}
+  #tool-prelims tr.drop-below td{box-shadow:inset 0 -3px 0 #0a6e56}
+  body.pr-dragging,body.pr-dragging *{cursor:grabbing !important;user-select:none !important}
 
   /* ===== DASHBOARD ===== */
   #tool-dashboard{position:relative;overflow:hidden;min-height:calc(100vh - 60px)}
@@ -291,7 +338,7 @@
   html[data-theme="dark"] .legacy .empty{background:var(--surface);border-color:var(--border);color:var(--muted)}
   html[data-theme="dark"] .legacy .legend b{color:#6fe0b5}
   html[data-theme="dark"] #day-toggle{background:#FFF200;color:#222;border-color:#cbbf00}
-  html[data-theme="dark"] #day-toggle.on,html[data-theme="dark"] #day-pdf{background:#0a6e56;color:#fff;border-color:#0a6e56}
+  html[data-theme="dark"] #day-toggle.on,html[data-theme="dark"] #day-pdf,html[data-theme="dark"] #pr-pdf{background:#0a6e56;color:#fff;border-color:#0a6e56}
 
   /* ===== PRINT ===== */
   @media print {
@@ -317,6 +364,12 @@
     .legacy input[type="time"]::-webkit-calendar-picker-indicator,
     .legacy input[type="date"]::-webkit-calendar-picker-indicator{display:none;-webkit-appearance:none;opacity:0}
     #tool-daily td:last-child,#tool-daily th:last-child{display:none}
+    #tool-prelims thead tr:first-child th:last-child,#tool-prelims tbody td:last-child{display:none}
+    #tool-prelims .drag-handle{display:none}
+    #tool-prelims textarea.numinput,#tool-prelims .notestext{border:none;padding:1px;font-size:8px;background:transparent;resize:none;overflow:visible}
+    #tool-prelims .tcell input{min-width:0}
+    #tool-prelims input.testinput,#tool-prelims input.testinput2{font-size:8px}
+    #tool-prelims .dateinput{width:100%}
     #tool-daily .datecellinput{min-width:0;width:100%}
   }
 </style>
@@ -349,14 +402,23 @@
   <div id="app-header">
     <div class="brand"><span class="logo-dot"></span><span class="bt">UPSC Prep Hub</span></div>
     <div id="main-tabs">
-      <button class="main-tab active" data-tool="dashboard">🏠 Dashboard</button>
-      <button class="main-tab" data-tool="revision">Prelims Revision Tracker</button>
-      <button class="main-tab" data-tool="mains">Mains Revision Tracker</button>
-      <button class="main-tab" data-tool="prelims">Prelims Report Card</button>
-      <button class="main-tab" data-tool="daily">Daily Study Log</button>
+      <button class="main-tab active" data-tool="dashboard"><span class="ti">🏠</span>Dashboard</button>
+      <button class="main-tab" data-tool="revision"><span class="ti">📘</span>Prelims Revision</button>
+      <button class="main-tab" data-tool="mains"><span class="ti">✍️</span>Mains Revision</button>
+      <button class="main-tab" data-tool="prelims"><span class="ti">📊</span>Prelims Report Card</button>
+      <button class="main-tab" data-tool="daily"><span class="ti">🗓️</span>Daily Study Log</button>
     </div>
     <div class="right">
-      <div id="hdr-timer" title="Time left until UPSC Prelims 2027 (23 May 2027, 9:30 AM IST)"><small>⏳</small><span id="ht">--d --h --m --s</span></div>
+      <div id="hdr-timer" title="Time left until UPSC Prelims 2027 (23 May 2027, 9:30 AM IST)">
+        <span class="ht-ico">⏳</span>
+        <div class="ht-cap"><b>Prelims 2027</b><span>countdown</span></div>
+        <div class="ht-units">
+          <div class="ht-u d"><b id="ht-d">000</b><i>days</i></div>
+          <div class="ht-u"><b id="ht-h">00</b><i>hrs</i></div>
+          <div class="ht-u"><b id="ht-m">00</b><i>min</i></div>
+          <div class="ht-u s"><b id="ht-s">00</b><i>sec</i></div>
+        </div>
+      </div>
       <button id="profile-btn" aria-label="Profile and settings" aria-haspopup="true" aria-expanded="false"><span id="avatar-letter">U</span><i class="sync-dot"></i></button>
       <div id="profile-menu" hidden>
         <div class="pm-user">
@@ -509,6 +571,7 @@
       <button id="pr-export">⬇ Export Backup (All Subjects)</button>
       <button id="pr-import-btn">⬆ Import Backup</button>
       <input type="file" id="pr-import" accept=".json" style="display:none;"/>
+      <button id="pr-pdf">⬇ Download PDF</button>
     </div>
     <div class="legend">
       <b>Marking scheme:</b> +2 for each correct answer, −2/3 for each incorrect answer, 0 for unattempted. <b>Marks Obtained</b> and <b>Out of</b> are calculated automatically from Total/Correct/Wrong — you don't need to enter them.<br>
@@ -517,7 +580,8 @@
       <b>Revision Gap</b> – knew it, forgot due to no revision &nbsp;|&nbsp;
       <b>Factual Gap</b> – got a specific fact wrong<br>
       <b>Interpretation/Silly Mistake Gap</b> – misread the question &nbsp;|&nbsp;
-      <b>Guesswork/Intuition Gap</b> – answered by guessing
+      <b>Guesswork/Intuition Gap</b> – answered by guessing<br>
+      <b>Reorder tests:</b> drag the ⋮⋮ handle at the left of a test name up or down and drop it where you want.
     </div>
   </div>
 
@@ -1701,7 +1765,7 @@ const PrelimsTool = (function () {
     body.innerHTML = '';
     rows.forEach((row, i) => {
       const tr = document.createElement('tr');
-      let html = `<td class="testname"><input type="text" class="testinput" data-i="${i}" data-f="test" value="${esc(row.test)}"/></td>`;
+      let html = `<td class="testname"><div class="tcell"><span class="drag-handle" data-drag="${i}" title="Drag up/down to reorder">⋮⋮</span><input type="text" class="testinput" data-i="${i}" data-f="test" value="${esc(row.test)}"/></div></td>`;
       html += `<td class="testcol"><input type="text" class="testinput2" data-i="${i}" data-f="testname" value="${esc(row.testname)}"/></td>`;
       html += `<td><input type="date" class="dateinput" data-i="${i}" data-f="date" value="${esc(row.date)}"/></td>`;
       ['total','correct','wrong'].forEach(f => { html += `<td><textarea class="numinput" data-i="${i}" data-f="${f}" rows="1">${esc(row[f])}</textarea></td>`; });
@@ -1739,6 +1803,55 @@ const PrelimsTool = (function () {
         const i = parseInt(e.target.dataset.i);
         data[current][i]['notes'] = e.target.textContent;
         save();
+      });
+    });
+
+    // ---- drag & drop reorder (mouse + touch) ----
+    body.querySelectorAll('.drag-handle').forEach(h => {
+      h.addEventListener('pointerdown', e => {
+        if (e.button !== undefined && e.button !== 0) return;
+        e.preventDefault();
+        const from = parseInt(h.dataset.drag);
+        const trs = Array.from(body.children);
+        const dragTr = trs[from];
+        let ins = from;
+        dragTr.classList.add('dragging');
+        document.body.classList.add('pr-dragging');
+        try { h.setPointerCapture(e.pointerId); } catch (_) {}
+        function clearMarks() { trs.forEach(t => t.classList.remove('drop-above', 'drop-below')); }
+        function onMove(ev) {
+          const y = ev.clientY;
+          if (y < 60) window.scrollBy(0, -14); else if (y > window.innerHeight - 60) window.scrollBy(0, 14);
+          ins = trs.length;
+          for (let k = 0; k < trs.length; k++) {
+            const r = trs[k].getBoundingClientRect();
+            if (y < r.top + r.height / 2) { ins = k; break; }
+          }
+          clearMarks();
+          if (ins < trs.length) trs[ins].classList.add('drop-above'); else trs[trs.length - 1].classList.add('drop-below');
+        }
+        function finish(commit) {
+          h.removeEventListener('pointermove', onMove);
+          h.removeEventListener('pointerup', onUp);
+          h.removeEventListener('pointercancel', onCancel);
+          document.body.classList.remove('pr-dragging');
+          clearMarks();
+          dragTr.classList.remove('dragging');
+          if (commit) {
+            const to = ins > from ? ins - 1 : ins;
+            if (to !== from) {
+              const arr = data[current];
+              const [moved] = arr.splice(from, 1);
+              arr.splice(to, 0, moved);
+              render(); save();
+            }
+          }
+        }
+        function onUp() { finish(true); }
+        function onCancel() { finish(false); }
+        h.addEventListener('pointermove', onMove);
+        h.addEventListener('pointerup', onUp);
+        h.addEventListener('pointercancel', onCancel);
       });
     });
     body.querySelectorAll('button[data-del]').forEach(btn => {
@@ -1792,6 +1905,8 @@ const PrelimsTool = (function () {
     a.click();
     URL.revokeObjectURL(url);
   });
+
+  document.getElementById('pr-pdf').addEventListener('click', () => window.print());
 
   document.getElementById('pr-import-btn').addEventListener('click', () => document.getElementById('pr-import').click());
   document.getElementById('pr-import').addEventListener('change', (e) => {
@@ -2068,14 +2183,14 @@ const DailyTool = (function () {
   function tick(){
     var now=Date.now(), diff=target-now;
     if(diff<=0){
-      $('ht').textContent='Exam day 🍀';
+      $('hdr-timer').innerHTML='<span class="ht-done">Exam day 🍀</span>';
       $('cd-clock').style.display='none'; $('cd-done').style.display='block'; return;
     }
     var secs=Math.floor(diff/1000);
     if(secs!==last){
       last=secs;
       var d=Math.floor(secs/86400),h=Math.floor(secs%86400/3600),m=Math.floor(secs%3600/60),s=secs%60;
-      $('ht').textContent=d+'d '+p2(h)+'h '+p2(m)+'m '+p2(s)+'s';
+      $('ht-d').textContent=String(d).padStart(3,'0');$('ht-h').textContent=p2(h);$('ht-m').textContent=p2(m);$('ht-s').textContent=p2(s);
       $('cd-d').textContent=String(d).padStart(3,'0');$('cd-h').textContent=p2(h);$('cd-m').textContent=p2(m);$('cd-s').textContent=p2(s);
       ring('rd',d/365);ring('rh',h/24);ring('rm',m/60);ring('rs',s/60);
     }
