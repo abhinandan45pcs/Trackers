@@ -534,6 +534,9 @@ html[data-theme="dark"] #tool-pnp{--bg:#17110f;--card:#241b19;--tx:#f1e8e2;--mu:
 #tool-pnp .fg .wf{grid-column:1/-1}
 #tool-pnp .fg .tc{background:color-mix(in srgb,#2bb3c0 14%,var(--card));padding:4px 6px;border-radius:10px}
 #tool-pnp{overflow-x:hidden}
+#tool-pnp .prcbox{grid-column:span 2;display:flex;flex-direction:column;justify-content:center;gap:4px}
+#tool-pnp .prcbtn{background:var(--ac);color:#fff;border-color:var(--ac);font-weight:700;padding:9px 14px}
+#tool-pnp .prcnote{font-size:11px;color:var(--mu)}#tool-pnp .prcnote a{color:var(--ac);font-weight:700;text-decoration:none}
 @media(max-width:620px){#tool-pnp .cyls{grid-template-columns:repeat(4,minmax(0,1fr))!important;row-gap:16px}}
 @media print{#tool-pnp #pnp-pop{display:none}}
 </style>
@@ -717,7 +720,6 @@ html[data-theme="dark"] #tool-pnp{--bg:#17110f;--card:#241b19;--tx:#f1e8e2;--mu:
     <h1>Prelims Report Card</h1>
     <div class="tabs-row">
       <div class="tabs" id="pr-tabs"></div>
-      <button class="add-subject-btn" id="pr-add-subject">+ Subject</button>
     </div>
     <div class="wrap">
     <table>
@@ -1891,7 +1893,28 @@ const PrelimsTool = (function () {
   const fields = ['test','testname','date','total','correct','wrong','silly','awareness','conceptual','revision','factual','guesswork','notes'];
   const MARKS_CORRECT = 2;
   const MARKS_WRONG = -2/3;
-  const DEFAULT_SUBJECTS = ['Polity','Modern Indian History','Geography','Economy','Environment','Science & Tech','CSAT','Current Affairs'];
+  // Permanent subjects (fixed list): the 8 PNP subjects + CSAT, Current Affairs, International Relations (+ PNP full-length tests)
+  const DEFAULT_SUBJECTS = ['Polity','Economy','Geography','Sci & Tech','Modern History','Environment','AMAC','Mapping','CSAT','Current Affairs','International Relations','Full Length Tests'];
+  function enforcePermanent() {
+    // older names -> PNP names (existing tests are moved across, nothing is lost)
+    const RENAME = { 'Modern Indian History': 'Modern History', 'Science & Tech': 'Sci & Tech' };
+    Object.keys(RENAME).forEach(o => {
+      const n = RENAME[o];
+      if (subjects.includes(o) || (o in data)) {
+        data[n] = [...(data[n] || []), ...(data[o] || [])];
+        delete data[o];
+        subjects = subjects.filter(x => x !== o);
+        if (!subjects.includes(n)) subjects.push(n);
+        if (current === o) current = n;
+      }
+    });
+    // keep any older custom subject only if it still holds tests, so no data is lost
+    const extras = subjects.filter(s => !DEFAULT_SUBJECTS.includes(s) && (data[s] || []).length);
+    subjects = [...DEFAULT_SUBJECTS, ...extras];
+    Object.keys(data).forEach(k => { if (!subjects.includes(k)) delete data[k]; });
+    initData();
+    if (!subjects.includes(current)) current = subjects[0];
+  }
   const defaultPolityNames = ['Polity I Prelims Test','Polity II Prelims Test','Polity III Prelims Test','Polity IV Prelims Test','Polity V Prelims Test'];
 
   function numOr0(v) { const n = parseFloat(v); return isNaN(n) ? 0 : n; }
@@ -1939,6 +1962,7 @@ const PrelimsTool = (function () {
       current = 'Polity';
     }
     initData();
+    enforcePermanent();
     if (!subjects.includes(current)) current = subjects[0] || '';
     render();
   }
@@ -1950,7 +1974,6 @@ const PrelimsTool = (function () {
       const count = (data[s] || []).length;
       return `<button class="tab${s === current ? ' active' : ''}" data-tab="${esc(s)}">
         ${esc(s)} <span class="tab-count">${count}</span>
-        <span class="tab-del" data-del-subject="${esc(s)}" title="Remove subject">✕</span>
       </button>`;
     }).join('');
 
@@ -2098,18 +2121,6 @@ const PrelimsTool = (function () {
     if (confirm(`Reset all tests under "${current}"? This cannot be undone.`)) { data[current] = []; render(); save(); }
   });
 
-  document.getElementById('pr-add-subject').addEventListener('click', () => {
-    const name = prompt('New subject name (e.g. Environment, CSAT, Current Affairs):');
-    if (!name) return;
-    const trimmed = name.trim();
-    if (!trimmed) return;
-    if (subjects.includes(trimmed)) { alert('That subject already exists.'); current = trimmed; render(); return; }
-    subjects.push(trimmed);
-    data[trimmed] = [];
-    current = trimmed;
-    save(); render();
-  });
-
   document.getElementById('pr-export').addEventListener('click', () => {
     const blob = new Blob([JSON.stringify({ subjects, data }, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -2136,6 +2147,7 @@ const PrelimsTool = (function () {
         data = {};
         Object.keys(parsed.data).forEach(s => { data[s] = (parsed.data[s] || []).map(r => ({ ...blankRow(''), ...r, total: r.total || '' })); });
         initData();
+        enforcePermanent();
         current = subjects[0] || '';
         save(); render();
         alert('Backup restored successfully.');
@@ -2145,7 +2157,31 @@ const PrelimsTool = (function () {
     reader.readAsText(file);
   });
 
-  return { init };
+  // ---- hook used by the PNP tab: copy/update a test result as one row (keyed by pnpKey) ----
+  function findPNP(key) {
+    for (const s of subjects) {
+      const i = (data[s] || []).findIndex(r => r && r.pnpKey === key);
+      if (i > -1) return { s, i };
+    }
+    return null;
+  }
+  function hasPNP(key) { const f = findPNP(key); return f ? f.s : null; }
+  function upsertFromPNP(subject, key, vals) {
+    if (!subjects.includes(subject)) subjects.push(subject);
+    initData();
+    const f = findPNP(key);
+    if (f && f.s === subject) {
+      Object.assign(data[subject][f.i], vals);
+    } else {
+      if (f) data[f.s].splice(f.i, 1);   // subject changed (e.g. scheme switched) -> move the row
+      data[subject].push(Object.assign(blankRow(vals.test), vals, { pnpKey: key }));
+    }
+    current = subject;
+    save(); render();
+    return subject;
+  }
+
+  return { init, upsertFromPNP, hasPNP };
 })();
 </script>
 
@@ -2400,7 +2436,7 @@ ${it&&it.t!='R'?`<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:cen
 </div>${form3(o,sel)}`:''}`;
 document.querySelectorAll('#pnp-day [data-s]').forEach(x=>x.onclick=()=>{const v=cur==x.dataset.s?'':x.dataset.s;if(it.t=='T')st.s[it.n]=Object.assign(st.s[it.n]||{},{st:v});else st.f[it.t=='F'?it.a+'-'+it.b:'G'+it.n]=v;save();render()});
 document.querySelectorAll('#pnp-day .sf').forEach(x=>{x.oninput=()=>{const r=st.s[kk(it)]=st.s[kk(it)]||{};r[x.dataset.k]=x.value;const m=cm(r);$('un').innerHTML='Unattempted<b>'+m.un+'</b>';$('mk').innerHTML='Marks obtained<b>'+m.mk+' / '+m.out+'</b>';if(m.t)r.sc=Math.round(m.mk/m.out*100);save()};x.onchange=()=>setTimeout(()=>{const a=document.activeElement,k=a&&a.dataset&&a.dataset.k;if(a&&a.tagName=='BUTTON')return;render();if(k){const e=document.querySelector('#pnp-day .sf[data-k="'+k+'"]');e&&e.focus()}},0)});
-$('grid').innerHTML='';for(let n=1;n<=108;n++){const v=(st.s[n]||{}).st,g=document.createElement('div');g.className='g';g.textContent=v?ic[v]:n;g.title='Test '+n;g.style.borderColor=sj(n)[3];if(v){g.style.background=cl[v];g.style.color='#fff'}g.onclick=()=>{sel=K(tdate(n));vm=new Date(tdate(n).getFullYear(),tdate(n).getMonth(),1);render()};$('grid').append(g)}
+wirePRC(it);$('grid').innerHTML='';for(let n=1;n<=108;n++){const v=(st.s[n]||{}).st,g=document.createElement('div');g.className='g';g.textContent=v?ic[v]:n;g.title='Test '+n;g.style.borderColor=sj(n)[3];if(v){g.style.background=cl[v];g.style.color='#fff'}g.onclick=()=>{sel=K(tdate(n));vm=new Date(tdate(n).getFullYear(),tdate(n).getMonth(),1);render()};$('grid').append(g)}
 $('subj').innerHTML=SJ.map(x=>{if(1){const t=x[1]-x[0]+1;let d=0;for(let n=x[0];n<=x[1];n++)if((st.s[n]||{}).st=='d')d++;return cyl(x,d,t)}const t=x[1]-x[0]+1;let d=0;for(let n=x[0];n<=x[1];n++)if((st.s[n]||{}).st=='d')d++;return`<div class="row"><span>${x[2]}</span><span class="pnp-sub">${d}/${t}</span></div><div class="bar"><i style="width:${d/t*100}%;background:${x[3]}"></i></div>`}).join('');
 const pts=[];for(let n=1;n<=108;n++){const v=(st.s[n]||{}).sc;if(v!==undefined&&v!=='')pts.push(+v)}
 $('trend').innerHTML=pts.length<2?'<span class="pnp-sub">Enter scores on 2+ tests to see your trend.</span>':`<svg viewBox="0 0 200 60" preserveAspectRatio="none"><polyline fill="none" stroke="var(--ac)" stroke-width="2" points="${pts.map((v,i)=>(i/(pts.length-1)*196+2)+','+(58-v*0.56)).join(' ')}"/></svg>`;
@@ -2416,9 +2452,27 @@ function form(o,d){const m=cm(o),i=(k,l,ty)=>`<label>${l}<input class="sf" data-
 return`<div class="sform"><label>Date<input class="sf" data-k="dt" type="date" value="${o.dt||d}"></label>${i('t','Total questions')}${i('c','Correct')}${i('w','Wrong')}<div class="au" id="pnp-un">Unattempted<b>${m.un}</b></div><div class="au ok" id="pnp-mk">Marks obtained<b>${m.mk} / ${m.out}</b></div></div><div class="pnp-sub" style="margin:12px 0 0">Mistake analysis</div><div class="sform an">${i('sm','Silly mistake')}${i('aw','Awareness gap')}${i('co','Conceptual gap')}${i('rv','Revision gap')}${i('fa','Factual gap')}${i('gu','Guesswork')}</div><div class="sform"><label style="grid-column:1/-1">Notes<input class="sf" data-k="nt" type="text" placeholder="Add notes..." value="${(o.nt||'').replace(/"/g,'&quot;')}"></label></div>`}
 function form2(o,d){const m=cm(o),i=(k,l)=>`<label>${l}<input class="sf" data-k="${k}" type="number" min="0" value="${o[k]??''}"></label>`;
 return`<div class="sec"><div class="sh y">📝 Result</div><div class="sg r5"><label>Date<input class="sf" data-k="dt" type="date" value="${o.dt||d}"></label>${i('t','Total Qs')}${i('c','Correct')}${i('w','Wrong')}<div class="au" id="pnp-un">Unattempted<b>${m.un}</b></div></div><div class="au ok big2" id="pnp-mk">Marks obtained<b>${m.mk} / ${m.out}</b></div></div><div class="two"><div class="sec"><div class="sh c">🔍 Incorrect analysis</div><div class="sg r4">${i('aw','Awareness gap')}${i('co','Conceptual gap')}${i('rv','Revision gap')}${i('fa','Factual gap')}</div></div><div class="sec"><div class="sh g">⚡ Other</div><div class="sg r2">${i('sm','Silly mistake')}${i('gu','Guesswork')}</div></div></div><label class="nt">Notes<input class="sf" data-k="nt" type="text" placeholder="Add notes..." value="${(o.nt||'').replace(/"/g,'&quot;')}"></label>`}
+const PRC_SUBJ={};
+const pk=it=>'pnp:'+kk(it),eh=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const prcOk=()=>typeof PrelimsTool!=='undefined'&&PrelimsTool.upsertFromPNP;
+function prcBox(){const it=M[sel];if(!it||it.t=='R')return'';
+const lk=prcOk()&&PrelimsTool.hasPNP?PrelimsTool.hasPNP(pk(it)):null;
+return`<div class="prcbox"><button type="button" class="prcbtn" data-prc>${lk?'🔄 Update in PRC':'➕ Add to PRC'}</button><span class="prcnote">${lk?`In PRC · ${eh(lk)} · <a href="#" data-prcgo>View ↗</a>`:'Copies this result to Prelims Report Card'}</span></div>`}
+function wirePRC(it){
+const b=document.querySelector('#pnp-day [data-prc]');if(!b)return;
+b.onclick=()=>{
+if(!prcOk()){alert('Prelims Report Card is not ready yet. Please try again in a moment.');return}
+const r=st.s[kk(it)]||{};
+if(!(parseFloat(r.t)>0)){alert('Enter Total Qs (and Correct / Wrong) first.');return}
+const subject=r.sch=='c'?'CSAT':it.t=='T'?(PRC_SUBJ[sj(it.n)[2]]||sj(it.n)[2]):'Full Length Tests';
+const vals={test:'PNP',testname:it.t=='T'?String(it.n):it.t=='F'?'FLT '+it.a+'–'+it.b:'FLT '+it.n,date:r.dt||sel,total:r.t,correct:r.c??'',wrong:r.w??'',silly:r.sm??'',awareness:r.aw??'',conceptual:r.co??'',revision:r.rv??'',factual:r.fa??'',guesswork:r.gu??'',notes:r.nt??''};
+PrelimsTool.upsertFromPNP(subject,pk(it),vals);
+render()};
+const g=document.querySelector('#pnp-day [data-prcgo]');
+if(g)g.onclick=e=>{e.preventDefault();const t=document.querySelector('.main-tab[data-tool="prelims"]');if(t)t.click()}}
 function form3(o,d){const m=cm(o),esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;'),
 t=(k,l,x,y)=>`<label class="${x||''}">${l}<textarea class="sf" data-k="${k}" rows="1" ${y?'inputmode="decimal"':''}>${esc(o[k])}</textarea></label>`;
-return`<div class="fm"><span class="fl y">📝 Result</span><div class="fg"><label>Date<input class="sf" data-k="dt" type="date" value="${o.dt||d}"></label><label class="w2">Marking scheme<select class="sf" data-k="sch"><option value="g" ${o.sch!='c'?'selected':''}>GS  +2 / −0.66</option><option value="c" ${o.sch=='c'?'selected':''}>CSAT  +2.5 / −0.83</option></select></label>${t('t','Total Qs','',1)}${t('c','Correct','',1)}${t('w','Wrong','',1)}<div class="au" id="pnp-un">Unattempted<b>${m.un}</b></div><div class="au ok w2" id="pnp-mk">Marks obtained<b>${m.mk} / ${m.out}</b></div></div>
+return`<div class="fm"><span class="fl y">📝 Result</span><div class="fg"><label>Date<input class="sf" data-k="dt" type="date" value="${o.dt||d}"></label><label class="w2">Marking scheme<select class="sf" data-k="sch"><option value="g" ${o.sch!='c'?'selected':''}>GS  +2 / −0.66</option><option value="c" ${o.sch=='c'?'selected':''}>CSAT  +2.5 / −0.83</option></select></label>${t('t','Total Qs','',1)}${t('c','Correct','',1)}${t('w','Wrong','',1)}<div class="au" id="pnp-un">Unattempted<b>${m.un}</b></div><div class="au ok w2" id="pnp-mk">Marks obtained<b>${m.mk} / ${m.out}</b></div>${prcBox()}</div>
 <span class="fl cy">🔍 Mistake analysis</span><div class="fg">${t('sm','Silly mistake')}${t('gu','Guesswork')}${t('aw','Awareness gap','tc')}${t('co','Conceptual gap','tc')}${t('rv','Revision gap','tc')}${t('fa','Factual gap','tc')}${t('nt','Notes','wf')}</div></div>`}
 function cyl(x,d,t){const p=Math.round(d/t*100);return`<div class="cy" style="--c:${x[3]}"><span class="pc">${p}%</span><div class="tube" title="${p}%"><i style="height:${p}%;--c:${x[3]}"></i></div><span class="nm" style="color:${x[3]}">${x[2]}</span><small>${d}/${t}</small></div>`}
 function bars(){const a=[];for(let n=1;n<=108;n++){const r=st.s[n];if(r&&r.sc!=null&&r.sc!=='')a.push(n)}const l=a.slice(-10);if(!l.length)return'';
