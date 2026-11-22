@@ -13,7 +13,7 @@
     --text:#1A1A18;--muted:#6B6A65;--accent:#4A43A8;--accent-bg:#EEEDFE;--accent-text:#3C3489;
     --red:#A32D2D;--red-bg:#FCEBEB;--amber:#854F0B;--amber-bg:#FAEEDA;--green:#3B6D11;--green-bg:#EAF3DE;
     --radius:8px;--shadow:0 1px 3px rgba(0,0,0,0.07);
-    --accent-border:var(--accent-border);--ch-body:#FAFAF8;--glass:rgba(255,255,255,.8);--track:rgba(20,26,51,.09);
+    --accent-border:#CFCCF5;--ch-body:#FAFAF8;--glass:rgba(255,255,255,.8);--track:rgba(20,26,51,.09);
     --a1:#ffa94d;--a2:#9a85ff;--a3:#4fd6d6;--orb1:#ff8a1f;--orb2:#5b3df5;--orb3:#00b3b3;
   }
   html[data-theme="dark"]{
@@ -56,87 +56,344 @@
   .tool-panel.active{display:block}
 
   /* ===== REVISION TRACKER (scoped) ===== */
-  :is(#tool-revision,#tool-mains) header{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
-  :is(#tool-revision,#tool-mains) .logo{font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px}
-  :is(#tool-revision,#tool-mains) .header-btns{display:flex;gap:8px}
-  :is(#tool-revision,#tool-mains) .hbtn{font-size:12px;padding:6px 12px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:5px}
-  :is(#tool-revision,#tool-mains) .hbtn:hover{background:var(--surface2);color:var(--text);border-color:#C8C6BC}
-  :is(#tool-revision,#tool-mains) .hbtn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
-  :is(#tool-revision,#tool-mains) .hbtn.primary:hover{background:var(--accent-text)}
-  :is(#tool-revision,#tool-mains) main{max-width:860px;margin:0 auto;padding:24px 16px}
-  :is(#tool-revision,#tool-mains) .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
-  :is(#tool-revision,#tool-mains) .stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;box-shadow:var(--shadow);cursor:pointer;user-select:none}
-  :is(#tool-revision,#tool-mains) .stat:hover{box-shadow:0 3px 10px rgba(0,0,0,0.12)}
-  :is(#tool-revision,#tool-mains) .stat.active-filter{border-width:2px}
-  :is(#tool-revision,#tool-mains) .stat.overdue.active-filter{border-color:var(--red);background:var(--red-bg)}
-  :is(#tool-revision,#tool-mains) .stat.soon.active-filter{border-color:#BA7517;background:var(--amber-bg)}
-  :is(#tool-revision,#tool-mains) .stat.fresh.active-filter{border-color:#639922;background:var(--green-bg)}
-  :is(#tool-revision,#tool-mains) .stat.never.active-filter{border-color:var(--accent);background:var(--accent-bg)}
-  :is(#tool-revision,#tool-mains) .filter-heading{font-size:13px;font-weight:600;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:8px}
-  :is(#tool-revision,#tool-mains) .filter-clear{font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer}
-  :is(#tool-revision,#tool-mains) .filter-clear:hover{background:var(--surface2);color:var(--text)}
-  :is(#tool-revision,#tool-mains) .daily-thought{background:var(--accent-bg);border:1px solid var(--accent-border);border-radius:var(--radius);padding:14px 16px;margin-bottom:20px}
-  :is(#tool-revision,#tool-mains) .thought-label{font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--accent-text);text-transform:uppercase;margin-bottom:6px}
-  :is(#tool-revision,#tool-mains) .thought-text{font-size:13px;color:var(--accent-text);line-height:1.65}
-  :is(#tool-revision,#tool-mains) .stat-val{font-size:22px;font-weight:600}
-  :is(#tool-revision,#tool-mains) .stat-lbl{font-size:11px;color:var(--muted);margin-top:2px}
-  :is(#tool-revision,#tool-mains) .stat.overdue .stat-val{color:var(--red)}
-  :is(#tool-revision,#tool-mains) .stat.soon .stat-val{color:var(--amber)}
-  :is(#tool-revision,#tool-mains) .stat.fresh .stat-val{color:var(--green)}
-  :is(#tool-revision,#tool-mains) .tabs-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:16px;flex-wrap:wrap}
-  :is(#tool-revision,#tool-mains) .tabs{display:flex;gap:6px;flex-wrap:wrap;flex:1}
-  :is(#tool-revision,#tool-mains) .tab{font-size:13px;padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;font-weight:500;display:flex;align-items:center;gap:5px}
-  :is(#tool-revision,#tool-mains) .tab:hover:not(.active){background:var(--surface2);color:var(--text)}
-  :is(#tool-revision,#tool-mains) .tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-  :is(#tool-revision,#tool-mains) .tab-del{font-size:11px;opacity:0.55;cursor:pointer;margin-left:2px;line-height:1}
-  :is(#tool-revision,#tool-mains) .tab-del:hover{opacity:1}
-  :is(#tool-revision,#tool-mains) .tab.active .tab-del{color:#fff}
-  :is(#tool-revision,#tool-mains) .add-subject-btn{font-size:12px;padding:6px 12px;border-radius:20px;border:1px dashed var(--border);background:transparent;color:var(--muted);cursor:pointer;white-space:nowrap}
-  :is(#tool-revision,#tool-mains) .add-subject-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
-  :is(#tool-revision,#tool-mains) .toolbar{display:flex;gap:8px;margin-bottom:14px}
-  :is(#tool-revision,#tool-mains) .toolbar input{flex:1;font-size:13px;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);outline:none}
-  :is(#tool-revision,#tool-mains) .toolbar input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-bg)}
-  :is(#tool-revision,#tool-mains) .toolbar select{font-size:12px;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--muted);cursor:pointer;outline:none}
-  :is(#tool-revision,#tool-mains) .add-btn{font-size:13px;padding:8px 16px;border-radius:var(--radius);border:none;background:var(--accent);color:#fff;cursor:pointer;font-weight:500;white-space:nowrap}
-  :is(#tool-revision,#tool-mains) .add-btn:hover{background:var(--accent-text)}
-  :is(#tool-revision,#tool-mains) .chapter-list{display:flex;flex-direction:column;gap:6px}
-  :is(#tool-revision,#tool-mains) .ch-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
-  :is(#tool-revision,#tool-mains) .ch-card.overdue{border-left:3px solid var(--red)}
-  :is(#tool-revision,#tool-mains) .ch-card.soon{border-left:3px solid #BA7517}
-  :is(#tool-revision,#tool-mains) .ch-card.fresh{border-left:3px solid #639922}
-  :is(#tool-revision,#tool-mains) .ch-card.never{border-left:3px solid var(--border)}
-  :is(#tool-revision,#tool-mains) .ch-head{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;user-select:none}
-  :is(#tool-revision,#tool-mains) .ch-head:hover{background:var(--surface2)}
-  :is(#tool-revision,#tool-mains) .ch-name{font-size:13px;font-weight:500;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  :is(#tool-revision,#tool-mains) .badge{font-size:11px;font-weight:500;padding:3px 9px;border-radius:20px;white-space:nowrap;flex-shrink:0}
-  :is(#tool-revision,#tool-mains) .badge.overdue{background:var(--red-bg);color:var(--red)}
-  :is(#tool-revision,#tool-mains) .badge.soon{background:var(--amber-bg);color:var(--amber)}
-  :is(#tool-revision,#tool-mains) .badge.fresh{background:var(--green-bg);color:var(--green)}
-  :is(#tool-revision,#tool-mains) .badge.never{background:var(--surface2);color:var(--muted)}
-  :is(#tool-revision,#tool-mains) .ch-actions{display:flex;gap:4px;flex-shrink:0;align-items:center}
-  :is(#tool-revision,#tool-mains) .icon-btn{background:none;border:none;cursor:pointer;padding:4px 6px;color:var(--muted);font-size:14px;border-radius:4px}
-  :is(#tool-revision,#tool-mains) .icon-btn:hover{color:var(--red);background:var(--red-bg)}
-  :is(#tool-revision,#tool-mains) .chevron{font-size:11px;color:var(--muted);transition:transform .2s;display:inline-block;padding:4px 6px}
-  :is(#tool-revision,#tool-mains) .chevron.open{transform:rotate(180deg)}
-  :is(#tool-revision,#tool-mains) .rev-count{font-size:11px;color:var(--muted);background:var(--surface2);border-radius:20px;padding:2px 7px;flex-shrink:0}
-  :is(#tool-revision,#tool-mains) .tab.all-tab{font-weight:700}
-  :is(#tool-revision,#tool-mains) .tab.all-tab:not(.active){background:var(--accent-bg);color:var(--accent-text);border-color:var(--accent-border)}
-  :is(#tool-revision,#tool-mains) .subject-tag{font-size:10px;font-weight:600;color:var(--accent-text);background:var(--accent-bg);border-radius:20px;padding:2px 8px;flex-shrink:0}
-  :is(#tool-revision,#tool-mains) .ch-body{border-top:1px solid var(--border);padding:12px 14px;display:flex;flex-direction:column;gap:10px;background:var(--ch-body)}
-  :is(#tool-revision,#tool-mains) .field-row{display:flex;align-items:center;gap:10px}
-  :is(#tool-revision,#tool-mains) .field-row label{font-size:12px;color:var(--muted);width:96px;flex-shrink:0}
-  :is(#tool-revision,#tool-mains) .field-row input[type=date],:is(#tool-revision,#tool-mains) .field-row select{font-size:12px;padding:5px 8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);outline:none}
-  :is(#tool-revision,#tool-mains) .field-row.note-row{align-items:flex-start}
-  :is(#tool-revision,#tool-mains) .field-row.note-row label{padding-top:6px}
-  :is(#tool-revision,#tool-mains) textarea{width:100%;font-size:12px;padding:7px 9px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);resize:vertical;min-height:64px;font-family:inherit;outline:none;line-height:1.6}
-  :is(#tool-revision,#tool-mains) .empty{text-align:center;padding:3rem;color:var(--muted);font-size:13px}
-  :is(#tool-revision,#tool-mains) .empty-icon{font-size:32px;margin-bottom:10px}
-  :is(#tool-revision,#tool-mains) .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center;z-index:100}
-  :is(#tool-revision,#tool-mains) .modal{background:var(--surface);border-radius:12px;padding:24px;width:320px;border:1px solid var(--border);box-shadow:0 8px 32px rgba(0,0,0,0.15)}
-  :is(#tool-revision,#tool-mains) .modal h3{font-size:15px;font-weight:600;margin-bottom:14px}
-  :is(#tool-revision,#tool-mains) .modal input{background:var(--surface);width:100%;font-size:13px;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);outline:none;color:var(--text)}
-  :is(#tool-revision,#tool-mains) .modal-btns{display:flex;gap:8px;margin-top:14px;justify-content:flex-end}
+  #tool-mains header{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+  #tool-mains .logo{font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px}
+  #tool-mains .header-btns{display:flex;gap:8px}
+  #tool-mains .hbtn{font-size:12px;padding:6px 12px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:5px}
+  #tool-mains .hbtn:hover{background:var(--surface2);color:var(--text);border-color:#C8C6BC}
+  #tool-mains .hbtn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  #tool-mains .hbtn.primary:hover{background:var(--accent-text)}
+  #tool-mains main{max-width:860px;margin:0 auto;padding:24px 16px}
+  #tool-mains .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+  #tool-mains .stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;box-shadow:var(--shadow);cursor:pointer;user-select:none}
+  #tool-mains .stat:hover{box-shadow:0 3px 10px rgba(0,0,0,0.12)}
+  #tool-mains .stat.active-filter{border-width:2px}
+  #tool-mains .stat.overdue.active-filter{border-color:var(--red);background:var(--red-bg)}
+  #tool-mains .stat.soon.active-filter{border-color:#BA7517;background:var(--amber-bg)}
+  #tool-mains .stat.fresh.active-filter{border-color:#639922;background:var(--green-bg)}
+  #tool-mains .stat.never.active-filter{border-color:var(--accent);background:var(--accent-bg)}
+  #tool-mains .filter-heading{font-size:13px;font-weight:600;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+  #tool-mains .filter-clear{font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer}
+  #tool-mains .filter-clear:hover{background:var(--surface2);color:var(--text)}
+  #tool-mains .daily-thought{background:var(--accent-bg);border:1px solid var(--accent-border);border-radius:var(--radius);padding:14px 16px;margin-bottom:20px}
+  #tool-mains .thought-label{font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--accent-text);text-transform:uppercase;margin-bottom:6px}
+  #tool-mains .thought-text{font-size:13px;color:var(--accent-text);line-height:1.65}
+  #tool-mains .stat-val{font-size:22px;font-weight:600}
+  #tool-mains .stat-lbl{font-size:11px;color:var(--muted);margin-top:2px}
+  #tool-mains .stat.overdue .stat-val{color:var(--red)}
+  #tool-mains .stat.soon .stat-val{color:var(--amber)}
+  #tool-mains .stat.fresh .stat-val{color:var(--green)}
+  #tool-mains .tabs-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+  #tool-mains .tabs{display:flex;gap:6px;flex-wrap:wrap;flex:1}
+  #tool-mains .tab{font-size:13px;padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;font-weight:500;display:flex;align-items:center;gap:5px}
+  #tool-mains .tab:hover:not(.active){background:var(--surface2);color:var(--text)}
+  #tool-mains .tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+  #tool-mains .tab-del{font-size:11px;opacity:0.55;cursor:pointer;margin-left:2px;line-height:1}
+  #tool-mains .tab-del:hover{opacity:1}
+  #tool-mains .tab.active .tab-del{color:#fff}
+  #tool-mains .add-subject-btn{font-size:12px;padding:6px 12px;border-radius:20px;border:1px dashed var(--border);background:transparent;color:var(--muted);cursor:pointer;white-space:nowrap}
+  #tool-mains .add-subject-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+  #tool-mains .toolbar{display:flex;gap:8px;margin-bottom:14px}
+  #tool-mains .toolbar input{flex:1;font-size:13px;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);outline:none}
+  #tool-mains .toolbar input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-bg)}
+  #tool-mains .toolbar select{font-size:12px;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--muted);cursor:pointer;outline:none}
+  #tool-mains .add-btn{font-size:13px;padding:8px 16px;border-radius:var(--radius);border:none;background:var(--accent);color:#fff;cursor:pointer;font-weight:500;white-space:nowrap}
+  #tool-mains .add-btn:hover{background:var(--accent-text)}
+  #tool-mains .chapter-list{display:flex;flex-direction:column;gap:6px}
+  #tool-mains .ch-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+  #tool-mains .ch-card.overdue{border-left:3px solid var(--red)}
+  #tool-mains .ch-card.soon{border-left:3px solid #BA7517}
+  #tool-mains .ch-card.fresh{border-left:3px solid #639922}
+  #tool-mains .ch-card.never{border-left:3px solid var(--border)}
+  #tool-mains .ch-head{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;user-select:none}
+  #tool-mains .ch-head:hover{background:var(--surface2)}
+  #tool-mains .ch-name{font-size:13px;font-weight:500;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #tool-mains .badge{font-size:11px;font-weight:500;padding:3px 9px;border-radius:20px;white-space:nowrap;flex-shrink:0}
+  #tool-mains .badge.overdue{background:var(--red-bg);color:var(--red)}
+  #tool-mains .badge.soon{background:var(--amber-bg);color:var(--amber)}
+  #tool-mains .badge.fresh{background:var(--green-bg);color:var(--green)}
+  #tool-mains .badge.never{background:var(--surface2);color:var(--muted)}
+  #tool-mains .ch-actions{display:flex;gap:4px;flex-shrink:0;align-items:center}
+  #tool-mains .icon-btn{background:none;border:none;cursor:pointer;padding:4px 6px;color:var(--muted);font-size:14px;border-radius:4px}
+  #tool-mains .icon-btn:hover{color:var(--red);background:var(--red-bg)}
+  #tool-mains .chevron{font-size:11px;color:var(--muted);transition:transform .2s;display:inline-block;padding:4px 6px}
+  #tool-mains .chevron.open{transform:rotate(180deg)}
+  #tool-mains .rev-count{font-size:11px;color:var(--muted);background:var(--surface2);border-radius:20px;padding:2px 7px;flex-shrink:0}
+  #tool-mains .tab.all-tab{font-weight:700}
+  #tool-mains .tab.all-tab:not(.active){background:var(--accent-bg);color:var(--accent-text);border-color:var(--accent-border)}
+  #tool-mains .subject-tag{font-size:10px;font-weight:600;color:var(--accent-text);background:var(--accent-bg);border-radius:20px;padding:2px 8px;flex-shrink:0}
+  #tool-mains .ch-body{border-top:1px solid var(--border);padding:12px 14px;display:flex;flex-direction:column;gap:10px;background:var(--ch-body)}
+  #tool-mains .field-row{display:flex;align-items:center;gap:10px}
+  #tool-mains .field-row label{font-size:12px;color:var(--muted);width:96px;flex-shrink:0}
+  #tool-mains .field-row input[type=date],#tool-mains .field-row select{font-size:12px;padding:5px 8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);outline:none}
+  #tool-mains .field-row.note-row{align-items:flex-start}
+  #tool-mains .field-row.note-row label{padding-top:6px}
+  #tool-mains textarea{width:100%;font-size:12px;padding:7px 9px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);resize:vertical;min-height:64px;font-family:inherit;outline:none;line-height:1.6}
+  #tool-mains .empty{text-align:center;padding:3rem;color:var(--muted);font-size:13px}
+  #tool-mains .empty-icon{font-size:32px;margin-bottom:10px}
+  #tool-mains .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center;z-index:100}
+  #tool-mains .modal{background:var(--surface);border-radius:12px;padding:24px;width:320px;border:1px solid var(--border);box-shadow:0 8px 32px rgba(0,0,0,0.15)}
+  #tool-mains .modal h3{font-size:15px;font-weight:600;margin-bottom:14px}
+  #tool-mains .modal input{background:var(--surface);width:100%;font-size:13px;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);outline:none;color:var(--text)}
+  #tool-mains .modal-btns{display:flex;gap:8px;margin-top:14px;justify-content:flex-end}
   #rev-import-input,#mrev-import-input{display:none}
+
+  /* ===== PRELIMS REVISION TRACKER (scoped to #tool-revision) ===== */
+  #tool-revision{min-height:100vh}
+  #tool-revision header{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+  #tool-revision .logo{font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px}
+  #tool-revision .header-btns{display:flex;gap:8px}
+  #tool-revision .hbtn{font-size:12px;padding:6px 12px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:5px}
+  #tool-revision .hbtn:hover{background:var(--surface2);color:var(--text);border-color:#C8C6BC}
+  #tool-revision .hbtn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  #tool-revision .hbtn.primary:hover{background:var(--accent-text)}
+  #tool-revision main{max-width:1040px;margin:0 auto;padding:24px 16px}
+  #tool-revision .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+  #tool-revision .stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;box-shadow:var(--shadow);cursor:pointer;user-select:none}
+  #tool-revision .stat:hover{box-shadow:0 3px 10px rgba(0,0,0,0.12)}
+  #tool-revision .stat.active-filter{border-width:2px}
+  #tool-revision .stat.overdue.active-filter{border-color:var(--red);background:var(--red-bg)}
+  #tool-revision .stat.soon.active-filter{border-color:#BA7517;background:var(--amber-bg)}
+  #tool-revision .stat.fresh.active-filter{border-color:#639922;background:var(--green-bg)}
+  #tool-revision .stat.never.active-filter{border-color:var(--accent);background:var(--accent-bg)}
+  #tool-revision .filter-heading{font-size:13px;font-weight:600;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+  #tool-revision .filter-clear{font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer}
+  #tool-revision .filter-clear:hover{background:var(--surface2);color:var(--text)}
+  #tool-revision .daily-thought{background:var(--accent-bg);border:1px solid var(--accent-border);border-radius:var(--radius);padding:14px 16px;margin-bottom:20px}
+  #tool-revision .thought-label{font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--accent-text);text-transform:uppercase;margin-bottom:6px}
+  #tool-revision .thought-text{font-size:13px;color:var(--accent-text);line-height:1.65}
+  #tool-revision .stat-val{font-size:22px;font-weight:600}
+  #tool-revision .stat-lbl{font-size:11px;color:var(--muted);margin-top:2px}
+  #tool-revision .stat.overdue .stat-val{color:var(--red)}
+  #tool-revision .stat.soon .stat-val{color:var(--amber)}
+  #tool-revision .stat.fresh .stat-val{color:var(--green)}
+  #tool-revision .tabs-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+  #tool-revision .tabs{display:flex;gap:6px;flex-wrap:wrap;flex:1}
+  #tool-revision .tab{font-size:13px;padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;font-weight:500;display:flex;align-items:center;gap:5px}
+  #tool-revision .tab:hover:not(.active){background:var(--surface2);color:var(--text)}
+  #tool-revision .tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+  #tool-revision .tab-del{font-size:11px;opacity:0.55;cursor:pointer;margin-left:2px;line-height:1}
+  #tool-revision .tab-del:hover{opacity:1}
+  #tool-revision .tab.active .tab-del{color:#fff}
+  #tool-revision .add-subject-btn{font-size:12px;padding:6px 12px;border-radius:20px;border:1px dashed var(--border);background:transparent;color:var(--muted);cursor:pointer;white-space:nowrap}
+  #tool-revision .add-subject-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+  #tool-revision .toolbar{display:flex;gap:8px;margin-bottom:14px}
+  #tool-revision .toolbar input{flex:1;font-size:13px;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);outline:none}
+  #tool-revision .toolbar input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-bg)}
+  #tool-revision .toolbar select{font-size:12px;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--muted);cursor:pointer;outline:none}
+  #tool-revision .add-btn{font-size:13px;padding:8px 16px;border-radius:var(--radius);border:none;background:var(--accent);color:#fff;cursor:pointer;font-weight:500;white-space:nowrap}
+  #tool-revision .add-btn:hover{background:var(--accent-text)}
+  #tool-revision .chapter-list{display:flex;flex-direction:column;gap:6px}
+  #tool-revision .ch-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+  #tool-revision .ch-card.overdue{border-left:3px solid var(--red)}
+  #tool-revision .ch-card.soon{border-left:3px solid #BA7517}
+  #tool-revision .ch-card.fresh{border-left:3px solid #639922}
+  #tool-revision .ch-card.never{border-left:3px solid var(--border)}
+  #tool-revision .ch-head{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;user-select:none}
+  #tool-revision .ch-head:hover{background:var(--surface2)}
+  #tool-revision .ch-name{font-size:13px;font-weight:500;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #tool-revision .badge{font-size:11px;font-weight:500;padding:3px 9px;border-radius:20px;white-space:nowrap;flex-shrink:0}
+  #tool-revision .badge.overdue{background:var(--red-bg);color:var(--red)}
+  #tool-revision .badge.soon{background:var(--amber-bg);color:var(--amber)}
+  #tool-revision .badge.fresh{background:var(--green-bg);color:var(--green)}
+  #tool-revision .badge.never{background:var(--surface2);color:var(--muted)}
+  #tool-revision .ch-actions{display:flex;gap:4px;flex-shrink:0;align-items:center}
+  #tool-revision .icon-btn{background:none;border:none;cursor:pointer;padding:4px 6px;color:var(--muted);font-size:14px;border-radius:4px}
+  #tool-revision .icon-btn:hover{color:var(--red);background:var(--red-bg)}
+  #tool-revision .chevron{font-size:11px;color:var(--muted);transition:transform .2s;display:inline-block;padding:4px 6px}
+  #tool-revision .chevron.open{transform:rotate(180deg)}
+  #tool-revision .rev-count{font-size:11px;color:var(--muted);background:var(--surface2);border-radius:20px;padding:2px 7px;flex-shrink:0}
+  #tool-revision .tab.all-tab{font-weight:700}
+  #tool-revision .tab.all-tab:not(.active){background:var(--accent-bg);color:var(--accent-text);border-color:var(--accent-border)}
+  #tool-revision .subject-tag{font-size:10px;font-weight:600;color:var(--accent-text);background:var(--accent-bg);border-radius:20px;padding:2px 8px;flex-shrink:0}
+  #tool-revision .ch-body{border-top:1px solid var(--border);padding:12px 14px;display:flex;flex-direction:column;gap:10px;background:var(--ch-body)}
+  #tool-revision .field-row{display:flex;align-items:center;gap:10px}
+  #tool-revision .field-row label{font-size:12px;color:var(--muted);width:96px;flex-shrink:0}
+  #tool-revision .field-row input[type=date],#tool-revision .field-row select{font-size:12px;padding:5px 8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);outline:none}
+  #tool-revision .field-row.note-row{align-items:flex-start}
+  #tool-revision .field-row.note-row label{padding-top:6px}
+  #tool-revision textarea{width:100%;font-size:12px;padding:7px 9px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);resize:vertical;min-height:64px;font-family:inherit;outline:none;line-height:1.6}
+  #tool-revision .empty{text-align:center;padding:3rem;color:var(--muted);font-size:13px}
+  #tool-revision .empty-icon{font-size:32px;margin-bottom:10px}
+  #tool-revision .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center;z-index:100}
+  #tool-revision .modal{background:var(--surface);border-radius:12px;padding:24px;width:320px;border:1px solid var(--border);box-shadow:0 8px 32px rgba(0,0,0,0.15)}
+  #tool-revision .modal h3{font-size:15px;font-weight:600;margin-bottom:14px}
+  #tool-revision .modal input{background:var(--surface);width:100%;font-size:13px;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);outline:none;color:var(--text)}
+  #tool-revision .modal-btns{display:flex;gap:8px;margin-top:14px;justify-content:flex-end}
+  #rev-import-input{display:none}
+  @media(max-width:540px){#tool-revision .stats{grid-template-columns:repeat(2,1fr)}#tool-revision header{padding:12px 14px}#tool-revision main{padding:14px 10px}}
+
+  /* ── Dashboard ── */
+  #tool-revision .dash{background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);margin-bottom:20px;overflow:hidden}
+  #tool-revision .dash-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;user-select:none}
+  #tool-revision .dash-title{font-size:13px;font-weight:700;letter-spacing:.3px}
+  #tool-revision .dash-sub{font-size:11px;color:var(--muted);font-weight:400;margin-left:8px}
+  #tool-revision .dash-body{padding:0 16px 16px;display:flex;flex-direction:column;gap:16px}
+  #tool-revision .dash-top{display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:center}
+  #tool-revision .ring{position:relative;width:130px;height:130px;margin:0 auto}
+  #tool-revision .ring svg{transform:rotate(-90deg)}
+  #tool-revision .ring .ring-c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  #tool-revision .ring .pct{font-size:26px;font-weight:700;line-height:1}
+  #tool-revision .ring .lbl{font-size:10px;color:var(--muted);margin-top:3px;text-transform:uppercase;letter-spacing:.6px}
+  #tool-revision .kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+  #tool-revision .kpi{background:var(--surface2);border-radius:var(--radius);padding:9px 12px}
+  #tool-revision .kpi b{display:block;font-size:19px;font-weight:700}
+  #tool-revision .kpi span{font-size:11px;color:var(--muted)}
+  #tool-revision .dash-sec{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px}
+  #tool-revision .stackbar{display:flex;height:14px;border-radius:7px;overflow:hidden;background:var(--track)}
+  #tool-revision .stackbar div{height:100%;transition:width .4s}
+  #tool-revision .legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:8px;font-size:11px;color:var(--muted)}
+  #tool-revision .legend i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+  #tool-revision .subj-row{display:grid;grid-template-columns:130px 1fr 44px;gap:10px;align-items:center;padding:5px 0;cursor:pointer;border-radius:6px}
+  #tool-revision .subj-row:hover{background:var(--surface2)}
+  #tool-revision .subj-name{font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #tool-revision .subj-name small{display:block;font-size:10px;color:var(--muted);font-weight:400}
+  #tool-revision .subj-pct{font-size:12px;font-weight:600;text-align:right}
+  #tool-revision .bars{display:flex;align-items:flex-end;gap:4px;height:80px}
+  #tool-revision .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:3px}
+  #tool-revision .bar-col .b{width:100%;max-width:26px;background:var(--accent);border-radius:4px 4px 0 0;min-height:3px;opacity:.9}
+  #tool-revision .bar-col .b.zero{background:var(--track);opacity:1}
+  #tool-revision .bar-col .n{font-size:9px;color:var(--muted);height:11px}
+  #tool-revision .bar-lbl{display:flex;gap:4px;margin-top:4px}
+  #tool-revision .bar-lbl span{flex:1;text-align:center;font-size:9px;color:var(--muted)}
+  #tool-revision .bar-lbl span.today{color:var(--accent);font-weight:700}
+  #tool-revision .dash-cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  #tool-revision .q-item{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);font-size:12px}
+  #tool-revision .q-item:last-child{border-bottom:none}
+  #tool-revision .q-name{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #tool-revision .q-name small{color:var(--muted);margin-left:6px;font-size:10px}
+  #tool-revision .q-tag{font-size:10px;padding:2px 7px;border-radius:20px;font-weight:600;flex-shrink:0}
+  #tool-revision .q-tag.overdue{background:var(--red-bg);color:var(--red)}
+  #tool-revision .q-tag.never{background:var(--accent-bg);color:var(--accent-text)}
+  #tool-revision .q-tag.soon{background:var(--amber-bg);color:var(--amber)}
+  #tool-revision .q-btn{font-size:10px;padding:3px 8px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;flex-shrink:0}
+  #tool-revision .q-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+  #tool-revision .dash-empty{font-size:12px;color:var(--muted);padding:8px 0}
+  @media(max-width:620px){#tool-revision .dash-top{grid-template-columns:1fr}#tool-revision .dash-cols{grid-template-columns:1fr}#tool-revision .subj-row{grid-template-columns:100px 1fr 40px}}
+
+  #tool-revision .hero{display:grid;grid-template-columns:200px 1fr;gap:18px;align-items:center;background:linear-gradient(135deg,var(--accent-bg),transparent);border:1px solid var(--accent-border);border-radius:12px;padding:12px 16px}
+  #tool-revision .verdict{text-align:center;font-size:12px;font-weight:700;color:var(--accent-text);margin-top:-4px}
+  #tool-revision .cd-num{font-size:34px;font-weight:800;line-height:1.1;color:var(--accent-text)}
+  #tool-revision .cd-num small{font-size:13px;font-weight:500;color:var(--muted)}
+  #tool-revision .cd-line{font-size:12px;margin-top:5px;color:var(--text)}
+  #tool-revision .cd-empty{font-size:12px;color:var(--muted);margin-bottom:6px}
+  #tool-revision .cd-in{margin-top:8px;font-size:12px;padding:5px 8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text)}
+  #tool-revision .nt{text-transform:none;letter-spacing:0;font-weight:400;margin-left:6px}
+  #tool-revision .map-row{display:grid;grid-template-columns:110px 1fr;gap:10px;align-items:start;margin-bottom:7px}
+  #tool-revision .map-lbl{font-size:11px;font-weight:600;padding-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #tool-revision .cells{display:flex;flex-wrap:wrap;gap:3px}
+  #tool-revision .cell{width:15px;height:15px;border-radius:4px;cursor:pointer;transition:transform .12s}
+  #tool-revision .cell:hover{transform:scale(1.5);position:relative;z-index:2}
+  #tool-revision .cell.pulse{animation:cpulse 2s ease-in-out infinite}
+  @keyframes cpulse{50%{opacity:.55}}
+  #tool-revision .grad{width:80px;height:8px;border-radius:4px;background:linear-gradient(90deg,hsl(0,62%,52%),hsl(60,62%,48%),hsl(125,62%,46%))}
+  #tool-revision .acts{display:flex;gap:3px;overflow-x:auto}
+  #tool-revision .acol{display:flex;flex-direction:column;gap:3px}
+  #tool-revision .ac{width:13px;height:13px;border-radius:3px;background:var(--track);display:block}
+  #tool-revision .ac.x{background:transparent}
+  #tool-revision .ac.l1{background:#c9c5fa}#tool-revision .ac.l2{background:#9a93f0}#tool-revision .ac.l3{background:#6f66e3}#tool-revision .ac.l4{background:#4A43A8}
+  #tool-revision .fc-note{font-size:11px;color:var(--muted);margin-top:4px}
+  #tool-revision .q-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+  @media(max-width:620px){#tool-revision .hero{grid-template-columns:1fr}#tool-revision .map-row{grid-template-columns:1fr;gap:3px}}
+
+  #tool-revision .name-in{flex:1;min-width:0;font-size:12px;padding:5px 8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);outline:none}
+  #tool-revision .dash2{display:grid;grid-template-columns:1fr 1.2fr;gap:16px;margin-bottom:20px;align-items:stretch}
+  #tool-revision .dcard{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:22px 22px 18px;box-shadow:var(--shadow)}
+  #tool-revision .dcard h2{margin:0;font-size:24px;font-weight:700;letter-spacing:-.3px}
+  #tool-revision .dsub{margin:4px 0 16px;color:var(--muted);font-size:13px;line-height:1.5}
+  #tool-revision .d-ringrow{display:flex;align-items:center;gap:18px;margin-bottom:18px}
+  #tool-revision .d-ring{position:relative;width:150px;height:150px;flex-shrink:0}
+  #tool-revision .d-ringc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  #tool-revision .d-ringc b{font-size:30px;font-weight:800;line-height:1}
+  #tool-revision .d-ringc span{font-size:11px;color:var(--muted);margin-top:3px}
+  #tool-revision .d-text{font-size:15px;line-height:1.7}
+  #tool-revision .tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  #tool-revision .tile{display:flex;align-items:center;gap:10px;background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:11px 12px;cursor:pointer;user-select:none}
+  #tool-revision .tile:hover{border-color:var(--accent)}
+  #tool-revision .tile.active-filter{border:2px solid var(--accent);background:var(--accent-bg)}
+  #tool-revision .tile .td{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+  #tool-revision .tile b{font-size:20px;font-weight:700}
+  #tool-revision .tile .tl{font-size:11px;color:var(--muted);line-height:1.3}
+  #tool-revision .d-foot{margin-top:14px;font-size:13px;color:var(--muted)}
+  #tool-revision .sgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  #tool-revision .sbox{background:color-mix(in srgb,var(--c) 9%,var(--surface));border:1px solid color-mix(in srgb,var(--c) 22%,var(--border));border-left:5px solid var(--c);border-radius:14px;padding:14px 14px 12px;min-height:112px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;transition:transform .15s,box-shadow .15s}
+  #tool-revision .sbox:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.12)}
+  #tool-revision .sbox.sel{box-shadow:0 0 0 2px var(--c)}
+  #tool-revision .sb-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+  #tool-revision .sb-name{font-size:15px;font-weight:700;color:var(--c);line-height:1.25}
+  #tool-revision .sb-pct{font-size:17px;font-weight:800;color:var(--c)}
+  #tool-revision .sb-count{font-size:12px;color:var(--muted);margin:8px 0}
+  #tool-revision .sb-bar{height:7px;border-radius:4px;background:var(--track);overflow:hidden}
+  #tool-revision .sb-bar i{display:block;height:100%;background:var(--c);border-radius:4px;transition:width .4s}
+  @media(max-width:860px){#tool-revision .dash2{grid-template-columns:1fr}}
+  @media(max-width:420px){#tool-revision .d-ringrow{flex-direction:column;align-items:flex-start}}
+
+  #tool-revision .sbox{background:linear-gradient(160deg,color-mix(in srgb,var(--c) 16%,var(--surface)) 0%,var(--surface) 62%);border:1px solid color-mix(in srgb,var(--c) 25%,var(--border));border-left:1px solid color-mix(in srgb,var(--c) 25%,var(--border));border-radius:18px;padding:14px;min-height:0;gap:12px;justify-content:flex-start;position:relative;overflow:hidden}
+  #tool-revision .sbox::before{content:"";position:absolute;left:0;top:0;right:0;height:4px;background:var(--c)}
+  #tool-revision .sb-head{display:flex;align-items:center;gap:11px}
+  #tool-revision .sb-ring{position:relative;width:52px;height:52px;flex-shrink:0}
+  #tool-revision .sb-ring b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--c)}
+  #tool-revision .sb-meta{display:flex;flex-direction:column;min-width:0}
+  #tool-revision .sb-name{font-size:15px;font-weight:700;color:var(--text);line-height:1.2}
+  #tool-revision .sb-count{font-size:11px;color:var(--muted);margin:3px 0 0}
+  #tool-revision .dots{display:flex;flex-wrap:wrap;gap:3px;align-content:flex-start;min-height:20px}
+  #tool-revision .dt{width:8px;height:8px;border-radius:50%;background:var(--track);display:block}
+  #tool-revision .dt.f{background:#3FA34D}#tool-revision .dt.s{background:#E3A21A}#tool-revision .dt.o{background:#D64545}
+  #tool-revision .sb-none{font-size:11px;color:var(--muted)}
+  #tool-revision .sb-stats{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:10.5px;font-weight:600;margin-top:auto}
+  #tool-revision .sb-stats span::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:4px;background:var(--track)}
+  #tool-revision .sb-stats .o{color:#D64545}#tool-revision .sb-stats .o::before{background:#D64545}
+  #tool-revision .sb-stats .s{color:#B77F0C}#tool-revision .sb-stats .s::before{background:#E3A21A}
+  #tool-revision .sb-stats .f{color:#3FA34D}#tool-revision .sb-stats .f::before{background:#3FA34D}
+  #tool-revision .sb-stats .n{color:var(--muted)}
+
+  #tool-revision .sbox{background:var(--surface);border:1px solid var(--border);border-left:1px solid var(--border)}
+  #tool-revision .sbox::before{display:none}
+  #tool-revision .sbox.sel{box-shadow:0 0 0 2px var(--accent)}
+  #tool-revision .sb-ring b{color:var(--rc)}
+
+  /* ── Laptop layout: 25% greeting / 75% subjects ── */
+  #tool-revision main{max-width:1600px;padding:16px 20px}
+  #tool-revision .dash2{grid-template-columns:minmax(230px,1fr) 3fr;gap:12px;margin-bottom:14px}
+  #tool-revision .dcard{padding:14px 14px 12px;border-radius:16px}
+  #tool-revision .dcard h2{font-size:19px}
+  #tool-revision .dsub{font-size:11.5px;margin:3px 0 10px;line-height:1.4}
+  #tool-revision .d-ringrow{flex-direction:column;align-items:center;gap:8px;margin-bottom:12px;text-align:center}
+  #tool-revision .d-ring{width:108px;height:108px}
+  #tool-revision .d-ring svg{width:100%;height:100%}
+  #tool-revision .d-ringc b{font-size:24px}
+  #tool-revision .d-text{font-size:12.5px;line-height:1.55}
+  #tool-revision .tiles{gap:7px}
+  #tool-revision .tile{padding:8px 9px;gap:7px;border-radius:10px}
+  #tool-revision .tile b{font-size:17px}
+  #tool-revision .tile .tl{font-size:9.5px;line-height:1.25}
+  #tool-revision .d-foot{margin-top:10px;font-size:11.5px}
+  #tool-revision .sgrid{grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:10px}
+  #tool-revision .sbox{padding:11px 11px 10px;gap:9px;border-radius:14px}
+  #tool-revision .sb-head{gap:9px}
+  #tool-revision .sb-ring{width:44px;height:44px}
+  #tool-revision .sb-ring svg{width:44px;height:44px}
+  #tool-revision .sb-ring b{font-size:10.5px}
+  #tool-revision .sb-name{font-size:13px}
+  #tool-revision .sb-count{font-size:10px}
+  #tool-revision .dots{gap:2px;min-height:14px}
+  #tool-revision .dt{width:6px;height:6px}
+  #tool-revision .sb-stats{font-size:9.5px;gap:2px 8px}
+  #tool-revision .sb-stats span::before{width:6px;height:6px;margin-right:3px}
+  #tool-revision .sb-none{font-size:10px}
+  @media(max-width:900px){#tool-revision .dash2{grid-template-columns:1fr}#tool-revision .d-ringrow{flex-direction:row;text-align:left}}
+
+  #tool-revision .tagpick{display:flex;flex-wrap:wrap;gap:6px}
+  #tool-revision .tg{font-size:11px;padding:4px 10px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;font-family:inherit}
+  #tool-revision .tg:hover{border-color:var(--accent);color:var(--text)}
+  #tool-revision .tg.on{color:#fff;font-weight:600;border-color:transparent}
+  #tool-revision .tg.on.ns{background:#9A9CB5}#tool-revision .tg.on.ip{background:#E3A21A}#tool-revision .tg.on.ld{background:#2B8FB5}
+  #tool-revision .tg.on.rv1{background:#8E86F0}#tool-revision .tg.on.rv2{background:#7B74EA}#tool-revision .tg.on.rv3{background:#6259D6}#tool-revision .tg.on.rv4{background:#4A43A8}#tool-revision .tg.on.rv5{background:#352F80}
+  #tool-revision .tg.on.seal{background:linear-gradient(135deg,#E8B22C,#C98A0B)}
+  #tool-revision .tg-chip{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;flex-shrink:0;color:#fff}
+  #tool-revision .tg-chip.ip{background:#E3A21A}#tool-revision .tg-chip.ld{background:#2B8FB5}
+  #tool-revision .tg-chip.rv1{background:#8E86F0}#tool-revision .tg-chip.rv2{background:#7B74EA}#tool-revision .tg-chip.rv3{background:#6259D6}#tool-revision .tg-chip.rv4{background:#4A43A8}#tool-revision .tg-chip.rv5{background:#352F80}
+  #tool-revision .tg-chip.seal{background:linear-gradient(135deg,#E8B22C,#C98A0B)}
 
   /* ===== SHARED "LEGACY" TABLE-STYLE TOOLS (Prelims + Daily) ===== */
   .legacy{background:#f4f4f2;padding:24px;font-family:'Segoe UI',Arial,sans-serif;color:#222;min-height:calc(100vh - 100px)}
@@ -193,7 +450,7 @@
   .legacy .legend b{color:#0a6e56}
   .legacy .empty{text-align:center;padding:3rem;color:#888;font-size:13px;background:#fff;border:1px solid #ddd;border-radius:8px}
 
-  @media(max-width:540px){:is(#tool-revision,#tool-mains) .stats{grid-template-columns:repeat(2,1fr)}:is(#tool-revision,#tool-mains) header{padding:12px 14px}:is(#tool-revision,#tool-mains) main{padding:14px 10px}}
+  @media(max-width:540px){#tool-mains .stats{grid-template-columns:repeat(2,1fr)}#tool-mains header{padding:12px 14px}#tool-mains main{padding:14px 10px}}
 
 
   /* ===== TOP BAR ===== */
@@ -338,17 +595,17 @@
   @media print {
     @page { size: landscape; margin: 8mm; }
     #login-screen{display:none !important}
-    #profile-menu,#app-header,#main-tabs,:is(#tool-revision,#tool-mains) header,:is(#tool-revision,#tool-mains) .header-btns,
-    :is(#tool-revision,#tool-mains) .toolbar,:is(#tool-revision,#tool-mains) .add-subject-btn,:is(#tool-revision,#tool-mains) .icon-btn,
-    :is(#tool-revision,#tool-mains) .tab-del,:is(#tool-revision,#tool-mains) .ch-actions .icon-btn,
+    #profile-menu,#app-header,#main-tabs,#tool-mains header,#tool-mains .header-btns,
+    #tool-mains .toolbar,#tool-mains .add-subject-btn,#tool-mains .icon-btn,
+    #tool-mains .tab-del,#tool-mains .ch-actions .icon-btn,
     .legacy .btns,.legacy .add-subject-btn,.legacy .tab-del,.legacy .delbtn,
     #rev-import-input,#mrev-import-input,input[type=file]{display:none !important}
     body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
     * {-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
     .tool-panel{display:none !important}
     .tool-panel.active{display:block !important}
-    :is(#tool-revision,#tool-mains) main{max-width:100%;padding:0}
-    :is(#tool-revision,#tool-mains) .ch-body{display:flex !important}
+    #tool-mains main{max-width:100%;padding:0}
+    #tool-mains .ch-body{display:flex !important}
     .legacy{background:#fff;padding:0}
     .legacy .wrap{overflow:visible}
     .legacy table{min-width:0 !important;width:100%;table-layout:fixed}
@@ -679,6 +936,16 @@ html[data-theme="dark"] #tool-pnp{--bg:#17110f;--card:#241b19;--tx:#f1e8e2;--mu:
   @media (max-width:760px){:where(#tool-mains) .dgrid{grid-template-columns:1fr}}
   @media (max-width:520px){:where(#tool-mains) .dhero{justify-content:center}
   :where(#tool-mains) .chips{grid-template-columns:1fr 1fr}}
+
+  /* Mains dashboard: papers as a 2-column grid of boxes filling the slot (3 rows for 6 papers; a 7th spans the full width) */
+  #tool-mains .dgrid3 .papers{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:minmax(130px,1fr);gap:10px;flex:1}
+  #tool-mains .dgrid3 .papers .prow{margin:0;padding:12px 14px;flex:none;display:flex;flex-direction:column;justify-content:space-between;min-width:0}
+  #tool-mains .dgrid3 .papers .prow:last-child:nth-child(odd){grid-column:1/-1}
+  #tool-mains .dgrid3 .papers .prtop{display:flex;flex-direction:column;align-items:flex-start;gap:2px;flex:1;justify-content:center}
+  #tool-mains .dgrid3 .papers .prtop .pn{order:1;font-size:15px}
+  #tool-mains .dgrid3 .papers .prtop .pp{order:2;font-size:30px;line-height:1.1;text-align:left;min-width:0;margin-top:4px}
+  #tool-mains .dgrid3 .papers .prtop .pr{order:3;margin-left:0;font-size:12px}
+  #tool-mains .dgrid3 .papers .sbar{margin:8px 0 0;height:8px}
 </style>
 </head>
 <body data-tool="dashboard">
@@ -796,12 +1063,7 @@ html[data-theme="dark"] #tool-pnp{--bg:#17110f;--card:#241b19;--tx:#f1e8e2;--mu:
     </header>
     <input type="file" id="rev-import-input" accept=".json" onchange="revHandleImport(event)">
     <main>
-      <div class="stats">
-        <div class="stat overdue" id="rev-stat-overdue" onclick="revSetFilter('overdue')"><div class="stat-val" id="rev-s-overdue">0</div><div class="stat-lbl">Overdue (15d+)</div></div>
-        <div class="stat soon" id="rev-stat-soon" onclick="revSetFilter('soon')"><div class="stat-val" id="rev-s-soon">0</div><div class="stat-lbl">Due soon (8–14d)</div></div>
-        <div class="stat fresh" id="rev-stat-fresh" onclick="revSetFilter('fresh')"><div class="stat-val" id="rev-s-fresh">0</div><div class="stat-lbl">Fresh (0–7d)</div></div>
-        <div class="stat never" id="rev-stat-never" onclick="revSetFilter('never')"><div class="stat-val" id="rev-s-never">0</div><div class="stat-lbl">Never revised</div></div>
-      </div>
+      <div id="rev-dashboard" class="dash2"></div>
       <div id="rev-daily-thought" class="daily-thought"></div>
       <div class="tabs-row">
         <div class="tabs" id="rev-tabs"></div>
@@ -1052,7 +1314,7 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 let currentUser = null;
-let appState = { revision: null, prelims: null, daily: null };
+let appState = { prelims: null, daily: null };
 
 // ---- To Do cloud sync (stored in users/{uid}.todo) ----
 let todoStored = null, todoPending = null, todoTimer = null, todoBusy = false;
@@ -1097,6 +1359,32 @@ async function todoPull() {
 }
 document.addEventListener('visibilitychange', () => { if (document.hidden) { if (todoPending) todoSaveNow(); } else todoPull(); });
 window.addEventListener('pagehide', () => { if (todoPending) todoSaveNow(); });
+
+// ---- Prelims Revision tracker cloud sync (stored in users/{uid}.revision) ----
+let revStored = null, revPending = null, revTimer = null;
+function revQueueSave(data) {
+  revPending = data;
+  setSyncStatus('Saving…');
+  clearTimeout(revTimer);
+  revTimer = setTimeout(revSaveNow, 1000);
+}
+async function revSaveNow() {
+  clearTimeout(revTimer);
+  if (!currentUser || !revPending) return;
+  const payload = JSON.parse(JSON.stringify(revPending));
+  revPending = null;
+  try {
+    // mergeFields replaces the whole `revision` field, so deleted subjects/chapters are really removed
+    await db.collection('users').doc(currentUser.uid).set({ revision: payload }, { mergeFields: ['revision'] });
+    setSyncStatus('Saved ✓');
+  } catch (e) {
+    console.error('Prelims Revision save failed', e);
+    revPending = revPending || payload;
+    setSyncStatus('Save failed — check connection');
+  }
+}
+document.addEventListener('visibilitychange', () => { if (document.hidden && revPending) revSaveNow(); });
+window.addEventListener('pagehide', () => { if (revPending) revSaveNow(); });
 
 // ---- Mains Revision tracker cloud sync (stored in users/{uid}.mains) ----
 let mainsStored = null, mainsPending = null, mainsTimer = null;
@@ -1179,14 +1467,15 @@ async function loadState() {
   const snap = await ref.get();
   if (snap.exists) {
     const d = snap.data() || {};
-    appState.revision = d.revision || null;
+    revStored = d.revision || null;
     mainsStored = d.mains || null;
     todoStored = d.todo || null;
     appState.prelims = d.prelims || null;
     appState.daily = d.daily || null;
     pnpStored = d.pnp || null;
   } else {
-    appState = { revision: null, prelims: null, daily: null };
+    appState = { prelims: null, daily: null };
+    revStored = null;
     pnpStored = null;
     mainsStored = null;
     todoStored = null;
@@ -1253,7 +1542,7 @@ auth.onAuthStateChanged(async (user) => {
     document.getElementById('user-email').textContent = user.email || '';
     setSyncStatus('Loading…');
     await loadState();
-    RevisionTool.init(appState.revision);
+    RevisionTool.init(revStored, revQueueSave);
     MainsTool.init(mainsStored, mainsQueueSave);
     TodoTool.init(todoStored, todoQueueSave);
     PrelimsTool.init(appState.prelims);
@@ -1262,6 +1551,7 @@ auth.onAuthStateChanged(async (user) => {
     setSyncStatus('Saved ✓');
   } else {
     currentUser = null;
+    clearTimeout(revTimer); revPending = null; revStored = null;
     clearTimeout(pnpTimer); pnpPending = null; pnpStored = null;
     clearTimeout(mainsTimer); mainsPending = null; mainsStored = null;
     clearTimeout(todoTimer); todoPending = null; todoStored = null; TodoTool.reset();
@@ -1283,46 +1573,12 @@ document.querySelectorAll('.main-tab').forEach(btn => {
 
 <script>
 // ======================================================
-// TOOL 1: REVISION TRACKER
+// TOOL 1: PRELIMS REVISION TRACKER (data saved to Firebase users/{uid}.revision)
 // ======================================================
 const RevisionTool = (function () {
-  const HISTORY_CHAPTERS = [
-    "CH1 - Mughal Background","CH2 - 1707 Decline of Mughals","CH3 - Successor States",
-    "CH4 - Rise of Marathas & Maratha Administration","CH5 - Jats and Afghans","CH6 - Sikh State",
-    "CH7 - Rajputs, Mysore & Travancore","CH8 - Advent of Europeans","CH9 - Carnatic Wars (1746–63)",
-    "CH10 - Battle of Plassey (1757) & Battle of Buxar (1764)","CH11 - Subsidiary Alliance of Wellesley (1798–1805)",
-    "CH12 - Anglo-Mysore Wars (1766–99), Travancore & Carnatic","CH13 - Anglo-Maratha Wars (1775–1819) till 1848",
-    "CH14 - Dalhousie Annexations & Policies (1848–56)","CH15 - British Imperial Ideology",
-    "CH16 - Land Revenue Systems","CH17 - Regulating Act (1773) to GOI Act (1858)","CH18 - EIC Administration",
-    "CH19 - Social Reforms, Education Reforms & Print Culture","CH20 - Pre-1857 Peasant Revolts & Tribal Uprisings",
-    "CH21 - Revolt of 1857","CH22 - Post-1857 Peasant Revolts","CH23 - Pre-1885 Indian National Movement (INM)",
-    "CH24 - INC (1885) & English Political Reformers","CH25 - Indian Councils Act (ICA) 1861",
-    "CH26 - Moderates in INC – Ideology, Demands & Negatives","CH27 - Moderates: Positives & Drain Theory",
-    "CH28 - Indian Councils Act (ICA) 1892","CH29 - Extremists & Swadeshi Movement (1905–08)",
-    "CH30 - Revolutionaries of the Swadeshi Movement","CH31 - Muslim League (1906) & ICA 1909",
-    "CH32 - Ghadar Movement (1913–15)","CH33 - Home Rule League & Lucknow Pact (1916)",
-    "CH34 - Government of India Act (1919)","CH35 - Gandhiji in South Africa","CH36 - Mahatma Gandhi – Ideology",
-    "CH37 - Gandhian Era till 1927","CH38 - Peasant Movements of the 1920s & 1930s",
-    "CH39 - Revolutionaries of the 1920s–30s","CH40 - Simon Commission (1927) to Delhi Manifesto (Nov 1929)",
-    "CH41 - Lahore Session (1929) to Civil Disobedience Movement (1930–34)",
-    "CH42 - GOI Act 1935 & Congress Ministries (1937–39)","CH43 - World War II (1939) to Cripps Mission (1942)",
-    "CH44 - Quit India Movement (1942–45)","CH45 - Bengal Famine, INA Agitations, INA & Naval Mutiny",
-    "CH46 - Rajaji Formula (1944) to Partition","CH47 - Many Voices of the Nation – Workers, Capitalists, Dalits & Women"
-  ];
-  const POLITY_CHAPTERS = [
-    "CH1 - Preamble","CH2 - Salient Features of the Constitution","CH3 - Amendment of the Indian Constitution",
-    "CH4 - Sources of the Indian Constitution","CH5 - Schedules of the Constitution","CH6 - Fundamental Rights",
-    "CH7 - Directive Principles of State Policy (DPSP)","CH8 - Fundamental Duties","CH9 - Union Executive",
-    "CH10 - State Executive","CH11 - Local Self Government","CH12 - State Legislature","CH13 - Judiciary",
-    "CH14 - Parliament","CH15 - Elections & Associated Topics","CH16 - System of Government",
-    "CH17 - Union Territories, Scheduled and Tribal Areas","CH18 - Union and its Territory","CH19 - Citizenship",
-    "CH20 - Constitutional Bodies","CH21 - Non-Constitutional Bodies","CH22 - Special Provisions for Some States",
-    "CH23 - Official Languages","CH24 - Cooperative Sector in India","CH25 - Making of the Constitution",
-    "CH26 - Governance","CH27 - NHRC (National Human Rights Commission)","CH28 - NCM (National Commission for Minorities)",
-    "CH29 - NCPCR (National Commission for Protection of Child Rights)","CH30 - NCW (National Commission for Women)",
-    "CH31 - Key Judgements","CH32 - Basic Structure of the Constitution","CH33 - Corruption and RTI"
-  ];
-  const DEFAULT_SUBJECTS = ['Modern Indian History','Geography','Polity','Economics','Environment','Sci & Tech','Ethics'];
+  const SEED = {"subjects":["Economics","Polity","Modern Indian History","Geography"],"data":{"Economics":[{"id":"eco-1","name":"1. Poverty & Inequality","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"eco-2","name":"2. Unemployment","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"eco-3","name":"3. Basic Concepts of Economics","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"eco-4","name":"4. National Income Accounting","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"eco-5","name":"5. Inflation","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"eco-6","name":"6. Money and Monetary Policy","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"eco-7","name":"7. Functions of RBI","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"eco-8","name":"8. Capital markets - Banking","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"eco-9","name":"9. NABARD and NBFCs","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"eco-10","name":"10. Capital Markets","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"eco-11","name":"11. External sector","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"eco-12","name":"12. Government Budgeting and Fiscal Policy","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"eco-13","name":"13. Goods and Services Tax","lastRevised":"","status":"Not Started","note":"","revisionCount":0}],"Polity":[{"id":"pol-1","name":"1. Historical Background","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-2","name":"2. Making of the Constitution","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-3","name":"3. Concept of Constitution","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-4","name":"4. Salient Features of the Constitution","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-5","name":"5. Preamble of the Constitution","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-6","name":"6. Union and its Territory","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-7","name":"7. Citizenship","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-8","name":"8. Fundamental Rights","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-9","name":"9. Directive Principles of State Policy","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-10","name":"10. Fundamental Duties","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-11","name":"11. Amendment of the Constitution","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-12","name":"12. Basic Structure of the Constitution","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-13","name":"13. Parliamentary System","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-14","name":"14. Federal System","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-15","name":"15. Centre–State Relations","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-16","name":"16. Inter-State Relations","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-17","name":"17. Emergency Provisions","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-18","name":"18. President","lastRevised":"2026-11-21","status":"Not Started","note":"","revisionCount":1},{"id":"pol-19","name":"19. Vice-President","lastRevised":"2026-11-21","status":"Not Started","note":"","revisionCount":1},{"id":"pol-20","name":"20. Prime Minister","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-21","name":"21. Central Council of Ministers","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-22","name":"22. Cabinet Committees","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-23","name":"23. Parliament","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-24","name":"24. Parliamentary Committees","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-25","name":"25. Parliamentary Group","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-26","name":"26. Supreme Court","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-27","name":"27. Judicial Review","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-28","name":"28. Judicial Activism","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-29","name":"29. Public Interest Litigation","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-30","name":"30. Governor","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-31","name":"31. Chief Minister","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-32","name":"32. State Council of Ministers","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-33","name":"33. State Legislature","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-34","name":"34. High Court","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-35","name":"35. Subordinate Courts","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-36","name":"36. Tribunals","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-37","name":"37. National Consumer Disputes Redressal Commission","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-38","name":"38. Lok Adalat and Other Courts","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-39","name":"39. Panchayati Raj","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-40","name":"40. Municipalities","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-41","name":"41. Union Territories","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-42","name":"42. Scheduled and Tribal Areas","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-43","name":"43. Election Commission","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-44","name":"44. Union Public Service Commission","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-45","name":"45. State Public Service Commission","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-46","name":"46. Finance Commission","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-47","name":"47. Goods and Services Tax Council","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-48","name":"48. National Commission for SCs","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-49","name":"49. National Commission for STs","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-50","name":"50. National Commission for BCs","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-51","name":"51. Special Officer for Linguistic Minorities","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-52","name":"52. Comptroller and Auditor General of India","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-53","name":"53. Attorney General of India","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-54","name":"54. Advocate General of the State","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-55","name":"55. Constitutional Prescriptions","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-56","name":"56. NITI Aayog","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-57","name":"57. National Human Rights Commission","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-58","name":"58. State Human Rights Commission","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-59","name":"59. National Commission for Women","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-60","name":"60. National Commission for Protection of Child Rights","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-61","name":"61. National Commission for Minorities","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-62","name":"62. Central Information Commission","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-63","name":"63. State Information Commission","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-64","name":"64. Central Vigilance Commission","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-65","name":"65. Central Bureau of Investigation","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-66","name":"66. Lokpal and Lokayuktas","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-67","name":"67. National Investigation Agency","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-68","name":"68. National Disaster Management Authority","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-69","name":"69. Bar Council of India","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-70","name":"70. Law Commission of India","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-71","name":"71. Delimitation Commission of India","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-72","name":"72. Co-operative Societies","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-73","name":"73. Official Language","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-74","name":"74. Public Services","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-75","name":"75. Rights and Liabilities of the Government","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-76","name":"76. Special Provisions Relating to Certain Classes","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-77","name":"77. Special Provisions for Some States","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-78","name":"78. Political Parties","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-79","name":"79. Role of Regional Parties","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-80","name":"80. Elections","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-81","name":"81. Election Laws","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-82","name":"82. Electoral Reforms","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-83","name":"83. Voting Behaviour","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-84","name":"84. Coalition Government","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-85","name":"85. Anti-Defection Law","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-86","name":"86. Pressure Groups","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-87","name":"87. National Integration","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-88","name":"88. Foreign Policy","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-89","name":"89. National Commission to Review the Working of the Constitution","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-90","name":"90. Landmark Judgements and their Impact","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-91","name":"91. Important Doctrines of Constitutional Interpretation","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"pol-92","name":"92. World Constitutions","lastRevised":"","status":"Not Started","note":"","revisionCount":0}],"Modern Indian History":[{"id":"mih-1","name":"1. Mughal Background","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-2","name":"2. 1707 Decline of Mughals","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-3","name":"3. Successor States","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-4","name":"4. Rise of Marathas & Maratha Administration","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-5","name":"5. Jats and Afghans","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-6","name":"6. Sikh State","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-7","name":"7. Rajputs, Mysore, Travancore","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-8","name":"8. Advent of Europeans","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-9","name":"9. Carnatic Wars 1746-63","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-10","name":"10. Battle of Plassey 1757 & Battle of Buxar 1764","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-11","name":"11. Subsidiary Alliance of Wellesley (1798-1805)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-12","name":"12. Anglo-Mysore Wars 1766-99 & Travancore & Carnatic","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-13","name":"13. Anglo-Maratha Wars (1775-1819) till 1848","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-14","name":"14. 1848-56 Dalhousie Annexations & Policies","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-15","name":"15. British Imperial Ideology","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-16","name":"16. Land Revenue","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-17","name":"17. 1773 Regulating Act to 1858 GOI Act","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-18","name":"18. EIC Administration","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-19","name":"19. Social Reforms, Education Reforms & Print Culture","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-20","name":"20. Pre-1857 Peasant Revolts & Tribal Uprisings","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-21","name":"21. 1857 Revolt","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-22","name":"22. Post-1857 Peasant Revolts","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-23","name":"23. Pre-1885 INM","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-24","name":"24. INC 1885 & English Political Reformers","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-25","name":"25. ICA 1861","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-26","name":"26. Moderates in INC - Ideology, Demands, Negatives","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-27","name":"27. Moderates Positives & Drain Theory","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-28","name":"28. ICA 1892","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-29","name":"29. 1905-08 Extremists & Swadeshi Movement","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-30","name":"30. Revolutionaries of Swadeshi Movement","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-31","name":"31. ML 1906 & ICA 1909","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-32","name":"32. Ghadar Movement 1913-15","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-33","name":"33. Home Rule League & Lucknow Pact 1916","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-34","name":"34. GOI 1919","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-35","name":"35. Gandhiji in South Africa","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-36","name":"36. Mahatma Gandhi - Ideology","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-37","name":"37. Gandhian Era till 1927","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-38","name":"38. Peasant Movements 1920s & 1930s","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-39","name":"39. Revolutionaries of 1920s-30s","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-40","name":"40. Simon 1927 to Delhi Manifesto Nov 1929","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-41","name":"41. Lahore Session 1929 to CDM 1930-34","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-42","name":"42. GOI 1935, Congress Ministries 1937-39","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-43","name":"43. WWII 1939 to Cripps 1942","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-44","name":"44. Quit India Movement 1942-45","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-45","name":"45. Bengal Famine, INA Agitations, INA & Naval Mutiny","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-46","name":"46. Rajaji Formula 1944 to Partition","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"mih-47","name":"47. Many Voices of the Nation - Workers, Capitalists, Dalits, Women","lastRevised":"","status":"Not Started","note":"","revisionCount":0}],"Geography":[{"id":"geo-1","name":"1.  Universe and Earth                  (Geomorphology)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-2","name":"2.  Interior of the Earth               (Geomorphology)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-3","name":"3.  Rocks and Rock Cycle                (Geomorphology)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-4","name":"4.  Earthquakes and Earth Movements     (Geomorphology)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-5","name":"5.  Volcanoes                           (Geomorphology)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-6","name":"6.  Plate Tectonics Theory              (Geomorphology)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-7","name":"7.  Orogeny                             (Geomorphology)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-8","name":"8.  Cycles of Erosion                   (Geomorphology)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-9","name":"9.  Atmosphere                          (Climatology)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-10","name":"10. Air Pressure and Pressure Belts     (Climatology)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-11","name":"11. Winds                               (Climatology)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-12","name":"12. Humidity and Condensation           (Climatology)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-13","name":"13. Clouds                              (Climatology)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-14","name":"14. Precipitation                       (Climatology)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-15","name":"15. Atmospheric Disturbances            (Climatology)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-16","name":"16. Air Masses                          (Climatology)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-17","name":"17. Fronts                              (Climatology)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-18","name":"18. Cyclones                            (Climatology)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-19","name":"19. Climate Change                      (Climatology)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-20","name":"20. Climatic Classification             (Climatology)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-21","name":"21. Oceanography                        (Oceanography)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-22","name":"22. Location and Physiography of India  (Indian Geography)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-23","name":"23. Indian Drainage System               (Indian Geography)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-24","name":"24. Indian Climate                      (Indian Geography)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-25","name":"25. Indian Forests and Soils            (Indian Geography)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-26","name":"26. Indian Waterfalls                   (Indian Geography)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-27","name":"27. Demography                          (Human Geography)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-28","name":"28. Settlements                         (Human Geography)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-29","name":"29. World Resources                     (Economic Geography)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-30","name":"30. Agriculture                         (Economic Geography)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-31","name":"31. Industries                          (Economic Geography)","lastRevised":"","status":"Not Started","note":"","revisionCount":0},{"id":"geo-32","name":"32. Transport and Communication         (Economic Geography)","lastRevised":"","status":"Not Started","note":"","revisionCount":0}]}};
+  const EXTRA_SUBJECTS = ['Environment','Sci & Tech','Mapping','AMAC','International Relations'];
+  const DEFAULT_SUBJECTS = [...SEED.subjects, ...EXTRA_SUBJECTS];
 
   // ── Constitutional Articles ───────────────────────────────────────────────────
   const ARTICLES = [
@@ -1500,13 +1756,13 @@ const RevisionTool = (function () {
 
   const randomArticle = ARTICLES[Math.floor(Math.random() * ARTICLES.length)];
 
-  function makeChapters(names) {
-    return names.map((name, i) => ({
-      id: 'preset-' + i + '-' + name.slice(0,8).replace(/\s/g,''),
-      name, lastRevised:'', status:'Not Started', note:'', revisionCount:0
-    }));
+  let seeded = false, polityClean = false, mihClean = false, emptyClean = false, extraSubjects = false;
+  let backups = {};          // safety copies of anything the one-time clean-ups removed (saved to Firebase too)
+  let persist = function () {};  // set by init(); writes the payload to Firebase users/{uid}.revision
+  function keepBackup(key, payload) {
+    backups[key] = payload;
+    try { localStorage.setItem('upscPrelims_' + key, JSON.stringify(payload)); } catch (e) {}
   }
-
   let subjects = [...DEFAULT_SUBJECTS];
   let data = {};
   let current = subjects[0];
@@ -1515,22 +1771,85 @@ const RevisionTool = (function () {
 
   function initData() { subjects.forEach(s => { if (!data[s]) data[s] = []; }); }
 
-  function init(saved) {
-    if (saved && saved.subjects) {
-      subjects = saved.subjects;
-      data = saved.data || {};
+  function isUntouchedList(a) {
+    return a.every(c => !c.lastRevised && !c.note && (c.status||'Not Started') === 'Not Started' && !c.revisionCount);
+  }
+  function freshSeed() {
+    subjects = [...SEED.subjects, ...DEFAULT_SUBJECTS.filter(d => !SEED.subjects.includes(d))];
+    data = JSON.parse(JSON.stringify(SEED.data));
+  }
+  function init(saved, persistFn) {
+    if (typeof persistFn === 'function') persist = persistFn;
+    seeded = false; polityClean = false; mihClean = false; emptyClean = false; extraSubjects = false;
+    backups = (saved && saved.backups && typeof saved.backups === 'object') ? saved.backups : {};
+    if (saved && saved.seeded === 'v4') { polityClean = !!saved.polityClean; mihClean = !!saved.mihClean; emptyClean = !!saved.emptyClean; extraSubjects = !!saved.extraSubjects; }
+    if (!saved || !saved.subjects) {
+      freshSeed(); save();
     } else {
-      subjects = [...DEFAULT_SUBJECTS];
-      data = {};
-      data['Modern Indian History'] = makeChapters(HISTORY_CHAPTERS);
-      data['Polity'] = makeChapters(POLITY_CHAPTERS);
+      const oldSubjects = saved.subjects, oldData = saved.data || {};
+      if (saved.seeded === 'v4') {
+        subjects = oldSubjects; data = oldData;
+      } else {
+        // one-time migration to the Prelims foundation set. Progress inside these subjects is kept;
+        // other subjects are removed from the tracker, with a safety copy left in localStorage.
+        const removed = {};
+        oldSubjects.forEach(s => { if (!SEED.subjects.includes(s) && (oldData[s]||[]).length) removed[s] = oldData[s]; });
+        if (Object.keys(removed).length) keepBackup('removedSubjects', { date: new Date().toISOString(), data: removed });
+        subjects = [...SEED.subjects, ...DEFAULT_SUBJECTS.filter(d => !SEED.subjects.includes(d))];
+        data = {};
+        SEED.subjects.forEach(sub => {
+          const cur = oldData[sub] || [];
+          const isOldPreset = cur.length && cur.every(c => String(c.id).startsWith('preset-')) && isUntouchedList(cur);
+          if (isOldPreset) { data[sub] = JSON.parse(JSON.stringify(SEED.data[sub])); return; }
+          const have = new Set(cur.map(c => c.id));
+          const merged = SEED.data[sub].map(c => cur.find(x => x.id === c.id) || JSON.parse(JSON.stringify(c)));
+          cur.forEach(c => { if (!SEED.data[sub].some(x => x.id === c.id)) merged.push(c); }); // your own added topics
+          data[sub] = merged;
+        });
+        save();
+      }
+    }
+    // status rename: Revised -> Revise 1, Mastered -> Seal
+    { let ch0 = false; Object.values(data).forEach(a => a.forEach(c => { if (c.status === 'Revised') { c.status = 'Revise 1'; ch0 = true; } else if (c.status === 'Mastered') { c.status = 'Seal'; ch0 = true; } })); if (ch0) save(); }
+    if (!saved || !saved.mihClean) {
+      const list = data['Modern Indian History'] || [];
+      const rm = list.filter(c => /^\s*CH\s*\d+/i.test(c.name) || String(c.id).startsWith('preset-'));
+      if (rm.length) {
+        keepBackup('mihChapters', { date: new Date().toISOString(), chapters: rm });
+        data['Modern Indian History'] = list.filter(c => !rm.includes(c));
+      }
+      mihClean = true; save();
+    }
+    if (!saved || !saved.polityClean) {
+      const list = data['Polity'] || [];
+      const rm = list.filter(c => /^\s*CH\s*\d+/i.test(c.name) || String(c.id).startsWith('preset-'));
+      if (rm.length) {
+        keepBackup('polityChapters', { date: new Date().toISOString(), chapters: rm });
+        data['Polity'] = list.filter(c => !rm.includes(c));
+      }
+      polityClean = true; save();
+    }
+    if (saved && !saved.emptyClean) {
+      // one-time: drop subjects that have no chapters
+      subjects = subjects.filter(s => (data[s] || []).length);
+      Object.keys(data).forEach(s => { if (!subjects.includes(s)) delete data[s]; });
+      emptyClean = true; save();
+    }
+    if (!saved || !saved.extraSubjects) {
+      // one-time: add the empty subjects you will fill in manually
+      EXTRA_SUBJECTS.forEach(x => { if (!subjects.includes(x)) subjects.push(x); });
+      extraSubjects = true; emptyClean = true; save();
     }
     initData();
     if (current !== 'All' && !subjects.includes(current)) current = subjects[0];
     render();
   }
 
-  function save() { appState.revision = { subjects, data }; scheduleSave(); }
+  function save() {
+    const payload = { subjects, data, seeded: 'v4', polityClean, mihClean, emptyClean, extraSubjects };
+    try { if (JSON.stringify(backups).length < 150000) payload.backups = backups; } catch (e) {}
+    persist(payload);
+  }
 
   function exportData() {
     const blob = new Blob([JSON.stringify({ subjects, data }, null, 2)], { type:'application/json' });
@@ -1646,6 +1965,7 @@ const RevisionTool = (function () {
 
   function render() {
     renderDailyThought();
+    renderDashboard();
     const allCount = subjects.reduce((sum,s) => sum + (data[s]||[]).length, 0);
     document.getElementById('rev-tabs').innerHTML =
       `<button class="tab all-tab${current==='All'?' active':''}" onclick="revSwitchTab('All')">
@@ -1664,10 +1984,8 @@ const RevisionTool = (function () {
       const d = daysSince(ch.lastRevised);
       if (d===null) nv++; else if (d>=15) ov++; else if (d>=8) so++; else fr++;
     }));
-    document.getElementById('rev-s-overdue').textContent = ov;
-    document.getElementById('rev-s-soon').textContent = so;
-    document.getElementById('rev-s-fresh').textContent = fr;
-    document.getElementById('rev-s-never').textContent = nv;
+    // the old 4-tile counters no longer exist (the dashboard draws its own tiles), so update them only if present
+    Object.entries({overdue:ov, soon:so, fresh:fr, never:nv}).forEach(([k,v]) => { const el = document.getElementById('rev-s-'+k); if (el) el.textContent = v; });
     ['overdue','soon','fresh','never'].forEach(f => {
       document.getElementById('rev-stat-'+f)?.classList.toggle('active-filter', filter === f);
     });
@@ -1718,6 +2036,7 @@ const RevisionTool = (function () {
         <div class="ch-head" onclick="revToggleExpand('${ch.id}')">
           <span class="ch-name">${esc(ch.name)}</span>
           ${current === 'All' ? `<span class="subject-tag">${esc(ch._subject)}</span>` : ''}
+          ${ch.status && ch.status !== 'Not Started' ? `<span class="tg-chip ${tagClass(ch.status)}">${ch.status==='Seal'?'🏅 ':''}${esc(ch.status)}</span>` : ''}
           ${revLabel ? `<span class="rev-count">${revLabel}</span>` : ''}
           <span class="badge ${b.cls}">${b.text}</span>
           <div class="ch-actions" onclick="event.stopPropagation()">
@@ -1727,19 +2046,17 @@ const RevisionTool = (function () {
         </div>
         ${isOpen ? `<div class="ch-body">
           <div class="field-row">
+            <label>Chapter name</label>
+            <input type="text" class="name-in" value="${esc(ch.name)}" onchange="revSetField('${ch.id}','name',this.value)">
+          </div>
+          <div class="field-row">
             <label>Last revised</label>
             <input type="date" value="${ch.lastRevised||''}" onchange="revSetField('${ch.id}','lastRevised',this.value)">
             <button class="hbtn primary" style="font-size:11px;padding:4px 10px" onclick="revMarkToday('${ch.id}')">Mark today</button>
           </div>
           <div class="field-row">
-            <label>Status</label>
-            <select onchange="revSetField('${ch.id}','status',this.value)">
-    <option value="Not Started"${ch.status==='Not Started'?' selected':''}>Not Started</option>
-    <option value="In Progress"${ch.status==='In Progress'?' selected':''}>In Progress</option>
-    <option value="Lectures Done"${ch.status==='Lectures Done'?' selected':''}>Lectures Done</option>
-    <option value="Revised"${ch.status==='Revised'?' selected':''}>Revised</option>
-    <option value="Mastered"${ch.status==='Mastered'?' selected':''}>Mastered</option>
-  </select>
+            <label>Status tag</label>
+            <div class="tagpick">${STATUSES.map(t => `<button class="tg ${tagClass(t)}${ch.status===t?' on':''}" onclick="revSetField('${ch.id}','status','${t}')">${t==='Seal'?'🏅 ':''}${t}</button>`).join('')}</div>
           </div>
           <div class="field-row note-row">
             <label>Notes</label>
@@ -1748,6 +2065,76 @@ const RevisionTool = (function () {
         </div>` : ''}
       </div>`;
     }).join('');
+  }
+
+  // ── Dashboard ───────────────────────────────────────────────────────────────
+  const STATUSES = ['Not Started','In Progress','Lectures Done','Revise 1','Revise 2','Revise 3','Revise 4','Revise 5','Seal'];
+  function tagClass(t){ return t==='Seal' ? 'seal' : /^Revise/.test(t) ? 'rv rv'+t.slice(-1) : t==='Lectures Done' ? 'ld' : t==='In Progress' ? 'ip' : 'ns'; }
+  const STATUS_META = [
+    { key:'Not Started',   color:'#B8B6AE', w:0 },
+    { key:'In Progress',   color:'#F0A93B', w:0.25 },
+    { key:'Lectures Done', color:'#4C8DFF', w:0.5 },
+    { key:'Revised',       color:'#7B74EA', w:0.75 },
+    { key:'Mastered',      color:'#5FA02A', w:1 }
+  ];
+  let dashOpen = true;
+  function toggleDash(){ dashOpen = !dashOpen; renderDashboard(); }
+  function isoDay(offset) {
+    const d = new Date(); d.setHours(0,0,0,0); d.setDate(d.getDate() + offset);
+    const m = String(d.getMonth()+1).padStart(2,'0'), day = String(d.getDate()).padStart(2,'0');
+    return d.getFullYear() + '-' + m + '-' + day;
+  }
+  function revisionDates(ch) {
+    const set = new Set(ch.history || []);
+    if (ch.lastRevised) set.add(ch.lastRevised);
+    return set;
+  }
+  // ── Dashboard (greeting + subject boxes) ──
+  const SUBJ_COLORS = ['#4A43A8','#1F9AB3','#2E9B4A','#E08A12','#D6409F','#7C5CFF','#E04848','#0F766E'];
+  function openSubject(sub){ current = sub; render(); const t = document.getElementById('rev-tabs'); if (t) window.scrollTo({ top: t.offsetTop - 20, behavior:'smooth' }); }
+  function renderDashboard() {
+    const el = document.getElementById('rev-dashboard');
+    if (!el) return;
+    const all = [];
+    subjects.forEach(s => (data[s]||[]).forEach(ch => all.push(ch)));
+    const total = all.length, started = all.filter(c => c.lastRevised).length;
+    const pct = total ? Math.round(started / total * 100) : 0;
+    const wk = {}; for (let i = 0; i < 7; i++) wk[isoDay(-i)] = 1;
+    const weekTopics = all.filter(c => [...revisionDates(c)].some(d => wk[d])).length;
+    const h = new Date().getHours();
+    const greet = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+    const dateStr = new Date().toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric' });
+    const C = 2 * Math.PI * 70;
+    const tile = (k, color, lbl) => `<div class="tile${filter===k?' active-filter':''}" id="rev-stat-${k}" onclick="revSetFilter('${k}')"><span class="td" style="background:${color}"></span><b id="rev-s-${k}">0</b><span class="tl">${lbl}</span></div>`;
+    const left = `<div class="dcard">
+      <h2>${greet} <span class="wave">👋</span></h2>
+      <p class="dsub">${dateStr} · here is where your Prelims preparation stands</p>
+      <div class="d-ringrow">
+        <div class="d-ring"><svg viewBox="0 0 160 160" width="150" height="150"><circle cx="80" cy="80" r="70" fill="none" stroke="var(--track)" stroke-width="16"/><circle cx="80" cy="80" r="70" fill="none" stroke="var(--accent)" stroke-width="16" stroke-linecap="round" transform="rotate(-90 80 80)" stroke-dasharray="${(C*pct/100).toFixed(1)} ${C.toFixed(1)}"/></svg>
+          <div class="d-ringc"><b>${pct}%</b><span>started</span></div></div>
+        <div class="d-text">You have started <b>${started}</b> of <b>${total}</b> topics.<br><b>${total-started}</b> still to begin.</div>
+      </div>
+      <div class="tiles">${tile('overdue','#D64545','Overdue<br>15+ days')}${tile('soon','#E3A21A','Due soon<br>8–14 days')}${tile('fresh','#3FA34D','Recently revised<br>0–7 days')}${tile('never','#9A9CB5','Not started<br>yet')}</div>
+      <div class="d-foot">📅 ${weekTopics} topic${weekTopics===1?'':'s'} revised in the last 7 days</div>
+    </div>`;
+    const boxes = subjects.map((s, i) => {
+      const chs = data[s] || [], n = chs.length, st = chs.filter(c => c.lastRevised).length;
+      const p = n ? Math.round(st / n * 100) : 0, c = SUBJ_COLORS[i % SUBJ_COLORS.length];
+      const cnt = { f:0, s:0, o:0, n:0 };
+      const dots = chs.map(ch => { const d = daysSince(ch.lastRevised); const k = d === null ? 'n' : d >= 15 ? 'o' : d >= 8 ? 's' : 'f'; cnt[k]++; return `<i class="dt ${k}" title="${esc(ch.name)}"></i>`; }).join('');
+      const rc = cnt.o ? '#D64545' : cnt.s ? '#E3A21A' : cnt.f ? '#3FA34D' : 'var(--muted)';
+      const R = 19, C = 2 * Math.PI * R;
+      return `<div class="sbox${s===current?' sel':''}" style="--c:${c};--rc:${rc}" onclick="revOpenSubject('${esc(s)}')">
+        <div class="sb-head">
+          <div class="sb-ring"><svg viewBox="0 0 48 48" width="52" height="52"><circle cx="24" cy="24" r="${R}" fill="none" stroke="var(--track)" stroke-width="5"/><circle cx="24" cy="24" r="${R}" fill="none" stroke="var(--rc)" stroke-width="5" stroke-linecap="round" transform="rotate(-90 24 24)" stroke-dasharray="${(C*p/100).toFixed(1)} ${C.toFixed(1)}"/></svg><b>${p}%</b></div>
+          <div class="sb-meta"><span class="sb-name">${esc(s)}</span><span class="sb-count">${st} of ${n} topics started</span></div>
+        </div>
+        <div class="dots">${dots || '<span class="sb-none">No topics yet</span>'}</div>
+        <div class="sb-stats"><span class="o">${cnt.o} overdue</span><span class="s">${cnt.s} soon</span><span class="f">${cnt.f} fresh</span><span class="n">${cnt.n} new</span></div>
+      </div>`;
+    }).join('');
+    const right = `<div class="dcard"><h2>📘 Your subjects</h2><p class="dsub">Tap a subject to open its topics.</p><div class="sgrid">${boxes}</div></div>`;
+    el.innerHTML = left + right;
   }
 
   function switchTab(s){ current=s; render() }
@@ -1783,7 +2170,12 @@ const RevisionTool = (function () {
     for (const s of subjects) {
       const ch = (data[s]||[]).find(c => c.id===id);
       if (ch) {
-        if (field==='lastRevised' && val && val!==ch.lastRevised) ch.revisionCount=(ch.revisionCount||0)+1;
+        if (field==='name' && !String(val).trim()) { render(); return; }
+        if (field==='lastRevised' && val && val!==ch.lastRevised) {
+          ch.revisionCount=(ch.revisionCount||0)+1;
+          if (!ch.history) ch.history=[];
+          if (!ch.history.includes(val)) ch.history.push(val);
+        }
         ch[field]=val;
         save(); render(); return;
       }
@@ -1806,7 +2198,7 @@ const RevisionTool = (function () {
 
   return { init, render, switchTab, toggleExpand, addChapter, setField, markToday, deleteChapter,
            openAddSubject, closeModal, confirmAddSubject, deleteSubject, importData, exportData, handleImport,
-           setFilter, clearFilter, randomArticle };
+           setFilter, clearFilter, randomArticle, openSubject };
 })();
 
 window.revRender = RevisionTool.render;
@@ -1824,6 +2216,7 @@ window.revImportData = RevisionTool.importData;
 window.revExportData = RevisionTool.exportData;
 window.revHandleImport = RevisionTool.handleImport;
 window.revSetFilter = RevisionTool.setFilter;
+window.revOpenSubject = RevisionTool.openSubject;
 window.revClearFilter = RevisionTool.clearFilter;
 </script>
 
@@ -1888,7 +2281,7 @@ const MainsTool = (function(){
         return `<div class="prow" style="--pc:${pcol(p.name,i)}" onclick="MainsTool.go(${i},-1,'all')"><div class="prtop"><span class="pn">${esc(p.name)}</span><span class="pr">${pc.started}/${pc.t}${need?` · <span style="color:${COL.overdue}">${need} due</span>`:''}</span><span class="pp">${pc.pct}%</span></div>
           <div class="sbar"><i style="width:${w(pc.fresh)};background:${COL.fresh}"></i><i style="width:${w(pc.soon)};background:${COL.soon}"></i><i style="width:${w(pc.overdue)};background:${COL.overdue}"></i></div>
           </div>`; }).join('')||'<div class="empty-d">No papers yet.</div>')+`</div></div>`;
-    let html=`<div class="dgrid3">${left}${stat}${right}</div>`;
+    let html=`<div class="dgrid3">${left}${right}${stat}</div>`;
     let need=all.filter(x=>{const s=status(x.ch);return s==='overdue'||s==='soon';}).sort((a,b)=>daysSince(b.ch.lastRevised)-daysSince(a.ch.lastRevised)).slice(0,6);
     let fill=[]; if(need.length<6) fill=all.filter(x=>status(x.ch)==='never').slice(0,6-need.length);
     const row=(x,kind)=>{ const b=badge(x.ch); return `<div class="rn"><span class="dot" style="background:${COL[b.cls]}"></span><div class="rtxt" onclick="MainsTool.open('${x.ch.id}')"><div class="rname">${esc(x.ch.name)}</div><div class="rmeta">${esc(x.paper)} › ${esc(x.subject)} · ${b.text}</div></div><button class="donebtn" onclick="MainsTool.markToday('${x.ch.id}')">${kind==='start'?'▶ Start today':'✓ Revised today'}</button></div>`; };
