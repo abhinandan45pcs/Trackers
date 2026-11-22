@@ -939,6 +939,43 @@ html[data-theme="dark"] #tool-pnp{--bg:#17110f;--card:#241b19;--tx:#f1e8e2;--mu:
   @media (max-width:760px){  :where(#tool-mains) .dgrid{grid-template-columns:1fr}}
   @media (max-width:520px){  :where(#tool-mains) .dhero{justify-content:center}
   :where(#tool-mains) .chips{grid-template-columns:1fr 1fr}}
+  #tool-dashboard .dwrap{max-width:1180px;padding-top:clamp(16px,3vw,34px)}
+  #tool-dashboard .dmain{display:grid;grid-template-columns:65fr 35fr;gap:clamp(12px,1.8vw,22px);align-items:stretch;margin:0 0 12px}
+  #tool-dashboard .dleft{display:flex;flex-direction:column;justify-content:center;gap:clamp(10px,1.6vw,18px);min-width:0}
+  #tool-dashboard .dleft .clock{margin:0}
+  #tool-dashboard .dprog{display:flex;flex-direction:column;gap:12px;min-width:0}
+  #tool-dashboard .pbox{position:relative;overflow:hidden;flex:1 0 auto;padding:14px 16px;cursor:pointer;display:flex;flex-direction:column;justify-content:center;gap:10px;min-width:0;border-radius:20px;box-shadow:0 10px 30px rgba(20,26,51,.07);transition:transform .2s,box-shadow .2s,border-color .2s}
+  #tool-dashboard .pbox::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:linear-gradient(var(--c),var(--c2))}
+  #tool-dashboard .pbox::after{content:"";position:absolute;right:-40px;top:-40px;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,var(--c) 0%,transparent 70%);opacity:.13;pointer-events:none}
+  #tool-dashboard .pbox:hover{transform:translateY(-3px);border-color:var(--c);box-shadow:0 16px 36px rgba(20,26,51,.14)}
+  #tool-dashboard .pbox .top{display:flex;align-items:center;gap:14px}
+  #tool-dashboard .pbox .gauge{position:relative;width:78px;height:78px;flex:none}
+  #tool-dashboard .pbox .gauge svg{width:100%;height:100%;transform:rotate(-90deg);filter:drop-shadow(0 3px 6px color-mix(in srgb,var(--c) 40%,transparent))}
+  #tool-dashboard .pbox .gauge circle{fill:none;stroke-width:8;stroke-linecap:round}
+  #tool-dashboard .pbox .gauge .gt{stroke:var(--track)}
+  #tool-dashboard .pbox .gauge .gp{stroke-dasharray:226.2;stroke-dashoffset:226.2;transition:stroke-dashoffset 1s cubic-bezier(.2,.8,.2,1)}
+  #tool-dashboard .pbox .gauge b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:Fraunces,Georgia,serif;font-weight:600;font-size:20px;letter-spacing:-.03em}
+  #tool-dashboard .pbox .gauge b small{font-size:11px;font-weight:500;color:var(--muted);margin:5px 0 0 1px;align-self:center}
+  #tool-dashboard .pbox .info{min-width:0;flex:1}
+  #tool-dashboard .pbox .pt{font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:space-between;gap:6px}
+  #tool-dashboard .pbox .go{font-size:11px;color:var(--muted);font-weight:500;opacity:0;transform:translateX(-4px);transition:.2s;white-space:nowrap}
+  #tool-dashboard .pbox:hover .go{opacity:1;transform:none;color:var(--c)}
+  #tool-dashboard .pbox .pm{font-size:12px;color:var(--muted);margin-top:2px}
+  #tool-dashboard .pbox .pm b{color:var(--text);font-variant-numeric:tabular-nums}
+  #tool-dashboard .pbox .tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+  #tool-dashboard .pbox .tg{font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--surface2);color:var(--muted);white-space:nowrap}
+  #tool-dashboard .pbox .tg.ok{background:var(--green-bg);color:var(--green)}
+  #tool-dashboard .pbox .tg.warn{background:var(--amber-bg);color:var(--amber)}
+  #tool-dashboard .pbox .tg.bad{background:var(--red-bg);color:var(--red)}
+  #tool-dashboard .pbox .tg.pace{background:color-mix(in srgb,var(--c) 14%,var(--surface));color:var(--c)}
+  #tool-dashboard .pbox .pl{display:grid;grid-template-columns:1fr 1fr;gap:5px 12px}
+  #tool-dashboard .pbox .pr{min-width:0}
+  #tool-dashboard .pbox .pr .rt{display:flex;justify-content:space-between;gap:6px;font-size:10.5px;color:var(--muted);line-height:1.3}
+  #tool-dashboard .pbox .pr .rt span:first-child{color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #tool-dashboard .pbox .pr .rb{height:4px;border-radius:99px;background:var(--track);overflow:hidden;margin-top:2px}
+  #tool-dashboard .pbox .pr .rb i{display:block;height:100%;border-radius:99px;background:var(--cc)}
+  @media (max-width:860px){#tool-dashboard .dmain{grid-template-columns:1fr}#tool-dashboard .pbox{flex:none}}
+  @media (prefers-reduced-motion:reduce){#tool-dashboard .pbox,#tool-dashboard .pbox .gauge .gp{transition:none}}
 </style>
 </head>
 <body data-tool="dashboard">
@@ -1013,10 +1050,12 @@ html[data-theme="dark"] #tool-pnp{--bg:#17110f;--card:#241b19;--tx:#f1e8e2;--mu:
   <div id="tool-dashboard" class="tool-panel active">
     <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
     <div class="dwrap">
-      <header class="hero">
-        <span class="pill">📅 Sunday, 23 May 2027 · 9:30 AM IST</span>
-        <h1 class="dh">UPSC Civil Services Prelims</h1>
-        <p class="sub">Every second counts. <b id="cd-tag">Stay consistent.</b></p>
+      <div class="dmain">
+      <div class="dleft">
+        <header class="hero">
+          <span class="pill">📅 Sunday, 23 May 2027 · 9:30 AM IST</span>
+          <h1 class="dh">UPSC Civil Services Prelims</h1>
+          <p class="sub">Every second counts. <b id="cd-tag">Stay consistent.</b></p>
       </header>
       <section class="clock" id="cd-clock" role="timer" aria-label="Time remaining until the exam">
         <div class="glass unit"><div class="ring"><svg viewBox="0 0 100 100"><circle class="t" cx="50" cy="50" r="46"/><circle class="p" id="rd" cx="50" cy="50" r="46" stroke="var(--a1)"/></svg><div class="num" id="cd-d">000</div></div><div class="lbl">Days</div></div>
@@ -1024,6 +1063,9 @@ html[data-theme="dark"] #tool-pnp{--bg:#17110f;--card:#241b19;--tx:#f1e8e2;--mu:
         <div class="glass unit"><div class="ring"><svg viewBox="0 0 100 100"><circle class="t" cx="50" cy="50" r="46"/><circle class="p" id="rm" cx="50" cy="50" r="46" stroke="var(--a3)"/></svg><div class="num" id="cd-m">00</div></div><div class="lbl">Minutes</div></div>
         <div class="glass unit"><div class="ring"><svg viewBox="0 0 100 100"><circle class="t" cx="50" cy="50" r="46"/><circle class="p" id="rs" cx="50" cy="50" r="46" stroke="var(--a1)"/></svg><div class="num" id="cd-s">00</div></div><div class="lbl">Seconds</div></div>
       </section>
+      </div>
+      <aside class="dprog" id="dprog" aria-label="Overall preparation progress"></aside>
+      </div>
       <div class="done-msg" id="cd-done">The exam has begun. Best of luck! 🍀</div>
       <section class="glass quote"><p id="cd-q">“It always seems impossible until it’s done.”</p><span id="cd-qa">Nelson Mandela</span></section>
       <p class="foot">Countdown uses your device clock, converted to IST.</p>
@@ -2195,7 +2237,8 @@ const RevisionTool = (function () {
 
   return { init, render, switchTab, toggleExpand, addChapter, setField, markToday, deleteChapter,
            openAddSubject, closeModal, confirmAddSubject, deleteSubject, importData, exportData, handleImport,
-           setFilter, clearFilter, randomArticle, openSubject };
+           setFilter, clearFilter, randomArticle, openSubject,
+           summary(){ const all=[]; subjects.forEach(s=>(data[s]||[]).forEach(c=>all.push(c))); const total=all.length, started=all.filter(c=>c.lastRevised).length; const dc=c=>{const d=daysSince(c.lastRevised);return d===null?'n':d>=15?'o':d>=8?'s':'f'}; let overdue=0,soon=0,fresh=0; all.forEach(c=>{const k=dc(c); if(k==='o')overdue++; else if(k==='s')soon++; else if(k==='f')fresh++;}); return {started,total,pct:total?Math.round(started/total*100):0,overdue,soon,fresh}; } };
 })();
 
 window.revRender = RevisionTool.render;
@@ -2341,6 +2384,7 @@ const MainsTool = (function(){
     MainsTool._fn=fn; setTimeout(()=>$('m-in')?.focus(),50); }
   return {
     init(data,onSave){ _onSave=onSave||null; const ok=!!(data&&Array.isArray(data.papers)); papers=migrate(hydrate(ok?clone(data.papers):clone(MAINS_PRESET))); curP=0;curS=-1;addP=0;addS=0;filter='all';expanded={};view='dash'; if(!ok) save(); render(); }, render,
+    summary(){ const c=cnt(flat()); return {started:c.started,total:c.t,pct:c.pct,overdue:c.overdue,soon:c.soon,fresh:c.fresh,papers:papers.map((p,i)=>{const k=cnt(flat([p])); return {name:p.name,started:k.started,total:k.t,pct:k.pct,color:pcol(p.name,i)};})}; },
     setView(v){view=v;render();window.scrollTo(0,0)},
     go(p,s,f){ curP=p;curS=s;filter=f||'all'; if(p>=0){addP=p;addS=Math.max(0,s);}view='topics';render();window.scrollTo(0,0); },
     open(id){ const r=flat().find(x=>x.ch.id===id); if(!r) return; curP=r.pi;curS=r.si;addP=r.pi;addS=r.si;filter='all';expanded[id]=true;view='topics';render(); setTimeout(()=>$('card-'+id)?.scrollIntoView({behavior:'smooth',block:'center'}),50); },
@@ -3030,7 +3074,7 @@ function init(data,onSave){
   hook=onSave;
   if(migrated)save();
 }
-return{init};
+return{init,summary(){let done=0;for(let n=1;n<=108;n++)if((st.s[n]||{}).st=='d')done++;const s=stats();return{done,total:108,pct:Math.round(done/108*100),due:s.due.length,back:s.back.length,notStarted:today<D0}}};
 })();
 </script>
 
@@ -3090,6 +3134,60 @@ return{init};
   }
   document.addEventListener('visibilitychange',function(){if(!document.hidden){last=-1;tick()}});
   tick();
+
+
+  /* overall progress blocks (PNP · Prelims Revision · Mains Revision): built once, then updated in place */
+  var DP=[
+    {k:'pnp',tab:'pnp',icon:'📚',title:'PNP 2027',c:'#ff9a3c',c2:'#ffcf6b'},
+    {k:'rev',tab:'revision',icon:'📖',title:'Prelims Revision',c:'#7c5cf0',c2:'#b79cff'},
+    {k:'mains',tab:'mains',icon:'✍️',title:'Mains Revision',c:'#12b5b5',c2:'#6fe3d6'}
+  ];
+  (function buildDP(){
+    var el=$('dprog'); if(!el) return;
+    el.innerHTML=DP.map(function(d){
+      return '<div class="glass pbox" id="pb-'+d.k+'" style="--c:'+d.c+';--c2:'+d.c2+'" data-go="'+d.tab+'" role="button" tabindex="0" aria-label="Open '+d.title+'">'+
+        '<div class="top"><div class="gauge"><svg viewBox="0 0 80 80"><defs><linearGradient id="pg-'+d.k+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="'+d.c+'"/><stop offset="1" stop-color="'+d.c2+'"/></linearGradient></defs><circle class="gt" cx="40" cy="40" r="36"/><circle class="gp" cx="40" cy="40" r="36" stroke="url(#pg-'+d.k+')"/></svg><b><span class="gv">0</span><small>%</small></b></div>'+
+        '<div class="info"><div class="pt"><span>'+d.icon+' '+d.title+'</span><span class="go">Open →</span></div><div class="pm"></div><div class="tags"></div></div></div>'+
+        (d.k==='mains'?'<div class="pl"></div>':'')+'</div>';
+    }).join('');
+    el.addEventListener('click',function(e){var b=e.target.closest('[data-go]');if(!b)return;var t=document.querySelector('.main-tab[data-tool="'+b.dataset.go+'"]');if(t)t.click()});
+    el.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&e.target.dataset&&e.target.dataset.go){e.preventDefault();e.target.click()}});
+  })();
+  function dpSafe(f,d){try{return f()}catch(e){return d}}
+  function dpTag(cls,txt){return '<span class="tg '+cls+'">'+txt+'</span>'}
+  function dpPace(remaining){
+    var days=Math.ceil((target-Date.now())/864e5); if(days<=0||remaining<=0) return '';
+    var v=remaining/days; return dpTag('pace','🎯 '+(v>=10?Math.round(v):v.toFixed(1))+'/day to finish by exam');
+  }
+  function dpSet(k,pct,line,tags){
+    var b=$('pb-'+k); if(!b) return;
+    var gp=b.querySelector('.gp'); gp.style.strokeDashoffset=226.2*(1-Math.min(1,Math.max(0,pct/100)));
+    b.querySelector('.gv').textContent=pct;
+    b.querySelector('.pm').innerHTML=line;
+    b.querySelector('.tags').innerHTML=tags;
+  }
+  function revTags(s){
+    var t=''; if(!s.total) return dpTag('','No topics yet');
+    if(s.overdue) t+=dpTag('bad','⚠ '+s.overdue+' overdue'); else if(s.started) t+=dpTag('ok','✓ nothing overdue');
+    if(s.soon) t+=dpTag('warn','⏳ '+s.soon+' due soon');
+    if(!s.started) t+=dpTag('','Not started');
+    return t+dpPace(s.total-s.started);
+  }
+  function dashProgress(){
+    if(!$('pb-pnp')) return;
+    var z={pct:0,total:0};
+    var pn=dpSafe(function(){return PnpTool.summary()},z), rv=dpSafe(function(){return RevisionTool.summary()},z), mn=dpSafe(function(){return MainsTool.summary()},z);
+    var pt=''; 
+    if(pn.notStarted) pt=dpTag('','Starts soon'); else if(pn.back>0) pt=dpTag(pn.back>2?'bad':'warn','⚠ '+pn.back+' behind schedule'); else pt=dpTag('ok','✓ on track');
+    pt+=dpTag('pace',(pn.due||0)+' tests due so far');
+    dpSet('pnp',pn.pct||0,'<b>'+(pn.done||0)+'</b> of <b>'+(pn.total||108)+'</b> tests completed',pt);
+    dpSet('rev',rv.pct||0,'<b>'+(rv.started||0)+'</b> of <b>'+(rv.total||0)+'</b> topics started',revTags(rv));
+    dpSet('mains',mn.pct||0,'<b>'+(mn.started||0)+'</b> of <b>'+(mn.total||0)+'</b> topics started',revTags(mn));
+    var pl=document.querySelector('#pb-mains .pl');
+    if(pl) pl.innerHTML=(mn.papers||[]).map(function(x){return '<div class="pr" style="--cc:'+x.color+'" title="'+x.name+': '+x.started+'/'+x.total+'"><div class="rt"><span>'+x.name+'</span><span>'+x.pct+'%</span></div><div class="rb"><i style="width:'+x.pct+'%"></i></div></div>'}).join('');
+  }
+  document.querySelectorAll('.main-tab').forEach(function(b){b.addEventListener('click',function(){if(b.dataset.tool==='dashboard')dashProgress()})});
+  dashProgress(); setTimeout(dashProgress,600); setInterval(function(){if(!document.hidden&&document.getElementById('tool-dashboard').classList.contains('active'))dashProgress()},2000);
 
   /* quotes */
   var Q=[["It always seems impossible until it’s done.","Nelson Mandela"],["Arise, awake, and stop not till the goal is reached.","Swami Vivekananda"],["You have the right to work, but never to the fruit of work.","Bhagavad Gita"],["Small daily improvements lead to stunning results.","Robin Sharma"],["The expert in anything was once a beginner.","Helen Hayes"],["Discipline is the bridge between goals and accomplishment.","Jim Rohn"]];
