@@ -1130,7 +1130,7 @@ html[data-theme="dark"] #tool-pnp{--bg:#17110f;--card:#241b19;--tx:#f1e8e2;--mu:
           <div class="np-list" id="np-list"></div>
         </div>
       </div>
-      <div id="hdr-timer" title="Time left until UPSC Prelims 2027 (23 May 2027, 9:30 AM IST)">
+      <div id="hdr-timer" title="Time left until UPSC Prelims 2027 (23 April 2027, 9:30 AM IST)">
         <span class="ht-dot"></span>
         <span class="ht-cap">Prelims 2027</span>
         <div class="ht-units">
@@ -1168,7 +1168,7 @@ html[data-theme="dark"] #tool-pnp{--bg:#17110f;--card:#241b19;--tx:#f1e8e2;--mu:
       <div class="dmain">
       <div class="dleft">
         <header class="hero">
-          <span class="pill">📅 Sunday, 23 May 2027 · 9:30 AM IST</span>
+          <span class="pill">📅 Friday, 23 April 2027 · 9:30 AM IST</span>
           <h1 class="dh">UPSC Civil Services Prelims</h1>
           <p class="sub">Every second counts. <b id="cd-tag">Stay consistent.</b></p>
       </header>
@@ -3235,7 +3235,7 @@ return{init,items(){const nd=new Date(),t0=new Date(nd.getFullYear(),nd.getMonth
   window.addEventListener('afterprint',function(){if(prevTheme){html.dataset.theme=prevTheme;prevTheme=null}});
 
   /* countdown (header timer + dashboard rings) */
-  var target=new Date("2027-05-23T09:30:00+05:30").getTime(), last=-1, C=289;
+  var target=new Date("2027-04-23T09:30:00+05:30").getTime(), last=-1, C=289;
   function ring(id,f){$(id).style.strokeDashoffset=C*(1-Math.min(1,Math.max(0,f)))}
   function tick(){
     var now=Date.now(), diff=target-now;
