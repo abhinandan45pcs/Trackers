@@ -1,0 +1,19 @@
+/* ===== CLOUD STORAGE METER (inside the profile menu) ===== */
+#profile-menu{max-height:calc(100vh - 60px);overflow-y:auto}
+#profile-menu .sm-row{padding-bottom:6px}
+#profile-menu .sm-row #sm-text{font-size:12px;font-weight:600;color:var(--text)}
+#sm-bar{height:8px;border-radius:8px;background:var(--border);overflow:hidden;margin:0 0 6px}
+#sm-fill{display:block;height:100%;width:0;border-radius:8px;background:var(--green);transition:width .4s ease,background .2s}
+#sm-bar[data-level="warn"] #sm-fill{background:var(--amber)}
+#sm-bar[data-level="high"] #sm-fill{background:var(--red)}
+#sm-note{font-size:11px;line-height:1.5;margin:4px 0 6px;padding:7px 9px;border-radius:var(--radius);background:var(--amber-bg);color:var(--amber)}
+#sm-note[data-level="high"]{background:var(--red-bg,var(--amber-bg));color:var(--red)}
+#sm-note[hidden]{display:none}
+#sm-details{font-size:12px;margin:2px 0 6px}
+#sm-details summary{cursor:pointer;color:var(--muted);padding:2px 0}
+#sm-list{list-style:none;margin:6px 0 0;padding:0}
+#sm-list li{display:flex;justify-content:space-between;gap:10px;padding:3px 0;color:var(--muted)}
+#sm-list li b{font-weight:600;color:var(--text)}
+#sm-refresh{background:none;border:none;color:var(--accent);font-size:11px;cursor:pointer;padding:0}
+.sm-sub{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);margin:0 0 4px}
+#sm-refresh:hover{text-decoration:underline}

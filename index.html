@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="css/mains-report-card.css?v=893f5b4d">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%234A43A8'/%3E%3Ctext x='50' y='68' font-size='58' font-family='Arial,sans-serif' font-weight='700' fill='white' text-anchor='middle'%3EU%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="css/main.css?v=a6da1d8d">
+<link rel="stylesheet" href="css/storage-meter.css?v=6273ae41">
 </head>
 <body data-tool="dashboard">
 
@@ -77,6 +78,11 @@
         </div>
         <div class="pm-title">Status</div>
         <div class="pm-row"><span>Cloud sync</span><span id="sync-status"></span></div>
+        <div class="pm-row sm-row"><span>Storage</span><span id="sm-text">Open to check</span></div>
+        <div id="sm-bar" role="progressbar" aria-label="Cloud storage used" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-level="ok"><i id="sm-fill"></i></div>
+        <div class="sm-sub"><span id="sm-detail"></span><button id="sm-refresh" type="button" title="Recheck now">Refresh</button></div>
+        <div id="sm-note" hidden></div>
+        <details id="sm-details"><summary>Breakdown by tool</summary><ul id="sm-list"></ul></details>
         <div class="pm-title">Quick links</div>
         <a class="pm-link" href="https://www.drshivin.com/prelims_pyq_practice" target="_blank" rel="noopener noreferrer"><span>📝</span><span>Prelims PYQ Practice</span><span class="ext">↗</span></a>
         <a class="pm-link" href="https://abhinandan45pcs.github.io/microtheme_upsc/" target="_blank" rel="noopener noreferrer"><span>🧩</span><span>Mains Microthemes</span><span class="ext">↗</span></a>
@@ -340,5 +346,6 @@
 
 <script src="js/09-profile-countdown.js?v=fa5476a6"></script>
 <script src="js/10-notifications.js?v=86c75d9f"></script>
+<script src="js/11-storage-meter.js?v=8b422f22"></script>
 </body>
 </html>
